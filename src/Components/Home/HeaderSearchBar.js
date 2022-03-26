@@ -10,7 +10,7 @@ export default function HeaderSearchBar() {
         className="p-2 w-100 d-flex align-items-center justify-content-around"
         style={{ height: "75px", backgroundColor: "#FEC400" }}
       >
-        <div>
+        <div style={{ marginRight: "10px" }}>
           <img src={queenz_zone_logo} className="img-fluid" alt="ded" />
         </div>
         <div>
