@@ -1,16 +1,17 @@
 {
   "files": {
-    "main.css": "/QueenZ-Zone/static/css/main.073c9b0a.css",
-    "main.js": "/QueenZ-Zone/static/js/main.036bbe96.js",
+    "main.css": "/QueenZ-Zone/static/css/main.e6c13ad2.css",
+    "main.js": "/QueenZ-Zone/static/js/main.d9750808.js",
     "static/js/787.dd8170f7.chunk.js": "/QueenZ-Zone/static/js/787.dd8170f7.chunk.js",
-    "static/media/logo.svg": "/QueenZ-Zone/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "static/media/MaskGroup2.png": "/QueenZ-Zone/static/media/MaskGroup2.aeaaad50501ced4448cf.png",
+    "static/media/MaskGroup4.png": "/QueenZ-Zone/static/media/MaskGroup4.1642571eb2819baa9bf4.png",
     "index.html": "/QueenZ-Zone/index.html",
-    "main.073c9b0a.css.map": "/QueenZ-Zone/static/css/main.073c9b0a.css.map",
-    "main.036bbe96.js.map": "/QueenZ-Zone/static/js/main.036bbe96.js.map",
+    "main.e6c13ad2.css.map": "/QueenZ-Zone/static/css/main.e6c13ad2.css.map",
+    "main.d9750808.js.map": "/QueenZ-Zone/static/js/main.d9750808.js.map",
     "787.dd8170f7.chunk.js.map": "/QueenZ-Zone/static/js/787.dd8170f7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.036bbe96.js"
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.d9750808.js"
   ]
 }
