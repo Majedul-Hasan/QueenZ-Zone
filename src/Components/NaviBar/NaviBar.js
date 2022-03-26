@@ -1,6 +1,7 @@
 import {
   faCartShopping,
   faClipboardList,
+  faHeart,
   faHouse,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -18,9 +19,9 @@ export default function NaviBar() {
         <div className="mx-auto" style={{ width: "100%" }}>
           <div
             className="w-100"
-            style={{ height: "70px", backgroundColor: "#FEC400" }}
+            style={{ height: "50px", backgroundColor: "#FEC400" }}
           >
-            <div class=" p-3 d-flex justify-content-around">
+            <div class=" p-2 d-flex justify-content-around">
               <div onClick={() => optionName("Home")}>
                 <FontAwesomeIcon
                   style={{ color: "black", fontSize: "28px" }}
@@ -32,6 +33,12 @@ export default function NaviBar() {
                 <FontAwesomeIcon
                   style={{ color: "white", fontSize: "28px" }}
                   icon={faClipboardList}
+                />
+              </div>
+              <div onClick={() => optionName("MyAccount")}>
+                <FontAwesomeIcon
+                  style={{ color: "white", fontSize: "28px" }}
+                  icon={faHeart}
                 />
               </div>
               <div onClick={() => optionName("ShoppingCard")}>

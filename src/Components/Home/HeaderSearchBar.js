@@ -1,4 +1,8 @@
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCartShopping,
+  faHeart,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import queenz_zone_logo from "../../Asset/queenz_zone_logo.png";
@@ -8,12 +12,15 @@ export default function HeaderSearchBar() {
     <div>
       <div
         className="p-2 w-100 d-flex align-items-center justify-content-around"
-        style={{ height: "75px", backgroundColor: "#FEC400" }}
+        style={{ height: "60px", backgroundColor: "#FEC400" }}
       >
-        <div style={{ marginRight: "10px" }}>
+        <div style={{ marginRight: "0px" }}>
           <img src={queenz_zone_logo} className="img-fluid" alt="ded" />
         </div>
-        <div>
+        <div
+          className="d-flex justify-content-evenly"
+          style={{ padding: "0px 10px" }}
+        >
           <div class="input-group ">
             <input
               type="text"
@@ -33,12 +40,25 @@ export default function HeaderSearchBar() {
               class="input-group-text"
               id="basic-addon2"
             >
-              Search
               <FontAwesomeIcon
-                style={{ paddingLeft: "5px" }}
+                style={{ paddingLeft: "0" }}
                 icon={faMagnifyingGlass}
               />
             </button>
+          </div>
+          <div
+            className="d-flex align-items-center"
+            style={{ fontSize: "20px" }}
+          >
+            <div
+              className=""
+              style={{ margin: "0px 15px", paddingLeft: "5px" }}
+            >
+              <FontAwesomeIcon icon={faHeart} />
+            </div>
+            <div className="" style={{ margin: "0px 10px" }}>
+              <FontAwesomeIcon icon={faCartShopping} />
+            </div>
           </div>
         </div>
       </div>
