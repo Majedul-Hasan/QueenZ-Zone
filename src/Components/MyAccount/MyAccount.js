@@ -1,6 +1,6 @@
 import { faG } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import {
   getAuth,
   GoogleAuthProvider,
@@ -8,9 +8,13 @@ import {
 } from "../FirebaseAuth/FirebaseAuth";
 
 export default function MyAccount() {
+  // user state for register btn and sign in btn
+  const [signInOrRegister, setSignInOrRegister] = useState("");
+
   // register btn
-  const registerBtn = () => {
-    console.log("clicked");
+  const registerBtn = (props) => {
+    console.log(props);
+    setSignInOrRegister(props);
   };
   // LogInwithGoogle
   const LogInwithGoogle = () => {
@@ -41,131 +45,376 @@ export default function MyAccount() {
       {" "}
       <div>
         <div
-          className="p-2 m-3 mt-4 "
           style={{
-            backgroundColor: "#FFF7BF",
-            width: "100px",
-            boxShadow: "rgb(213 205 149)  0 3px 7px",
-            borderRadius: "5px",
+            display: ` ${signInOrRegister === "Register" ? "none" : "block"} `,
           }}
         >
-          <span
-            className="d-flex justify-content-center"
+          <div
+            className="p-2 m-3 mt-4 "
             style={{
-              fontSize: "16",
-              fontFamily: "Poppins",
-              fontWeight: "600",
-              margin: "",
+              backgroundColor: "#FFF7BF",
+              width: "100px",
+              boxShadow: "rgb(213 205 149)  0 3px 7px",
+              borderRadius: "5px",
             }}
           >
-            SIGN IN
-          </span>
-        </div>
-        <div
-          className=" m-3 "
-          style={{
-            backgroundColor: "#FFF7BF",
-            boxShadow: "rgb(213 205 149)  0 3px 7px",
-            borderRadius: "5px",
-          }}
-        >
-          <div className="p-2">
-            <label
-              for="Email"
-              className=" mt-2 form-label"
+            <span
+              className="d-flex justify-content-center"
               style={{
                 fontSize: "16",
                 fontFamily: "Poppins",
-                fontWeight: "400",
+                fontWeight: "600",
                 margin: "",
               }}
             >
-              Email Address
-            </label>
-            <div class="input-group mb-3">
-              <input
-                type="text"
-                class="form-control"
-                id="Email"
-                placeholder="email..."
-                aria-describedby="basic-addon3"
-                style={{
-                  fontSize: "16",
-                  fontFamily: "Poppins",
-                  fontWeight: "400",
-                }}
-              />
-            </div>
-            <label
-              for="Password"
-              class="form-label"
-              style={{
-                fontSize: "16",
-                fontFamily: "Poppins",
-                fontWeight: "400",
-                margin: "",
-              }}
-            >
-              Password
-            </label>
-            <div class="input-group mb-3">
-              <input
-                type="text"
-                placeholder="password"
-                className=" form-control"
-                id="Password"
-                aria-describedby="basic-addon3"
+              SIGN IN
+            </span>
+          </div>
+          <div
+            className=" m-3 "
+            style={{
+              backgroundColor: "#FFF7BF",
+              boxShadow: "rgb(213 205 149)  0 3px 7px",
+              borderRadius: "5px",
+            }}
+          >
+            <div className="p-2">
+              <label
+                for="Email"
+                className=" mt-2 form-label"
                 style={{
                   fontSize: "16",
                   fontFamily: "Poppins",
                   fontWeight: "400",
                   margin: "",
                 }}
-              />
+              >
+                Email Address
+              </label>
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="Email"
+                  placeholder="email..."
+                  aria-describedby="basic-addon3"
+                  style={{
+                    fontSize: "16",
+                    fontFamily: "Poppins",
+                    fontWeight: "400",
+                  }}
+                />
+              </div>
+              <label
+                for="Password"
+                class="form-label"
+                style={{
+                  fontSize: "16",
+                  fontFamily: "Poppins",
+                  fontWeight: "400",
+                  margin: "",
+                }}
+              >
+                Password
+              </label>
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  placeholder="password"
+                  className=" form-control"
+                  id="Password"
+                  aria-describedby="basic-addon3"
+                  style={{
+                    fontSize: "16",
+                    fontFamily: "Poppins",
+                    fontWeight: "400",
+                    margin: "",
+                  }}
+                />
+              </div>
             </div>
+          </div>
+          <div
+            className="p-2 m-3 mx-auto "
+            style={{
+              backgroundColor: "#FEC400",
+              width: "100px",
+              boxShadow: "rgb(213 205 149)  0 3px 7px",
+              borderRadius: "5px",
+              width: "195px",
+            }}
+          >
+            <span
+              className="d-flex justify-content-center"
+              style={{
+                fontSize: "16",
+                fontFamily: "Poppins",
+                fontWeight: "600",
+                margin: "",
+                color: "white",
+              }}
+            >
+              SIGN IN
+            </span>
+          </div>
+          <div class="d-flex justify-content-center">
+            <span
+              style={{
+                fontSize: "14px",
+                fontFamily: "Poppins",
+                fontWeight: "400",
+              }}
+            >
+              If you don't have an account please{" "}
+              <span
+                onClick={() => registerBtn("Register")}
+                style={{
+                  color: "blue",
+                }}
+              >
+                REGISTER
+              </span>
+            </span>
           </div>
         </div>
         <div
-          className="p-2 m-3 mx-auto "
+          className=""
           style={{
-            backgroundColor: "#FEC400",
-            width: "100px",
-            boxShadow: "rgb(213 205 149)  0 3px 7px",
-            borderRadius: "5px",
-            width: "195px",
+            display: ` ${signInOrRegister === "Sign in" ? "none" : "block"} `,
           }}
         >
-          <span
-            className="d-flex justify-content-center"
-            style={{
-              fontSize: "16",
-              fontFamily: "Poppins",
-              fontWeight: "600",
-              margin: "",
-              color: "white",
-            }}
-          >
-            SIGN IN
-          </span>
-        </div>
-        <div class="d-flex justify-content-center">
-          <span
-            style={{
-              fontSize: "14px",
-              fontFamily: "Poppins",
-              fontWeight: "400",
-            }}
-          >
-            If you don't have an account please{" "}
-            <span
-              onClick={() => registerBtn()}
+          <div>
+            <div
+              className="p-2 m-3 mt-4 "
               style={{
-                color: "blue",
+                backgroundColor: "#FFF7BF",
+                width: "150px",
+                boxShadow: "rgb(213 205 149)  0 3px 7px",
+                borderRadius: "5px",
               }}
             >
-              REGISTER
-            </span>
-          </span>
+              <span
+                className="d-flex justify-content-center"
+                style={{
+                  fontSize: "16",
+                  fontFamily: "Poppins",
+                  fontWeight: "600",
+                  margin: "",
+                }}
+              >
+                REGISTRATION
+              </span>
+            </div>
+            <div
+              className=" m-3 "
+              style={{
+                backgroundColor: "#FFF7BF",
+                boxShadow: "rgb(213 205 149)  0 3px 7px",
+                borderRadius: "5px",
+              }}
+            >
+              <div className="p-2">
+                <label
+                  for="UserName"
+                  className=" mt-2 form-label"
+                  style={{
+                    fontSize: "16",
+                    fontFamily: "Poppins",
+                    fontWeight: "400",
+                    margin: "",
+                  }}
+                >
+                  User name
+                </label>
+                <div class="input-group ">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="UserName"
+                    placeholder="username..."
+                    aria-describedby="basic-addon3"
+                    style={{
+                      fontSize: "16",
+                      fontFamily: "Poppins",
+                      fontWeight: "400",
+                    }}
+                  />
+                </div>
+                <label
+                  for="First Name"
+                  className=" mt-2 form-label"
+                  style={{
+                    fontSize: "16",
+                    fontFamily: "Poppins",
+                    fontWeight: "400",
+                    margin: "",
+                  }}
+                >
+                  First Name
+                </label>
+                <div class="input-group ">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="First Name"
+                    placeholder="firsh name..."
+                    aria-describedby="basic-addon3"
+                    style={{
+                      fontSize: "16",
+                      fontFamily: "Poppins",
+                      fontWeight: "400",
+                    }}
+                  />
+                </div>
+                <label
+                  for="Last Name"
+                  className=" mt-2 form-label"
+                  style={{
+                    fontSize: "16",
+                    fontFamily: "Poppins",
+                    fontWeight: "400",
+                    margin: "",
+                  }}
+                >
+                  Last Name
+                </label>
+                <div class="input-group ">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="Last Name"
+                    placeholder="last name..."
+                    aria-describedby="basic-addon3"
+                    style={{
+                      fontSize: "16",
+                      fontFamily: "Poppins",
+                      fontWeight: "400",
+                    }}
+                  />
+                </div>
+                <label
+                  for="Passwordd"
+                  className=" mt-2 form-label"
+                  style={{
+                    fontSize: "16",
+                    fontFamily: "Poppins",
+                    fontWeight: "400",
+                    margin: "",
+                  }}
+                >
+                  Password
+                </label>
+                <div class="input-group ">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="Passwordd"
+                    placeholder="password..."
+                    aria-describedby="basic-addon3"
+                    style={{
+                      fontSize: "16",
+                      fontFamily: "Poppins",
+                      fontWeight: "400",
+                    }}
+                  />
+                </div>
+                <label
+                  for="Confirm Password"
+                  className=" mt-2 form-label"
+                  style={{
+                    fontSize: "16",
+                    fontFamily: "Poppins",
+                    fontWeight: "400",
+                    margin: "",
+                  }}
+                >
+                  Confirm Password
+                </label>
+                <div class="input-group">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="Confirm Password"
+                    placeholder="password..."
+                    aria-describedby="basic-addon3"
+                    style={{
+                      fontSize: "16",
+                      fontFamily: "Poppins",
+                      fontWeight: "400",
+                    }}
+                  />
+                </div>
+                <label
+                  for="Emaill"
+                  className=" mt-2 form-label"
+                  style={{
+                    fontSize: "16",
+                    fontFamily: "Poppins",
+                    fontWeight: "400",
+                    margin: "",
+                  }}
+                >
+                  Email Address
+                </label>
+                <div class="input-group mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="Emaill"
+                    placeholder="email..."
+                    aria-describedby="basic-addon3"
+                    style={{
+                      fontSize: "16",
+                      fontFamily: "Poppins",
+                      fontWeight: "400",
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              className="p-2 m-3 mx-auto "
+              style={{
+                backgroundColor: "#FEC400",
+                width: "100px",
+                boxShadow: "rgb(213 205 149)  0 3px 7px",
+                borderRadius: "5px",
+                width: "195px",
+              }}
+            >
+              <span
+                className="btn btn-warning d-flex justify-content-center"
+                style={{
+                  fontSize: "16",
+                  fontFamily: "Poppins",
+                  fontWeight: "600",
+                  margin: "",
+                  color: "white",
+                }}
+              >
+                REGISTRATION
+              </span>
+            </div>
+            <div class="d-flex justify-content-center">
+              <span
+                style={{
+                  fontSize: "14px",
+                  fontFamily: "Poppins",
+                  fontWeight: "400",
+                }}
+              >
+                If you have an account please{" "}
+                <span
+                  onClick={() => registerBtn("Sign in")}
+                  style={{
+                    color: "blue",
+                  }}
+                >
+                  SIGN IN
+                </span>
+              </span>
+            </div>
+          </div>
         </div>
         <div class="d-flex justify-content-center mt-3">
           <span
@@ -184,22 +433,24 @@ export default function MyAccount() {
           class="d-flex mt-4 justify-content-center "
           onClick={() => LogInwithGoogle()}
         >
-          <div
-            class="d-flex bd-highlight"
-            style={{
-              backgroundColor: "green",
-              color: "white",
-              padding: "5px 30px",
-              borderRadius: "10px",
-              fontSize: "16px",
-              fontFamily: "Poppins",
-              fontWeight: "600",
-              boxShadow: "rgb(213 205 149)  0 3px 7px",
-            }}
-          >
-            <div class="p-2 w-100 bd-highlight">Google</div>
-            <div class="p-2 flex-shrink-1 bd-highlight">
-              <FontAwesomeIcon icon={faG} />
+          <div className="mb-5 pb-5">
+            <div
+              class="d-flex bd-highlight  "
+              style={{
+                backgroundColor: "green",
+                color: "white",
+                padding: "5px 30px",
+                borderRadius: "10px",
+                fontSize: "16px",
+                fontFamily: "Poppins",
+                fontWeight: "600",
+                boxShadow: "rgb(213 205 149)  0 3px 7px",
+              }}
+            >
+              <div class="p-2 w-100 bd-highlight">Google</div>
+              <div class="p-2 flex-shrink-1 bd-highlight ">
+                <FontAwesomeIcon icon={faG} />
+              </div>
             </div>
           </div>
         </div>
