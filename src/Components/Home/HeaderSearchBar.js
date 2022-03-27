@@ -2,12 +2,21 @@ import {
   faCartShopping,
   faHeart,
   faMagnifyingGlass,
+  faMessage,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import queenz_zone_logo from "../../Asset/queenz_zone_logo.png";
 
 export default function HeaderSearchBar() {
+  let history = useHistory();
+
+  const optionName = (props) => {
+    console.log();
+
+    history.push(`/${props}`);
+  };
   return (
     <div>
       <div
@@ -53,10 +62,35 @@ export default function HeaderSearchBar() {
             <div
               className=""
               style={{ margin: "0px 15px", paddingLeft: "5px" }}
+              onClick={() => optionName("MyMessage")}
             >
+              <div ClassName="" style={{ position: "relative" }}>
+                <FontAwesomeIcon icon={faMessage} />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "-10px",
+                    fontSize: "14px",
+                    borderRadius: "100%",
+                    backgroundColor: "#fec400",
+                    padding: "2px",
+                    right: "-4px",
+                    fontFamily: "Poppins",
+                    fontWeight: "600",
+                  }}
+                >
+                  <span>5</span>
+                </div>
+              </div>
+            </div>
+            <div onClick={() => optionName("Favorite")} className="" style={{}}>
               <FontAwesomeIcon icon={faHeart} />
             </div>
-            <div className="" style={{ margin: "0px 10px" }}>
+            <div
+              className=""
+              onClick={() => optionName("ShoppingCard")}
+              style={{ margin: "0px 10px" }}
+            >
               <FontAwesomeIcon icon={faCartShopping} />
             </div>
           </div>
