@@ -9,7 +9,7 @@ import {
 
 export default function MyAccount() {
   // user state for register btn and sign in btn
-  const [signInOrRegister, setSignInOrRegister] = useState("");
+  const [signInOrRegister, setSignInOrRegister] = useState("Sign in");
 
   // register btn
   const registerBtn = (props) => {
