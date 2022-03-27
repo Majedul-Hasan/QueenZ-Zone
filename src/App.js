@@ -52,6 +52,7 @@ function App() {
           </Route>
 
           <Route path="*">
+            <HeaderSearchBar></HeaderSearchBar>
             <Layout></Layout>
             <NaviBar></NaviBar>
           </Route>
