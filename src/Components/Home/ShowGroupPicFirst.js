@@ -4,13 +4,13 @@ import pic from "../../Asset/MaskGroup4.png";
 export default function ShowGroupPicFirst() {
   return (
     <div>
-      <div class="" style={{ backgroundColor: "#FEC400" }}>
-        <div class="d-flex justify-content-around">
+      <div className="" style={{ backgroundColor: "#FEC400" }}>
+        <div className="d-flex justify-content-around">
           <div className="p-1">
             <img
               src={pic}
               style={{ width: "300px" }}
-              class="img-fluid "
+              className="img-fluid "
               alt="..."
             ></img>
           </div>
@@ -18,7 +18,7 @@ export default function ShowGroupPicFirst() {
             <img
               src={pic}
               style={{ width: "300px" }}
-              class="img-fluid "
+              className="img-fluid "
               alt="..."
             ></img>
           </div>
@@ -26,17 +26,17 @@ export default function ShowGroupPicFirst() {
             <img
               src={pic}
               style={{ width: "300px" }}
-              class="img-fluid "
+              className="img-fluid "
               alt="..."
             ></img>
           </div>
         </div>
-        <div class="d-flex justify-content-around">
+        <div className="d-flex justify-content-around">
           <div className="p-1">
             <img
               src={pic}
               style={{ width: "300px" }}
-              class="img-fluid "
+              className="img-fluid "
               alt="..."
             ></img>
           </div>
@@ -44,7 +44,7 @@ export default function ShowGroupPicFirst() {
             <img
               src={pic}
               style={{ width: "300px" }}
-              class="img-fluid "
+              className="img-fluid "
               alt="..."
             ></img>
           </div>
@@ -52,7 +52,7 @@ export default function ShowGroupPicFirst() {
             <img
               src={pic}
               style={{ width: "300px" }}
-              class="img-fluid "
+              className="img-fluid "
               alt="..."
             ></img>
           </div>

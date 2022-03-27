@@ -7,13 +7,18 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import { default as React, useContext } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { UserInfoContext } from "../../App";
 
 export default function NaviBar() {
   let { url } = useRouteMatch();
   // react router dom history
   let history = useHistory();
+
+  // use context
+  const [loggingUserInfo, setLoginUsserInfo] = useContext(UserInfoContext);
+  console.log("this is navbar page : ", loggingUserInfo);
 
   const optionName = (props) => {
     console.log();
@@ -23,7 +28,7 @@ export default function NaviBar() {
 
   return (
     <div>
-      <div class="fixed-bottom ">
+      <div className="fixed-bottom ">
         <div className="mx-auto" style={{ width: "100%" }}>
           <div
             className="w-100"
@@ -33,7 +38,7 @@ export default function NaviBar() {
               fontSize: "24px",
             }}
           >
-            <div class=" p-2 d-flex justify-content-around">
+            <div className=" p-2 d-flex justify-content-around">
               <div onClick={() => optionName("Home")}>
                 <FontAwesomeIcon style={{ color: "black" }} icon={faHouse} />
               </div>
@@ -77,7 +82,16 @@ export default function NaviBar() {
                 />
               </div>
               <div onClick={() => optionName("MyAccount")}>
-                <FontAwesomeIcon style={{ color: "white" }} icon={faUser} />
+                {loggingUserInfo.photoURL ? (
+                  <img
+                    className="img-fluid"
+                    style={{ borderRadius: "50%", width: "30px" }}
+                    src={loggingUserInfo.photoURL}
+                    alt="user pic"
+                  />
+                ) : (
+                  <FontAwesomeIcon style={{ color: "white" }} icon={faUser} />
+                )}
               </div>
             </div>
           </div>

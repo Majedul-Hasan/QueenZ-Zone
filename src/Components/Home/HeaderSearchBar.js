@@ -30,10 +30,10 @@ export default function HeaderSearchBar() {
           className="d-flex justify-content-evenly"
           style={{ padding: "0px 10px" }}
         >
-          <div class="input-group ">
+          <div className="input-group ">
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               placeholder="Search..."
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
@@ -46,7 +46,7 @@ export default function HeaderSearchBar() {
                 fontSize: "18px",
                 fontFamily: "Poppins",
               }}
-              class="input-group-text"
+              className="input-group-text"
               id="basic-addon2"
             >
               <FontAwesomeIcon
