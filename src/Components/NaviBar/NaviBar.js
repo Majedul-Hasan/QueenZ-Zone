@@ -84,7 +84,7 @@ export default function NaviBar() {
               <div onClick={() => optionName("MyAccount")}>
                 {loggingUserInfo.photoURL ? (
                   <img
-                    className="img-fluid"
+                    className="img-fluid mb-1"
                     style={{ borderRadius: "50%", width: "30px" }}
                     src={loggingUserInfo.photoURL}
                     alt="user pic"
