@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       {/* home page layout */}
-      <Router>
+      <Router basename="/QueenZ-Zone">
         <Switch>
           <Route exact path="/">
             <HeaderSearchBar></HeaderSearchBar>
