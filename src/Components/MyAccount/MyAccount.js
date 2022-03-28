@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   GoogleAuthProvider,
+  signInWithEmailAndPassword,
   signInWithPopup,
 } from "../FirebaseAuth/FirebaseAuth";
 import LogInUserInfoPage from "./LogInUserInfoPage";
@@ -18,25 +19,80 @@ export default function MyAccount() {
   // use context
   const [loggingUserInfo, setLoginUsserInfo] = useContext(UserInfoContext);
 
+  // error handile
+  const [showError, setShowError] = useState({
+    error: false,
+    msg: "",
+  });
+
+  // login with email and password
   // react form hook
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
     console.log(data);
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, data.email, data.Password)
+    // valid password check
+    if (data.ConfirmPassword != data.Password) {
+      const localErrorMsg = {
+        error: true,
+        msg: "password don't match",
+      };
+
+      setShowError(localErrorMsg);
+    } else {
+      createUserWithEmailAndPassword(auth, data.email, data.Password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+
+          //   console.log(user);
+
+          const shortdata = {
+            displayName: `${data.FirstName} ${data.LastName}`,
+            email: user.email,
+            phoneNumber: data.phoneNumber,
+          };
+
+          setLoginUsserInfo(shortdata);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+          console.log(error);
+
+          const localErrorMsg = {
+            error: true,
+            msg: error,
+          };
+
+          setShowError(localErrorMsg);
+        });
+    }
+  };
+
+  // sign in all things
+  const [signInEmail, setSignInEmail] = useState();
+  const [signInPassword, setSignInPassword] = useState();
+  const onSignInEmail = (props) => {
+    setSignInEmail(props);
+  };
+  const onSignInPassword = (props) => {
+    setSignInPassword(props);
+  };
+
+  const onSignIn = () => {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, signInEmail, signInPassword)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-
-        console.log(user);
-
-        setLoginUsserInfo(data);
+        // ...
+        setLoginUsserInfo(user);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // ..
-        console.log(error);
       });
   };
 
@@ -57,7 +113,15 @@ export default function MyAccount() {
         const token = credential.accessToken;
         const user = result.user;
         console.log(user, token);
-        setLoginUsserInfo(user);
+        const shortdata = {
+          displayName: user.displayName,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+          photoURL: user.photoURL,
+          uid: user.uid,
+        };
+
+        setLoginUsserInfo(shortdata);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -86,134 +150,140 @@ export default function MyAccount() {
               } `,
             }}
           >
-            <div
-              className="p-2 m-3 mt-4 "
-              style={{
-                backgroundColor: "#FFF7BF",
-                width: "100px",
-                boxShadow: "rgb(213 205 149)  0 3px 7px",
-                borderRadius: "5px",
-              }}
-            >
-              <span
-                className="d-flex justify-content-center"
+            <div>
+              <div
+                className="p-2 m-3 mt-4 "
                 style={{
-                  fontSize: "16",
-                  fontFamily: "Poppins",
-                  fontWeight: "600",
-                  margin: "",
+                  backgroundColor: "#FFF7BF",
+                  width: "100px",
+                  boxShadow: "rgb(213 205 149)  0 3px 7px",
+                  borderRadius: "5px",
                 }}
               >
-                SIGN IN
-              </span>
-            </div>
-            <div
-              className=" m-3 "
-              style={{
-                backgroundColor: "#FFF7BF",
-                boxShadow: "rgb(213 205 149)  0 3px 7px",
-                borderRadius: "5px",
-              }}
-            >
-              <div className="p-2">
-                <label
-                  for="Email"
-                  className=" mt-2 form-label"
+                <span
+                  className="d-flex justify-content-center"
                   style={{
                     fontSize: "16",
                     fontFamily: "Poppins",
-                    fontWeight: "400",
+                    fontWeight: "600",
                     margin: "",
                   }}
                 >
-                  Email Address
-                </label>
-                <div class="input-group mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="Email"
-                    placeholder="email..."
-                    aria-describedby="basic-addon3"
-                    style={{
-                      fontSize: "16",
-                      fontFamily: "Poppins",
-                      fontWeight: "400",
-                    }}
-                  />
-                </div>
-                <label
-                  for="Password"
-                  class="form-label"
-                  style={{
-                    fontSize: "16",
-                    fontFamily: "Poppins",
-                    fontWeight: "400",
-                    margin: "",
-                  }}
-                >
-                  Password
-                </label>
-                <div class="input-group mb-3">
-                  <input
-                    type="text"
-                    placeholder="password"
-                    className=" form-control"
-                    id="Password"
-                    aria-describedby="basic-addon3"
+                  SIGN IN
+                </span>
+              </div>
+              <div
+                className=" m-3 "
+                style={{
+                  backgroundColor: "#FFF7BF",
+                  boxShadow: "rgb(213 205 149)  0 3px 7px",
+                  borderRadius: "5px",
+                }}
+              >
+                <div className="p-2">
+                  <label
+                    for="Email"
+                    className=" mt-2 form-label"
                     style={{
                       fontSize: "16",
                       fontFamily: "Poppins",
                       fontWeight: "400",
                       margin: "",
                     }}
-                  />
+                  >
+                    Email Address
+                  </label>
+                  <div class="input-group mb-3">
+                    <input
+                      onChange={(e) => onSignInEmail(e.target.value)}
+                      type="email"
+                      class="form-control"
+                      id="Email"
+                      placeholder="email..."
+                      aria-describedby="basic-addon3"
+                      style={{
+                        fontSize: "16",
+                        fontFamily: "Poppins",
+                        fontWeight: "400",
+                      }}
+                    />
+                  </div>
+                  <label
+                    for="Password"
+                    class="form-label"
+                    style={{
+                      fontSize: "16",
+                      fontFamily: "Poppins",
+                      fontWeight: "400",
+                      margin: "",
+                    }}
+                  >
+                    Password
+                  </label>
+                  <div class="input-group mb-3">
+                    <input
+                      onChange={(e) => onSignInPassword(e.target.value)}
+                      type="text"
+                      placeholder="password"
+                      className=" form-control"
+                      id="Password"
+                      aria-describedby="basic-addon3"
+                      style={{
+                        fontSize: "16",
+                        fontFamily: "Poppins",
+                        fontWeight: "400",
+                        margin: "",
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              className="p-2 m-3 mx-auto "
-              style={{
-                backgroundColor: "#FEC400",
-                width: "100px",
-                boxShadow: "rgb(213 205 149)  0 3px 7px",
-                borderRadius: "5px",
-                width: "195px",
-              }}
-            >
-              <span
-                className="btn btn-warning d-flex justify-content-center"
+              <div
+                className="p-2 m-3 mx-auto "
                 style={{
-                  fontSize: "16",
-                  fontFamily: "Poppins",
-                  fontWeight: "600",
-                  margin: "",
-                  color: "white",
+                  backgroundColor: "#FEC400",
+                  width: "100px",
+                  boxShadow: "rgb(213 205 149)  0 3px 7px",
+                  borderRadius: "5px",
+                  width: "195px",
                 }}
               >
-                SIGN IN
-              </span>
-            </div>
-            <div class="d-flex justify-content-center">
-              <span
-                style={{
-                  fontSize: "14px",
-                  fontFamily: "Poppins",
-                  fontWeight: "400",
-                }}
-              >
-                If you don't have an account please{" "}
-                <span
-                  onClick={() => registerBtn("Register")}
+                <div
+                  onClick={() => onSignIn()}
+                  className="btn btn-warning d-flex justify-content-center"
                   style={{
-                    color: "blue",
+                    fontSize: "16px",
+                    fontFamily: "Poppins",
+                    fontWeight: "600",
+                    margin: "",
+                    color: "white",
                   }}
                 >
-                  REGISTER
+                  SIGN IN
+                </div>
+              </div>
+              <div class="d-flex justify-content-center">
+                <span
+                  style={{
+                    fontSize: "14px",
+                    fontFamily: "Poppins",
+                    fontWeight: "400",
+                  }}
+                >
+                  If you don't have an account please{" "}
+                  <span
+                    onClick={() => registerBtn("Register")}
+                    style={{
+                      color: "blue",
+                    }}
+                  >
+                    SIGN UP
+                  </span>
                 </span>
-              </span>
+              </div>
             </div>
           </div>
+
           <form onSubmit={handleSubmit(onSubmit)}>
             <div
               className=""
@@ -242,7 +312,7 @@ export default function MyAccount() {
                       margin: "",
                     }}
                   >
-                    REGISTRATION
+                    SIGN UP
                   </span>
                 </div>
                 <div
@@ -440,18 +510,18 @@ export default function MyAccount() {
                 >
                   <button
                     type="submit"
-                    className="mx-auto btn btn-warning d-flex justify-content-center"
+                    className="mx-auto btn btn-warning d-flex justify-content-center "
                     style={{
-                      fontSize: "16",
+                      fontSize: "16px",
                       backgroundColor: "rgb(254 196 0)",
                       boxShadow: "rgb(213 205 149)  0 3px 7px",
                       fontFamily: "Poppins",
                       fontWeight: "600",
-                      margin: "",
+                      width: "200px",
                       color: "white",
                     }}
                   >
-                    REGISTRATION
+                    SIGN UP
                   </button>
                 </div>
                 <div class="d-flex justify-content-center">
@@ -476,6 +546,24 @@ export default function MyAccount() {
               </div>
             </div>
           </form>
+
+          <div
+            class="alert alert-danger alert-dismissible fade show m-3"
+            role="alert"
+            style={{
+              display: `${showError.error === true ? "block" : "none"}   `,
+            }}
+          >
+            <strong>{`${
+              showError.msg.message ? showError.msg.message : showError.msg
+            } `}</strong>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
 
           <div class="d-flex justify-content-center mt-3">
             <span

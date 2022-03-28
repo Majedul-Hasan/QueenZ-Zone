@@ -3,7 +3,6 @@ import { UserInfoContext } from "../../App";
 export default function LogInUserInfoPage() {
   // use context
   const [loggingUserInfo, setLoginUsserInfo] = useContext(UserInfoContext);
-  console.log("this is  : ", loggingUserInfo);
 
   // sign out
   const signOutUser = () => {
@@ -59,11 +58,7 @@ export default function LogInUserInfoPage() {
               className="col-7"
               style={{ backgroundColor: "white", borderRadius: "5px" }}
             >
-              <span className="p-2 ">{`${
-                loggingUserInfo.displayName
-                  ? loggingUserInfo.displayName
-                  : `${loggingUserInfo.FirstName} ${loggingUserInfo.LastName}`
-              }`}</span>
+              <span className="p-2 ">{loggingUserInfo.displayName}</span>
             </div>
           </div>{" "}
           <div className="row pt-2">
