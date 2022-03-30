@@ -13,6 +13,9 @@ import {
 import LogInUserInfoPage from "./LogInUserInfoPage";
 
 export default function MyAccount() {
+  // real time
+  const [realTime, setRealTime] = useState(new Date());
+
   // user state for register btn and sign in btn
   const [signInOrRegister, setSignInOrRegister] = useState("Sign in");
 
@@ -25,11 +28,54 @@ export default function MyAccount() {
     msg: "",
   });
 
+  // check google pop user
+  const isUserAlreadyCreate = (props) => {
+    console.log(props);
+
+    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneGooglePopUser", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ props }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("this check data : ", data);
+
+        if (!data.length) {
+          console.log("empty array  ");
+          fetchUserInfo(props);
+        } else {
+          console.log("full array  ");
+          setLoginUsserInfo(data[0]._id);
+        }
+      })
+      .catch((error) => {
+        console.log("this check error : ", error);
+      });
+  };
+
+  // fetch user login info
+  const fetchUserInfo = (props) => {
+    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneCreateUser", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(props),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setLoginUsserInfo(data.insertedId);
+      })
+      .catch((error) => {});
+  };
+
   // login with email and password
   // react form hook
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
     const auth = getAuth();
     // valid password check
     if (data.ConfirmPassword != data.Password) {
@@ -50,16 +96,18 @@ export default function MyAccount() {
           const shortdata = {
             displayName: `${data.FirstName} ${data.LastName}`,
             email: user.email,
+            password: data.Password,
             phoneNumber: data.phoneNumber,
+            time: realTime,
+            address: data.address,
           };
 
-          setLoginUsserInfo(shortdata);
+          fetchUserInfo(shortdata);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           // ..
-          console.log(error);
 
           const localErrorMsg = {
             error: true,
@@ -72,8 +120,8 @@ export default function MyAccount() {
   };
 
   // sign in all things
-  const [signInEmail, setSignInEmail] = useState();
-  const [signInPassword, setSignInPassword] = useState();
+  const [signInEmail, setSignInEmail] = useState("");
+  const [signInPassword, setSignInPassword] = useState("");
   const onSignInEmail = (props) => {
     setSignInEmail(props);
   };
@@ -82,28 +130,42 @@ export default function MyAccount() {
   };
 
   const onSignIn = () => {
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, signInEmail, signInPassword)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        // ...
-        setLoginUsserInfo(user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
+    if (signInEmail === "" || signInPassword === "") {
+      const localErrorMsg = {
+        error: true,
+        msg: "Please,fill up the input box",
+      };
+
+      setShowError(localErrorMsg);
+    } else {
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, signInEmail, signInPassword)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          // ...
+
+          fetchUserInfo(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          const localErrorMsg = {
+            error: true,
+            msg: error,
+          };
+
+          setShowError(localErrorMsg);
+        });
+    }
   };
 
   // register btn
   const registerBtn = (props) => {
-    console.log(props);
     setSignInOrRegister(props);
   };
   // LogInwithGoogle
   const LogInwithGoogle = () => {
-    console.log("google");
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
     signInWithPopup(auth, provider)
@@ -112,16 +174,19 @@ export default function MyAccount() {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
-        console.log(user, token);
+
         const shortdata = {
           displayName: user.displayName,
           email: user.email,
           phoneNumber: user.phoneNumber,
           photoURL: user.photoURL,
           uid: user.uid,
+          time: realTime,
         };
 
-        setLoginUsserInfo(shortdata);
+        // setLoginUsserInfo(shortdata);
+        // fetchUserInfo(shortdata);
+        isUserAlreadyCreate(shortdata);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -223,8 +288,8 @@ export default function MyAccount() {
                   <div class="input-group mb-3">
                     <input
                       onChange={(e) => onSignInPassword(e.target.value)}
-                      type="text"
-                      placeholder="password"
+                      type="password"
+                      placeholder="password..."
                       className=" form-control"
                       id="Password"
                       aria-describedby="basic-addon3"
@@ -403,6 +468,35 @@ export default function MyAccount() {
                         class="form-control"
                         id="Phone Number"
                         placeholder="phone number..."
+                        aria-describedby="basic-addon3"
+                        style={{
+                          fontSize: "16",
+                          fontFamily: "Poppins",
+                          fontWeight: "400",
+                        }}
+                      />
+                    </div>
+                    <label
+                      for="Phone Number"
+                      className=" mt-2 form-label"
+                      style={{
+                        fontSize: "16",
+                        fontFamily: "Poppins",
+                        fontWeight: "400",
+                        margin: "",
+                      }}
+                    >
+                      Address
+                    </label>
+                    <div class="input-group ">
+                      <input
+                        {...register("address", {
+                          required: true,
+                        })}
+                        type="text"
+                        class="form-control"
+                        id="Phone Number"
+                        placeholder="your address..."
                         aria-describedby="basic-addon3"
                         style={{
                           fontSize: "16",

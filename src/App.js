@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HeaderSearchBar from "../src/Components/Home/HeaderSearchBar";
 import Layout from "../src/Components/Home/Layout";
@@ -16,6 +16,26 @@ function App() {
   const [loggingUserInfo, setLoginUsserInfo] = useState({});
 
   console.log(loggingUserInfo);
+
+  // useEfect for read user info
+  useEffect(() => {
+    // fetch fins user
+    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneFindUser", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ loggingUserInfo }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("this is find data from app js :", data[0]);
+        setLoginUsserInfo(data[0]);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [loggingUserInfo]);
 
   return (
     <div className="App">
