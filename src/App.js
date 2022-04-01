@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HeaderSearchBar from "../src/Components/Home/HeaderSearchBar";
 import Layout from "../src/Components/Home/Layout";
 import "./App.css";
+import CatagoryProduct from "./Components/CategoryPoduct/CatagoryProduct";
 import FavoritePage from "./Components/Favorite/FavoritePage";
 import MyAccount from "./Components/MyAccount/MyAccount";
 import MyMessage from "./Components/MyMessage/MyMessage";
@@ -77,6 +78,11 @@ function App() {
             <Route path="/MyAccount">
               <HeaderSearchBar></HeaderSearchBar>
               <MyAccount></MyAccount>
+              <NaviBar></NaviBar>
+            </Route>
+            <Route path="/Cloth">
+              <HeaderSearchBar></HeaderSearchBar>
+              <CatagoryProduct></CatagoryProduct>
               <NaviBar></NaviBar>
             </Route>
 
