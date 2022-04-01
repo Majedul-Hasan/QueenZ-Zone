@@ -53,9 +53,7 @@ export default function SingleProductHomePage({ dt }) {
                     <s>{dt.prise}</s>
                   </strong>
                 )} */}
-                <strong>
-                  <s>{dt.prise}</s>
-                </strong>
+                <strong>{dt.prise}</strong>
               </span>
             </div>
             <div

@@ -140,10 +140,7 @@ export default function LogInUserInfoPage() {
                   borderRadius: "5px",
                 }}
               >
-                <span className="p-2 ">
-                  {loggingUserInfo.email}
-                  sfgef
-                </span>
+                <span className="p-2 ">{loggingUserInfo.email}</span>
               </div>
             </div>{" "}
             <div className="row pt-2 pb-2">
