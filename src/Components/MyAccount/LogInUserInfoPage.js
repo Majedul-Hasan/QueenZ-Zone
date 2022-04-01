@@ -135,9 +135,15 @@ export default function LogInUserInfoPage() {
               <div className="col-4">Email</div>
               <div
                 className="col-7"
-                style={{ backgroundColor: "white", borderRadius: "5px" }}
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: "5px",
+                }}
               >
-                <span className="p-2 ">{loggingUserInfo.email}</span>
+                <span className="p-2 ">
+                  {loggingUserInfo.email}
+                  sfgef
+                </span>
               </div>
             </div>{" "}
             <div className="row pt-2 pb-2">

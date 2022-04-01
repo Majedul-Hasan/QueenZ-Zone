@@ -44,7 +44,7 @@ export default function SingleProductHomePage({ dt }) {
               <span>SAR </span>
               <span className="">
                 {" "}
-                {dt.discount ? (
+                {/* {dt.discount ? (
                   <strong>
                     <s>{dt.discount}</s>
                   </strong>
@@ -52,7 +52,10 @@ export default function SingleProductHomePage({ dt }) {
                   <strong>
                     <s>{dt.prise}</s>
                   </strong>
-                )}
+                )} */}
+                <strong>
+                  <s>{dt.prise}</s>
+                </strong>
               </span>
             </div>
             <div
