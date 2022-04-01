@@ -256,7 +256,7 @@ export default function MyAccount() {
                       margin: "",
                     }}
                   >
-                    Email Address
+                    Email
                   </label>
                   <div class="input-group mb-3">
                     <input
