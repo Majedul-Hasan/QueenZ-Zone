@@ -5,7 +5,7 @@ export default function MapSingleProduct({ dt }) {
   console.log(dt);
   return (
     <div
-      className="col-4 mb-4"
+      className="col-6  p-3 mb-3 pb-3"
       style={{
         margin: "0px",
         padding: "0px",
@@ -16,24 +16,23 @@ export default function MapSingleProduct({ dt }) {
           <div
             className="p-1"
             style={{
-              height: "200px",
+              height: "265px",
               margin: "0 auto",
               display: "flex",
-              justifyContent: "center",
             }}
           >
             <div
               className=""
               style={{
                 backgroundColor: "white",
-                height: "200px",
+
                 width: "100px",
               }}
             >
               <img
                 style={{
-                  width: "105px",
-                  height: "105px",
+                  width: "150px",
+                  height: "150px",
                   borderRadius: "5px 5px 0px 0px ",
                 }}
                 src={dt.img}
@@ -41,22 +40,24 @@ export default function MapSingleProduct({ dt }) {
                 alt="..."
               />
               <div
+                className=""
                 style={{
                   backgroundColor: "#FFF7BF",
                   borderRadius: "0px 0px 5px 5px",
                   fontSize: "10px",
                   fontFamily: "Poppins",
-                  width: "105px",
+                  width: "150px",
+                  height: "145px",
                   boxShadow: "rgb(213 205 149)  0 3px 7px",
                 }}
               >
                 <div
                   className="p-1"
                   style={{
-                    fontSize: "10px",
+                    fontSize: "16px",
                     fontFamily: "Poppins",
-                    width: "105px",
-                    height: "55px",
+                    width: "150px",
+                    height: "90px",
                     // backgroundColor: "#FFF7BF",
                   }}
                 >
@@ -64,7 +65,7 @@ export default function MapSingleProduct({ dt }) {
                 </div>
                 <div
                   className="p-1"
-                  style={{ fontSize: "8px", fontFamily: "Poppins" }}
+                  style={{ fontSize: "13px", fontFamily: "Poppins" }}
                 >
                   <span>SAR </span>
                   <span className="">
@@ -97,7 +98,7 @@ export default function MapSingleProduct({ dt }) {
                           dt.reviewStar.map((starNum) => (
                             <div>
                               <img
-                                style={{ width: "10px" }}
+                                style={{ width: "14px" }}
                                 src={starPic}
                                 alt=""
                               />
@@ -111,7 +112,7 @@ export default function MapSingleProduct({ dt }) {
                     <div
                       className=""
                       style={{
-                        fontSize: "7px",
+                        fontSize: "10px",
                         display: "flex",
                         alignItems: "center",
                         marginTop: "2px",

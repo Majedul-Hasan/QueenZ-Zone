@@ -154,8 +154,16 @@ export default function CatagoryProduct() {
   ];
   return (
     <div>
-      <div className="w-100">
-        <div className="row" style={{ margin: "0px" }}>
+      <div className="">
+        <div
+          className="row"
+          style={{
+            margin: "0px",
+            padding: "0px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           {allProductList.map((dt) => (
             <MapSingleProduct dt={dt}></MapSingleProduct>
           ))}
