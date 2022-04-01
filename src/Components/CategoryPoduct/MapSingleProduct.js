@@ -5,7 +5,7 @@ export default function MapSingleProduct({ dt }) {
   console.log(dt);
   return (
     <div
-      className="col-6  p-3 mb-3 pb-3"
+      className="col-6 mb-3 pb-3"
       style={{
         margin: "0px",
         padding: "0px",
@@ -16,7 +16,7 @@ export default function MapSingleProduct({ dt }) {
           <div
             className="p-1"
             style={{
-              height: "265px",
+              height: "315px",
               margin: "0 auto",
               display: "flex",
             }}
@@ -25,14 +25,12 @@ export default function MapSingleProduct({ dt }) {
               className=""
               style={{
                 backgroundColor: "white",
-
-                width: "100px",
               }}
             >
               <img
                 style={{
-                  width: "150px",
-                  height: "150px",
+                  width: "100%",
+
                   borderRadius: "5px 5px 0px 0px ",
                 }}
                 src={dt.img}
@@ -46,8 +44,8 @@ export default function MapSingleProduct({ dt }) {
                   borderRadius: "0px 0px 5px 5px",
                   fontSize: "10px",
                   fontFamily: "Poppins",
-                  width: "150px",
-                  height: "145px",
+                  width: "100%",
+                  height: "140px",
                   boxShadow: "rgb(213 205 149)  0 3px 7px",
                 }}
               >
@@ -56,7 +54,7 @@ export default function MapSingleProduct({ dt }) {
                   style={{
                     fontSize: "16px",
                     fontFamily: "Poppins",
-                    width: "150px",
+                    width: "100%",
                     height: "90px",
                     // backgroundColor: "#FFF7BF",
                   }}
