@@ -11,7 +11,7 @@ export default function ShowProductCategory() {
   const allProductList = [
     {
       img: "https://i.ibb.co/Y2rTPPP/pexels-skylar-kang-6044266-Cropped.jpg",
-      Product_name: "Black Black Black Black Black Black Black Black Bag",
+      Product_name: "Black Black Black Black Black Bag",
       prise: "57",
       discount: "42",
       reviewStar: ["1", "2", "3", "4", "5"],
@@ -166,9 +166,6 @@ export default function ShowProductCategory() {
           <div
             className="p-2 m-3 mt-4 "
             style={{
-              backgroundColor: "#FFF7BF",
-
-              boxShadow: "rgb(213 205 149)  0 3px 7px",
               borderRadius: "5px",
             }}
           >

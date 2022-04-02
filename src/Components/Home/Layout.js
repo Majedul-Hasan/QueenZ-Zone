@@ -5,7 +5,7 @@ import ShowGroupPicFirst from "./ShowGroupPicFirst";
 
 export default function Layout() {
   return (
-    <div>
+    <div className="mb-5 pb-3">
       <CarouselHome></CarouselHome>
       <ShowGroupPicFirst></ShowGroupPicFirst>
       <AllProductCatagaryShow></AllProductCatagaryShow>

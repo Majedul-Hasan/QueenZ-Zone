@@ -1,8 +1,14 @@
 import { React, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory, useLocation } from "react-router-dom";
 import { UserInfoContext } from "../../App";
-
 export default function LogInUserInfoPage() {
+  let history = useHistory();
+  let location = useLocation();
+
+  //  back location
+  let { from } = location.state || { from: { pathname: "/" } };
+
   // use context
   const [loggingUserInfo, setLoginUsserInfo] = useContext(UserInfoContext);
 
@@ -47,6 +53,7 @@ export default function LogInUserInfoPage() {
       .then((data) => {
         console.log("Success:", data);
         setLoginUsserInfo(loggingUserInfo._id);
+        history.replace(from);
       })
       .catch((error) => {
         console.error("Error:", error);

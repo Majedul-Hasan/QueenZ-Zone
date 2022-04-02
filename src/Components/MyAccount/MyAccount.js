@@ -2,6 +2,7 @@ import { faG } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory, useLocation } from "react-router-dom";
 import { UserInfoContext } from "../../App";
 import {
   createUserWithEmailAndPassword,
@@ -13,6 +14,14 @@ import {
 import LogInUserInfoPage from "./LogInUserInfoPage";
 
 export default function MyAccount() {
+  let history = useHistory();
+  let location = useLocation();
+
+  //  back location not working
+  let { from } = location.state || { from: { pathname: "/" } };
+
+  console.log(from.pathname);
+
   // real time
   const [realTime, setRealTime] = useState(new Date());
 
@@ -27,6 +36,15 @@ export default function MyAccount() {
     error: false,
     msg: "",
   });
+
+  // back location
+  const backLocation = () => {
+    if (from.pathname === "/Favorite" && loggingUserInfo.displayName) {
+      history.push("/Favorite");
+    }
+  };
+
+  backLocation();
 
   // check google pop user
   const isUserAlreadyCreate = (props) => {
@@ -49,6 +67,7 @@ export default function MyAccount() {
         } else {
           console.log("full array  ");
           setLoginUsserInfo(data[0]._id);
+          history.replace(from);
         }
       })
       .catch((error) => {
@@ -101,6 +120,7 @@ export default function MyAccount() {
             time: realTime,
             address: data.address,
           };
+          history.replace(from);
 
           fetchUserInfo(shortdata);
         })
@@ -144,7 +164,7 @@ export default function MyAccount() {
           // Signed in
           const user = userCredential.user;
           // ...
-
+          history.replace(from);
           fetchUserInfo(user);
         })
         .catch((error) => {
@@ -174,6 +194,9 @@ export default function MyAccount() {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
+        history.replace(from);
+
+        console.log("this is google");
 
         const shortdata = {
           displayName: user.displayName,
@@ -466,7 +489,7 @@ export default function MyAccount() {
                         })}
                         type="number"
                         class="form-control"
-                        id="Phone Number"
+                        id="PhoneNumber"
                         placeholder="phone number..."
                         aria-describedby="basic-addon3"
                         style={{
@@ -477,7 +500,7 @@ export default function MyAccount() {
                       />
                     </div>
                     <label
-                      for="Phone Number"
+                      for="PhoneNumber"
                       className=" mt-2 form-label"
                       style={{
                         fontSize: "16",
@@ -495,7 +518,7 @@ export default function MyAccount() {
                         })}
                         type="text"
                         class="form-control"
-                        id="Phone Number"
+                        id="PhoneNumber"
                         placeholder="your address..."
                         aria-describedby="basic-addon3"
                         style={{

@@ -8,6 +8,7 @@ import FavoritePage from "./Components/Favorite/FavoritePage";
 import MyAccount from "./Components/MyAccount/MyAccount";
 import MyMessage from "./Components/MyMessage/MyMessage";
 import NaviBar from "./Components/NaviBar/NaviBar";
+import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import ShoppingCardPage from "./Components/ShoppinfCard/ShoppingCardPage";
 
 // user info create context
@@ -49,6 +50,11 @@ function App() {
               <Layout></Layout>
               <NaviBar></NaviBar>
             </Route>
+            <PrivateRoute path="/Favorite">
+              <HeaderSearchBar></HeaderSearchBar>
+              <FavoritePage></FavoritePage>
+              <NaviBar></NaviBar>
+            </PrivateRoute>
             <Route exact path="/Home">
               <HeaderSearchBar></HeaderSearchBar>
               <Layout></Layout>
@@ -70,11 +76,7 @@ function App() {
               <ShoppingCardPage></ShoppingCardPage>
               <NaviBar></NaviBar>
             </Route>
-            <Route path="/Favorite">
-              <HeaderSearchBar></HeaderSearchBar>
-              <FavoritePage></FavoritePage>
-              <NaviBar></NaviBar>
-            </Route>
+
             <Route path="/MyAccount">
               <HeaderSearchBar></HeaderSearchBar>
               <MyAccount></MyAccount>
@@ -88,7 +90,7 @@ function App() {
 
             <Route path="*">
               <HeaderSearchBar></HeaderSearchBar>
-              <Layout></Layout>
+
               <NaviBar></NaviBar>
             </Route>
           </Switch>
