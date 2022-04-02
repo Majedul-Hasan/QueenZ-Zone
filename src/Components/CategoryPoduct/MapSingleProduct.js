@@ -1,13 +1,15 @@
 import { faCartShopping, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import starPic from "../../Asset/starPic.png";
 
 export default function MapSingleProduct({ dt }) {
-  console.log(dt);
+  // love btn
+  const [love, setLove] = useState(false);
+
   return (
     <div
-      className="col-6 mb-3 pb-3"
+      className="col-6 "
       style={{
         margin: "0px",
         padding: "0px",
@@ -47,7 +49,7 @@ export default function MapSingleProduct({ dt }) {
                   fontSize: "10px",
                   fontFamily: "Poppins",
                   width: "100%",
-                  height: "165px",
+                  height: "122px",
                   boxShadow: "rgb(213 205 149)  0 3px 7px",
                 }}
               >
@@ -57,7 +59,7 @@ export default function MapSingleProduct({ dt }) {
                     fontSize: "16px",
                     fontFamily: "Poppins",
                     width: "100%",
-                    height: "90px",
+                    height: "50px",
                     // backgroundColor: "#FFF7BF",
                   }}
                 >
@@ -97,7 +99,9 @@ export default function MapSingleProduct({ dt }) {
                     <FontAwesomeIcon
                       className="p-1 m-1"
                       icon={faHeart}
+                      onClick={() => setLove(!love)}
                       style={{
+                        color: `${love === true ? "red" : "black"}`,
                         backgroundColor: "",
                         borderRadius: "50%",
                         border: "1px solid white",

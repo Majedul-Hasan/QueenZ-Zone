@@ -5,7 +5,7 @@ export default function CatagoryProduct() {
   const allProductList = [
     {
       img: "https://i.ibb.co/Y2rTPPP/pexels-skylar-kang-6044266-Cropped.jpg",
-      Product_name: "Black Black Black Black Black Black Black Black Bag",
+      Product_name: "Black Black Black Black  Black Bag",
       prise: "57",
       discount: "42",
       reviewStar: ["1", "2", "3", "4", "5"],
@@ -154,7 +154,7 @@ export default function CatagoryProduct() {
   ];
   return (
     <div>
-      <div className="">
+      <div className=" mb-5 pd-5">
         <div
           className="row"
           style={{
