@@ -1,3 +1,5 @@
+import { faCartShopping, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import starPic from "../../Asset/starPic.png";
 
@@ -16,7 +18,7 @@ export default function MapSingleProduct({ dt }) {
           <div
             className="p-1"
             style={{
-              height: "315px",
+              height: "345px",
               margin: "0 auto",
               display: "flex",
             }}
@@ -45,7 +47,7 @@ export default function MapSingleProduct({ dt }) {
                   fontSize: "10px",
                   fontFamily: "Poppins",
                   width: "100%",
-                  height: "140px",
+                  height: "165px",
                   boxShadow: "rgb(213 205 149)  0 3px 7px",
                 }}
               >
@@ -66,7 +68,14 @@ export default function MapSingleProduct({ dt }) {
                   style={{ fontSize: "13px", fontFamily: "Poppins" }}
                 >
                   <span>SAR </span>
-                  <span className="">
+                  <span
+                    className=""
+                    style={{
+                      fontSize: "18px",
+                      fontFamily: "Poppins",
+                      color: "red",
+                    }}
+                  >
                     {" "}
                     {/* {dt.discount ? (
                   <strong>
@@ -81,43 +90,69 @@ export default function MapSingleProduct({ dt }) {
                   </span>
                 </div>
                 <div
-                  className=""
-                  style={{ display: "flex", justifyContent: "flex-end" }}
+                  class="d-flex justify-content-between"
+                  style={{ alignItems: "center" }}
                 >
-                  <div className="d-flex flex-row-reverse bd-highlight ">
-                    <div className="d-flex ">
+                  <div style={{ fontSize: "20px" }}>
+                    <FontAwesomeIcon
+                      className="p-1 m-1"
+                      icon={faHeart}
+                      style={{
+                        backgroundColor: "",
+                        borderRadius: "50%",
+                        border: "1px solid white",
+                      }}
+                    />
+                    <FontAwesomeIcon
+                      icon={faCartShopping}
+                      className="p-1 m-1"
+                      style={{
+                        backgroundColor: "",
+                        borderRadius: "50%",
+                        border: "1px solid white",
+                      }}
+                    />
+                  </div>
+
+                  <div
+                    className=""
+                    style={{ display: "flex", justifyContent: "flex-end" }}
+                  >
+                    <div className="d-flex flex-row-reverse bd-highlight ">
+                      <div className="d-flex ">
+                        <div
+                          className="d-flex justify-content-evenly"
+                          style={{
+                            marginRight: "4px",
+                          }}
+                        >
+                          {dt.reviewStar.length >= 1 ? (
+                            dt.reviewStar.map((starNum) => (
+                              <div>
+                                <img
+                                  style={{ width: "14px" }}
+                                  src={starPic}
+                                  alt=""
+                                />
+                              </div>
+                            ))
+                          ) : (
+                            <span></span>
+                          )}
+                        </div>
+                      </div>
                       <div
-                        className="d-flex justify-content-evenly"
+                        className=""
                         style={{
-                          marginRight: "4px",
+                          fontSize: "10px",
+                          display: "flex",
+                          marginTop: "3px",
+                          alignItems: "flex-start",
+                          marginRight: "3px",
                         }}
                       >
-                        {dt.reviewStar.length >= 1 ? (
-                          dt.reviewStar.map((starNum) => (
-                            <div>
-                              <img
-                                style={{ width: "14px" }}
-                                src={starPic}
-                                alt=""
-                              />
-                            </div>
-                          ))
-                        ) : (
-                          <span></span>
-                        )}
+                        ({dt.reviewRate})
                       </div>
-                    </div>
-                    <div
-                      className=""
-                      style={{
-                        fontSize: "10px",
-                        display: "flex",
-                        alignItems: "center",
-                        marginTop: "2px",
-                        marginRight: "3px",
-                      }}
-                    >
-                      ({dt.reviewRate})
                     </div>
                   </div>
                 </div>
