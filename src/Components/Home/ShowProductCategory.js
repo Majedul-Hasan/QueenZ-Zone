@@ -244,7 +244,7 @@ export default function ShowProductCategory() {
         </div>
 
         <div
-          className="p-2"
+          className="p-2 productHomepage"
           style={{
             width: "100%",
 

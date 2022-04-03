@@ -4,6 +4,7 @@ import HeaderSearchBar from "../src/Components/Home/HeaderSearchBar";
 import Layout from "../src/Components/Home/Layout";
 import "./App.css";
 import CatagoryProduct from "./Components/CategoryPoduct/CatagoryProduct";
+import MainDashboard from "./Components/Dashboard/MainDashboard/MainDashboard";
 import FavoritePage from "./Components/Favorite/FavoritePage";
 import MyAccount from "./Components/MyAccount/MyAccount";
 import MyMessage from "./Components/MyMessage/MyMessage";
@@ -86,6 +87,9 @@ function App() {
               <HeaderSearchBar></HeaderSearchBar>
               <CatagoryProduct></CatagoryProduct>
               <NaviBar></NaviBar>
+            </Route>
+            <Route path="/Dashboard">
+              <MainDashboard></MainDashboard>
             </Route>
 
             <Route path="*">

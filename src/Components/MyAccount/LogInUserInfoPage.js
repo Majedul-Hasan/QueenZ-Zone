@@ -53,7 +53,6 @@ export default function LogInUserInfoPage() {
       .then((data) => {
         console.log("Success:", data);
         setLoginUsserInfo(loggingUserInfo._id);
-        history.replace(from);
       })
       .catch((error) => {
         console.error("Error:", error);

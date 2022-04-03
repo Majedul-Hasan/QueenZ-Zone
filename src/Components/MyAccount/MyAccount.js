@@ -67,7 +67,6 @@ export default function MyAccount() {
         } else {
           console.log("full array  ");
           setLoginUsserInfo(data[0]._id);
-          history.replace(from);
         }
       })
       .catch((error) => {
@@ -120,7 +119,6 @@ export default function MyAccount() {
             time: realTime,
             address: data.address,
           };
-          history.replace(from);
 
           fetchUserInfo(shortdata);
         })
@@ -164,7 +162,7 @@ export default function MyAccount() {
           // Signed in
           const user = userCredential.user;
           // ...
-          history.replace(from);
+
           fetchUserInfo(user);
         })
         .catch((error) => {
@@ -194,7 +192,6 @@ export default function MyAccount() {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
-        history.replace(from);
 
         console.log("this is google");
 
