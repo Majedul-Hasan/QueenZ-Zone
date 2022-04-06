@@ -1,24 +1,35 @@
-import React, { useState } from "react";
+import { default as React, useContext } from "react";
+import AllAboutProduct from "../AddProduct/AllAboutProduct";
+import { FunctionBarSelectionContext } from "../MainDashboard/MainDashboard";
 
 export default function Functionbar() {
-  const [imageNumbr, setImageNumber] = useState([]);
+  // use context for sidebar name
+  const [FunctionBarSelectionName, setFunctionBarSelectionName] = useContext(
+    FunctionBarSelectionContext
+  );
+  // const [imageNumbr, setImageNumber] = useState([]);
 
-  const addImage = (props) => {
-    console.log("dkj");
-    setImageNumber([...imageNumbr, props]);
-  };
+  // const addImage = (props) => {
+  //   console.log("dkj");
+  //   setImageNumber([...imageNumbr, props]);
+  // };
 
-  const seeeeee = () => {
-    console.log("this is :::::        ", imageNumbr);
-  };
+  // const seeeeee = () => {
+  //   console.log("this is :::::        ", imageNumbr);
+  // };
 
   return (
     <div>
-      <button onClick={() => addImage("1")}>Add</button>
+      {/* <button onClick={() => addImage("1")}>Add</button>
       <button onClick={() => seeeeee()}>seeeeeee</button>
       {imageNumbr.map((dt) => (
         <h2>hiiiiii</h2>
-      ))}
+      ))} */}
+      {/* <AddProduct></AddProduct> */}
+      {/* <AddProductReDesign></AddProductReDesign> */}
+      {FunctionBarSelectionName === "Add Product" && (
+        <AllAboutProduct></AllAboutProduct>
+      )}
     </div>
   );
 }

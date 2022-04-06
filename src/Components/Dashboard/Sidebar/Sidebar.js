@@ -1,16 +1,23 @@
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import { default as React, useContext, useState } from "react";
 import logo from "../../../Asset/queenz_zone_logo.png";
+import { FunctionBarSelectionContext } from "../MainDashboard/MainDashboard";
 
 export default function Sidebar() {
+  // use context for sidebar name
+  const [FunctionBarSelectionName, setFunctionBarSelectionName] = useContext(
+    FunctionBarSelectionContext
+  );
+
   // useState for option select
-  const [optionSelectState, setOptionSelectState] = useState("");
+  const [optionSelectState, setOptionSelectState] = useState("order");
 
   // option select
   const optionSelect = (props) => {
     console.log(props);
     setOptionSelectState(props);
+    setFunctionBarSelectionName(props);
   };
 
   return (
@@ -18,7 +25,10 @@ export default function Sidebar() {
       <div>
         <div style={{ backgroundColor: "#FEC400", height: "100vh" }}>
           <div>
-            <div class="d-flex justify-content-evenly">
+            <div
+              class="d-flex justify-content-evenly "
+              style={{ padding: "0px 20px", paddingTop: "10px" }}
+            >
               <div>
                 <img style={{ width: "68px" }} src={logo} alt="" />
               </div>
@@ -70,35 +80,6 @@ export default function Sidebar() {
             </div>
             <div
               className=""
-              onClick={() => optionSelect("Porduct Details")}
-              style={{
-                padding: `${
-                  optionSelectState === "Porduct Details" ? "4px" : "8px"
-                }`,
-              }}
-            >
-              <div
-                class="d-flex justify-content-start p-2 "
-                style={{
-                  backgroundColor: ` ${
-                    optionSelectState === "Porduct Details"
-                      ? " rgb(255 240 128 / 60%)"
-                      : "rgb(254, 196, 0)"
-                  }  `,
-                  height: "35px",
-                  cursor: "pointer",
-                }}
-              >
-                <div>
-                  <FontAwesomeIcon icon={faCartShopping} />
-                </div>
-                <div className="fw-bold" style={{ marginLeft: "10px" }}>
-                  Porduct Details
-                </div>
-              </div>
-            </div>
-            <div
-              className=""
               onClick={() => optionSelect("Add Product")}
               style={{
                 padding: `${
@@ -126,6 +107,36 @@ export default function Sidebar() {
                 </div>
               </div>
             </div>
+            <div
+              className=""
+              onClick={() => optionSelect("Porduct Details")}
+              style={{
+                padding: `${
+                  optionSelectState === "Porduct Details" ? "4px" : "8px"
+                }`,
+              }}
+            >
+              <div
+                class="d-flex justify-content-start p-2 "
+                style={{
+                  backgroundColor: ` ${
+                    optionSelectState === "Porduct Details"
+                      ? " rgb(255 240 128 / 60%)"
+                      : "rgb(254, 196, 0)"
+                  }  `,
+                  height: "35px",
+                  cursor: "pointer",
+                }}
+              >
+                <div>
+                  <FontAwesomeIcon icon={faCartShopping} />
+                </div>
+                <div className="fw-bold" style={{ marginLeft: "10px" }}>
+                  Porduct Details
+                </div>
+              </div>
+            </div>
+
             <div
               className=""
               onClick={() => optionSelect("Stock")}
