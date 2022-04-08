@@ -334,7 +334,7 @@ export default function AddLink({
               <div>
                 <span>
                   Shortcut Image square sizing{" "}
-                  <a target="_blank" href="https://croppola.com/">
+                  <a target="_blank" href="https://bulkimagecrop.com/">
                     <strong>WEBSITE</strong>
                   </a>
                 </span>

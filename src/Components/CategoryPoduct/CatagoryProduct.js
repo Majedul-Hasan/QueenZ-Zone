@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MapSingleProduct from "./MapSingleProduct";
 
 export default function CatagoryProduct() {
@@ -152,6 +152,19 @@ export default function CatagoryProduct() {
       reviewRate: "4",
     },
   ];
+
+  // useState fetch product
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneFindAllProduct")
+      .then((response) => response.json())
+      .then((json) => {
+        setProducts(json);
+      });
+  }, []);
+
   return (
     <div>
       <div className=" mb-5 pd-5">
@@ -164,9 +177,11 @@ export default function CatagoryProduct() {
             justifyContent: "center",
           }}
         >
-          {allProductList.map((dt) => (
-            <MapSingleProduct dt={dt}></MapSingleProduct>
-          ))}
+          {!products.length === true ? (
+            <h2>hlw</h2>
+          ) : (
+            products.map((dt) => <MapSingleProduct dt={dt}></MapSingleProduct>)
+          )}
         </div>
       </div>
     </div>

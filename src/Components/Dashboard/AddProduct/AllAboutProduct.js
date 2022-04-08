@@ -30,21 +30,93 @@ export default function AllAboutProduct() {
   // use state for addtag
   const [tagArray, setTagArray] = useState([]);
 
-  const submit = () => {
-    const productDetails = [
-      {
-        ProductName: FinalProductName,
-        ProductPrice: FinalProductPrice,
-        ProductImage: AllInfo,
-        ProductOffer: FinalProductOffer,
-        ProductCategory: FinalProductCategory,
-        ProductDescription: FinalProductDescription,
-        ProductTags: tagArray,
-      },
-    ];
+  const [gloError, setGloError] = useState({
+    err: false,
+    mag: "",
+  });
 
-    console.log(productDetails);
-    window.location.reload(false);
+  const submit = () => {
+    if (
+      FinalProductName === undefined ||
+      FinalProductPrice === undefined ||
+      FinalProductCategory === undefined ||
+      !AllInfo.length === true
+    ) {
+      FinalProductName === undefined &&
+        setGloError({
+          err: true,
+          msg: "Plaese,fill up the product's name input field",
+        });
+
+      FinalProductPrice === undefined &&
+        setGloError({
+          err: true,
+          msg: "Plaese,fill up the product's Price input field",
+        });
+
+      FinalProductCategory === undefined &&
+        setGloError({
+          err: true,
+          msg: "Plaese,fill up the product's Category",
+        });
+
+      !AllInfo.length === true &&
+        setGloError({
+          err: true,
+          msg: "Plaese,Upload one or more product image",
+        });
+    } else {
+      const productDetails = [
+        {
+          ProductName: FinalProductName,
+          ProductPrice: FinalProductPrice,
+          ProductImage: AllInfo,
+          ProductOffer:
+            FinalProductOffer === undefined ? "null" : FinalProductOffer,
+          ProductCategory: FinalProductCategory,
+          ProductDescription:
+            FinalProductDescription === undefined
+              ? "null"
+              : FinalProductDescription,
+          ProductTags: tagArray,
+        },
+      ];
+
+      console.log(productDetails);
+
+      fetch(
+        "https://glacial-shore-36532.herokuapp.com/queenZoneUserProductUpload",
+        {
+          method: "POST", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ productDetails }),
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+      window.location.reload(false);
+    }
+  };
+
+  const handleKeypress = (e) => {
+    //it triggers by pressing the enter key
+    console.log("this is clicked 2");
+    if (e.keyCode === 13) {
+      if (tag != "") {
+        console.log(tag);
+
+        setTagArray([...tagArray, tag]);
+        setTag("");
+      }
+    }
   };
 
   const picSubmit = (props) => {
@@ -242,6 +314,8 @@ export default function AllAboutProduct() {
                       aria-label="Recipient's username"
                       aria-describedby="basic-addon2"
                       onChange={(e) => setTag(e.target.value)}
+                      // onKeyPress={handleKeypress}
+                      onKeyUp={handleKeypress}
                       value={tag}
                     />
                     <button
@@ -321,6 +395,40 @@ export default function AllAboutProduct() {
           >
             Submit
           </button>
+        </div>
+        <div
+          className="d-flex justify-content-center mt-3 p-2"
+          style={{
+            border: "2px solid #fec400",
+            borderRadius: "10px",
+            display: `${gloError.err === true ? "block" : "none"}`,
+          }}
+        >
+          <div
+            class=" p-2 alert-danger d-flex align-items-center"
+            role="alert"
+            style={{
+              display: `${gloError.err === true ? "block" : "none"}`,
+              borderRadius: "5px",
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="currentColor"
+              class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+              viewBox="0 0 16 16"
+              role="img"
+              aria-label="Warning:"
+              style={{
+                display: `${gloError.err === true ? "block" : "none"}`,
+              }}
+            >
+              <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+            </svg>
+            <div>{gloError.msg}</div>
+          </div>
         </div>
       </div>
     </AlllllProductInfoContext.Provider>

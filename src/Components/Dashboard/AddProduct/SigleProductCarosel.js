@@ -13,7 +13,6 @@ export default function SigleProductCarosel({ carusalSelect }) {
         {carusalSelect[0].image.map((img) => (
           <div>
             <img src={img[0]} />
-            <p className="legend">Legend 1</p>
           </div>
         ))}
       </Carousel>

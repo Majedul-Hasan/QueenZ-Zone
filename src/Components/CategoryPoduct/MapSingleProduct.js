@@ -1,11 +1,20 @@
-import { faCartShopping, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Carousel from "nuka-carousel";
 import React, { useState } from "react";
-import starPic from "../../Asset/starPic.png";
 
 export default function MapSingleProduct({ dt }) {
   // love btn
   const [love, setLove] = useState(false);
+
+  // useState for image
+
+  const [imgs, setImgs] = useState(dt.ProductImage);
+
+  // setState for First image
+  const [firstImgs, setFristImgs] = useState(dt.ProductImage[0][0].image);
+
+  console.log("this is fetch product : ", dt);
 
   return (
     <div
@@ -31,20 +40,73 @@ export default function MapSingleProduct({ dt }) {
                 backgroundColor: "white",
               }}
             >
+              <Carousel
+                renderCenterLeftControls={({ previousSlide }) => (
+                  <button
+                    style={{
+                      color: "black",
+                      background: "none",
+                      fontSize: "23px",
+                      border: "none",
+                    }}
+                    onClick={previousSlide}
+                  >
+                    <FontAwesomeIcon icon={faAngleLeft} />
+                  </button>
+                )}
+                renderCenterRightControls={({ nextSlide }) => (
+                  <button
+                    style={{
+                      color: "black",
+                      background: "none",
+                      fontSize: "23px",
+                      border: "none",
+                    }}
+                    onClick={nextSlide}
+                  >
+                    <FontAwesomeIcon icon={faAngleRight} />
+                  </button>
+                )}
+              >
+                {/* <img
+                  style={{
+                    width: "100%",
+
+                    borderRadius: "5px 5px 0px 0px ",
+                  }}
+                  src="https://i.ibb.co/Y2rTPPP/pexels-skylar-kang-6044266-Cropped.jpg"
+                /> */}
+
+                {firstImgs.map((img) => (
+                  <img
+                    style={{
+                      width: "100%",
+
+                      borderRadius: "5px 5px 0px 0px ",
+                    }}
+                    src={img}
+                  />
+                ))}
+              </Carousel>
+
+              {/* 
               <img
                 style={{
                   width: "100%",
 
                   borderRadius: "5px 5px 0px 0px ",
                 }}
-                src={dt.img}
+                src={
+                  "https://i.ibb.co/Y2rTPPP/pexels-skylar-kang-6044266-Cropped.jpg"
+                }
                 class=""
                 alt="..."
-              />
+              /> */}
               <div
                 className=""
                 style={{
-                  backgroundColor: "#FFF7BF",
+                  backgroundColor: "white",
+                  border: "2px solid #FFF7BF",
                   borderRadius: "0px 0px 5px 5px",
                   fontSize: "10px",
                   fontFamily: "Poppins",
@@ -53,6 +115,43 @@ export default function MapSingleProduct({ dt }) {
                   boxShadow: "rgb(213 205 149)  0 3px 7px",
                 }}
               >
+                {imgs.length > 1 && (
+                  <div
+                    style={{
+                      fontSize: "20px",
+                    }}
+                  >
+                    <span>Color : </span>{" "}
+                    {imgs.map((img) => (
+                      <button
+                        className="btn"
+                        style={{
+                          display: "inline-block",
+                        }}
+                      >
+                        <img
+                          onClick={() => setFristImgs(img[0].image)}
+                          style={{
+                            width: "20px",
+
+                            borderRadius: "5px 5px 0px 0px ",
+                          }}
+                          src={img[0].image[0][0]}
+                          class=""
+                          alt="..."
+                        />
+                        <div
+                          style={{
+                            width: "10px",
+                            height: "10px",
+                            backgroundColor: `${img[0].color}`,
+                          }}
+                        ></div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
                 <div
                   className="p-1"
                   style={{
@@ -63,7 +162,7 @@ export default function MapSingleProduct({ dt }) {
                     // backgroundColor: "#FFF7BF",
                   }}
                 >
-                  <span>{dt.Product_name}</span>
+                  <span>bag</span>
                 </div>
                 <div
                   className="p-1"
@@ -88,10 +187,10 @@ export default function MapSingleProduct({ dt }) {
                     <s>{dt.prise}</s>
                   </strong>
                 )} */}
-                    <strong>{dt.prise}</strong>
+                    <strong>35</strong>
                   </span>
                 </div>
-                <div
+                {/* <div
                   class="d-flex justify-content-between"
                   style={{ alignItems: "center" }}
                 >
@@ -159,7 +258,7 @@ export default function MapSingleProduct({ dt }) {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
