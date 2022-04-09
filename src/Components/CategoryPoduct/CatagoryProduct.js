@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import MapSingleProduct from "./MapSingleProduct";
-
+import LogoLoging from "../../Asset/Mask Group 1.png";
+import "./Loading.css";
+import ProductAllList from "./ProductAllList";
 export default function CatagoryProduct() {
   const allProductList = [
     {
@@ -167,6 +168,7 @@ export default function CatagoryProduct() {
 
   return (
     <div>
+      <div></div>
       <div className=" mb-5 pd-5">
         <div
           className="row"
@@ -178,9 +180,19 @@ export default function CatagoryProduct() {
           }}
         >
           {!products.length === true ? (
-            <h2>hlw</h2>
+            <div className="d-flex justify-content-center">
+              <div style={{}}>
+                <img className="Loading" src={LogoLoging} alt="" />
+                <div>
+                  {" "}
+                  <span className="d-flex justify-content-center">
+                    Loading...
+                  </span>
+                </div>
+              </div>
+            </div>
           ) : (
-            products.map((dt) => <MapSingleProduct dt={dt}></MapSingleProduct>)
+            products.map((dt) => <ProductAllList dt={dt}></ProductAllList>)
           )}
         </div>
       </div>

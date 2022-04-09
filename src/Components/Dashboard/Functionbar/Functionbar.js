@@ -1,4 +1,5 @@
 import { default as React, useContext } from "react";
+import AddCategory from "../AddCategory/AddCategory";
 import AllAboutProduct from "../AddProduct/AllAboutProduct";
 import { FunctionBarSelectionContext } from "../MainDashboard/MainDashboard";
 
@@ -29,6 +30,9 @@ export default function Functionbar() {
       {/* <AddProductReDesign></AddProductReDesign> */}
       {FunctionBarSelectionName === "Add Product" && (
         <AllAboutProduct></AllAboutProduct>
+      )}
+      {FunctionBarSelectionName === "Add Category" && (
+        <AddCategory></AddCategory>
       )}
     </div>
   );

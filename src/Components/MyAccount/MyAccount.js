@@ -1,6 +1,6 @@
 import { faG } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useLocation } from "react-router-dom";
 import { UserInfoContext } from "../../App";
@@ -37,14 +37,36 @@ export default function MyAccount() {
     msg: "",
   });
 
-  // back location
-  const backLocation = () => {
-    if (from.pathname === "/Favorite" && loggingUserInfo.displayName) {
-      history.push("/Favorite");
-    }
-  };
+  // useEfect for read user info
+  useEffect(() => {
+    // fetch fins user
+    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneFindUser", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ loggingUserInfo }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("this is find data from app js :", data[0]);
+        setLoginUsserInfo(data[0]);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [loggingUserInfo]);
 
-  backLocation();
+  // back location
+  // const backLocation = () => {
+  //   if (from.pathname === "/Favorite" && loggingUserInfo.displayName) {
+  //     history.push("/Favorite");
+  //   }
+  // };
+
+  // backLocation();
+
+  // history.replace(from);
 
   // check google pop user
   const isUserAlreadyCreate = (props) => {

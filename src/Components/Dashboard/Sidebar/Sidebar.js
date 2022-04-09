@@ -109,10 +109,10 @@ export default function Sidebar() {
             </div>
             <div
               className=""
-              onClick={() => optionSelect("Porduct Details")}
+              onClick={() => optionSelect("Add Category")}
               style={{
                 padding: `${
-                  optionSelectState === "Porduct Details" ? "4px" : "8px"
+                  optionSelectState === "Add Category" ? "4px" : "8px"
                 }`,
               }}
             >
@@ -120,7 +120,7 @@ export default function Sidebar() {
                 class="d-flex justify-content-start p-2 "
                 style={{
                   backgroundColor: ` ${
-                    optionSelectState === "Porduct Details"
+                    optionSelectState === "Add Category"
                       ? " rgb(255 240 128 / 60%)"
                       : "rgb(254, 196, 0)"
                   }  `,
@@ -132,7 +132,7 @@ export default function Sidebar() {
                   <FontAwesomeIcon icon={faCartShopping} />
                 </div>
                 <div className="fw-bold" style={{ marginLeft: "10px" }}>
-                  Porduct Details
+                  Add Category
                 </div>
               </div>
             </div>

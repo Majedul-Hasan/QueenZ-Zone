@@ -1,0 +1,10 @@
+.Loading {
+    margin: auto;
+
+   margin-top: 300px;
+   width: 50px;
+    animation: Loading 3s infinite;
+  }
+@keyframes Loading {
+    10% {transform: rotate(360deg);}
+  }
