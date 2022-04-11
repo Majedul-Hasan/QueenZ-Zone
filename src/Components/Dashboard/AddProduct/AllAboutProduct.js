@@ -102,7 +102,7 @@ export default function AllAboutProduct() {
           console.error("Error:", error);
         });
 
-      window.location.reload(false);
+      //   window.location.reload(false);
     }
   };
 

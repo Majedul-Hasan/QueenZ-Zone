@@ -166,6 +166,28 @@ export default function CatagoryProduct() {
       });
   }, []);
 
+  const [oldSecData, setOldSecdata] = useState([]);
+
+  console.log(oldSecData);
+
+  useEffect(() => {
+    const oldDataArray = JSON.parse(
+      sessionStorage.getItem("addToShoppingCard")
+    );
+
+    if (oldDataArray === null) {
+      sessionStorage.setItem("addToShoppingCard", JSON.stringify([]));
+    }
+
+    console.log("oldDataArray :::::", oldDataArray);
+  }, []);
+
+  useEffect(() => {
+    if (oldSecData.length != 0) {
+      sessionStorage.setItem("addToShoppingCard", JSON.stringify(oldSecData));
+    }
+  }, [oldSecData]);
+
   return (
     <div>
       <div></div>
@@ -192,7 +214,13 @@ export default function CatagoryProduct() {
               </div>
             </div>
           ) : (
-            products.map((dt) => <ProductAllList dt={dt}></ProductAllList>)
+            products.map((dt) => (
+              <ProductAllList
+                oldSecData={oldSecData}
+                setOldSecdata={setOldSecdata}
+                dt={dt}
+              ></ProductAllList>
+            ))
           )}
         </div>
       </div>

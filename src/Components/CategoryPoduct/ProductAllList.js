@@ -1,9 +1,14 @@
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faCartShopping,
+  faHeart,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Carousel from "nuka-carousel";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function ProductAllList({ dt }) {
+export default function ProductAllList({ setOldSecdata, oldSecData, dt }) {
   console.log("this is fetch product : ", dt);
   // useState for image
 
@@ -11,10 +16,29 @@ export default function ProductAllList({ dt }) {
 
   // setState for First image
   const [firstImgs, setFristImgs] = useState(dt.ProductImage[0][0].image);
+
+  useEffect(() => {
+    setOldSecdata(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
+  }, []);
+  console.log("this is fetch product : ", oldSecData);
+  // add to shopping card
+  const addToShoppingCard = (props) => {
+    setOldSecdata([...oldSecData, [dt, firstImgs]]);
+
+    // const dataOld = JSON.parse(sessionStorage.getItem("addToShoppingCard"));
+
+    //  setSelectedProductImage([...selectedProductImage, firstImgs]);
+  };
+
+  // add to love
+  const addToLove = () => {
+    console.log(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
+  };
+
   return (
     <div className="col-6">
       <div
-        className="p-2"
+        className="p-2 mt-3"
         style={{ backgroundColor: "#FFF7BF ", borderRadius: "10px" }}
       >
         <Carousel
@@ -118,7 +142,7 @@ export default function ProductAllList({ dt }) {
             {dt.ProductName}
           </div>
           <div
-            className="p-1"
+            className="pt-1"
             style={{ fontSize: "13px", fontFamily: "Poppins" }}
           >
             <span>SAR </span>
@@ -131,17 +155,62 @@ export default function ProductAllList({ dt }) {
               }}
             >
               {" "}
-              {/* {dt.discount ? (
-                  <strong>
-                    <s>{dt.discount}</s>
-                  </strong>
-                ) : (
-                  <strong>
-                    <s>{dt.prise}</s>
-                  </strong>
-                )} */}
-              <strong>35</strong>
+              <strong>{dt.ProductPrice}</strong>
             </span>
+          </div>
+
+          <div
+            style={{
+              fontSize: "10px",
+              fontFamily: "Poppins",
+              display: `${dt.ProductOffer != "null" ? "block" : "none"}`,
+            }}
+          >
+            <strong>
+              <s>SAR</s>
+            </strong>
+            <span
+              className=""
+              style={{
+                fontSize: "10px",
+                fontFamily: "Poppins",
+                color: "red",
+              }}
+            >
+              {" "}
+              <strong>
+                <s>65</s>
+              </strong>
+            </span>
+          </div>
+        </div>
+        <div
+          className="pt-2 d-flex justify-content-around"
+          style={{
+            fontSize: "21px",
+          }}
+        >
+          <div onClick={() => addToLove(dt)}>
+            <FontAwesomeIcon
+              icon={faHeart}
+              className=""
+              style={{
+                backgroundColor: "",
+                borderRadius: "50%",
+                border: "1px solid white",
+              }}
+            />
+          </div>
+          <div onClick={() => addToShoppingCard(dt)}>
+            <FontAwesomeIcon
+              icon={faCartShopping}
+              className=""
+              style={{
+                backgroundColor: "",
+                borderRadius: "50%",
+                border: "1px solid white",
+              }}
+            />
           </div>
         </div>
       </div>
