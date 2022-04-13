@@ -1,14 +1,18 @@
-import {
-  faAngleLeft,
-  faAngleRight,
-  faCartShopping,
-  faHeart,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ShoppingCartOutlined } from "@mui/icons-material";
+import Favorite from "@mui/icons-material/Favorite";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import Stack from "@mui/material/Stack";
 import Carousel from "nuka-carousel";
 import React, { useEffect, useState } from "react";
 
 export default function ProductAllList({ setOldSecdata, oldSecData, dt }) {
+  // metarial ui icon click color
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
   console.log("this is fetch product : ", dt);
   // useState for image
 
@@ -143,7 +147,11 @@ export default function ProductAllList({ setOldSecdata, oldSecData, dt }) {
           </div>
           <div
             className="pt-1"
-            style={{ fontSize: "13px", fontFamily: "Poppins" }}
+            style={{
+              fontSize: "13px",
+              fontFamily: "Poppins",
+              display: "inline-block",
+            }}
           >
             <span>SAR </span>
             <span
@@ -158,51 +166,54 @@ export default function ProductAllList({ setOldSecdata, oldSecData, dt }) {
               <strong>{dt.ProductPrice}</strong>
             </span>
           </div>
-
-          <div
-            style={{
-              fontSize: "10px",
-              fontFamily: "Poppins",
-              display: `${dt.ProductOffer != "null" ? "block" : "none"}`,
-            }}
-          >
-            <strong>
-              <s>SAR</s>
-            </strong>
-            <span
-              className=""
+          <s>
+            <div
               style={{
                 fontSize: "10px",
                 fontFamily: "Poppins",
-                color: "red",
+                paddingLeft: "5px",
+                display: `${
+                  dt.ProductOffer != "null" ? "inline-block" : "none"
+                }`,
               }}
             >
-              {" "}
               <strong>
-                <s>65</s>
+                <s>SAR</s>
               </strong>
-            </span>
-          </div>
+              <span
+                className=""
+                style={{
+                  fontSize: "10px",
+                  fontFamily: "Poppins",
+                  color: "red",
+                }}
+              >
+                {" "}
+                <strong>
+                  <s>{dt.ProductOffer}</s>
+                </strong>
+              </span>
+            </div>
+          </s>
         </div>
         <div
           className="pt-2 d-flex justify-content-around"
           style={{
             fontSize: "21px",
+            alignItems: "center",
           }}
         >
           <div onClick={() => addToLove(dt)}>
-            <FontAwesomeIcon
-              icon={faHeart}
-              className=""
-              style={{
-                backgroundColor: "",
-                borderRadius: "50%",
-                border: "1px solid white",
-              }}
+            <Checkbox
+              color="error"
+              {...label}
+              icon={<FavoriteBorder />}
+              checkedIcon={<Favorite />}
             />
           </div>
+
           <div onClick={() => addToShoppingCard(dt)}>
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               icon={faCartShopping}
               className=""
               style={{
@@ -210,7 +221,13 @@ export default function ProductAllList({ setOldSecdata, oldSecData, dt }) {
                 borderRadius: "50%",
                 border: "1px solid white",
               }}
-            />
+            /> */}
+
+            <Stack spacing={2} direction="row">
+              <Button variant="text">
+                <ShoppingCartOutlined />
+              </Button>
+            </Stack>
           </div>
         </div>
       </div>

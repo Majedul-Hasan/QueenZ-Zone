@@ -1,12 +1,47 @@
 import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import ReSingleProductDesign from "./ReSingleProductDesign";
 import "./ShowProductCategory.css";
-import SingleProductHomePage from "./SingleProductHomePage";
 
 export default function ShowProductCategory() {
+  const [productData, setproductdata] = useState([]);
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneFindAllProduct")
+      .then((response) => response.json())
+      .then((json) => {
+        setproductdata(json);
+      });
+  }, []);
+
+  console.log("this is product ddddddddddeeeeeeeeeeeeeeee ::;;  ", productData);
+
   let history = useHistory();
+
+  const [oldSecData, setOldSecdata] = useState([]);
+
+  console.log(oldSecData);
+
+  useEffect(() => {
+    const oldDataArray = JSON.parse(
+      sessionStorage.getItem("addToShoppingCard")
+    );
+
+    if (oldDataArray === null) {
+      sessionStorage.setItem("addToShoppingCard", JSON.stringify([]));
+    }
+
+    console.log("oldDataArray :::::", oldDataArray);
+  }, []);
+
+  useEffect(() => {
+    if (oldSecData.length != 0) {
+      sessionStorage.setItem("addToShoppingCard", JSON.stringify(oldSecData));
+    }
+  }, [oldSecData]);
 
   const allProductList = [
     {
@@ -252,11 +287,20 @@ export default function ShowProductCategory() {
             overflow: "scroll",
           }}
         >
-          {allProductList.map((dt) => (
-            <div>
-              <SingleProductHomePage dt={dt}></SingleProductHomePage>
-            </div>
-          ))}
+          {!productData.length === true ? (
+            <h3>Loading...</h3>
+          ) : (
+            productData.map((dt) => (
+              <div>
+                <ReSingleProductDesign
+                  oldSecData={oldSecData}
+                  setOldSecdata={setOldSecdata}
+                  dt={dt}
+                ></ReSingleProductDesign>
+              </div>
+            ))
+          )}
+
           <div
             class="d-flex align-items-center p-5"
             onClick={() => history.push("/Cloth")}

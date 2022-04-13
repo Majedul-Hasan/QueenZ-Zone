@@ -4,6 +4,8 @@ import { React, useState } from "react";
 import starPic from "../../Asset/starPic.png";
 
 export default function SingleProductHomePage({ dt }) {
+  console.log("this is product data : ", dt);
+
   // love btn
   const [love, setLove] = useState(false);
   return (
