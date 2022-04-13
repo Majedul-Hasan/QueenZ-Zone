@@ -8,8 +8,19 @@ export default function ProductCard({
   editProductQty,
   setEditProductQty,
   dt,
+  proQtyNumberCheck,
+  errorproductSize,
+  setproductSize,
 }) {
-  console.log(dt);
+  console.log("ttttttttttttttttttttttttttttttttttttttt", dt);
+
+  if (errorproductSize != undefined) {
+    console.log(
+      "ttttttttttttttttttttttttttttttttttttttt",
+      errorproductSize[0] === dt
+    );
+  }
+
   const [selected, setSelected] = useState([]);
 
   const options = [
@@ -21,7 +32,7 @@ export default function ProductCard({
     { label: "XXL (extra extra large)", value: "XXL" },
   ];
 
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(dt[0].qty === undefined ? 1 : dt[0].qty);
 
   const [pSize, setPsize] = useState();
 
@@ -43,12 +54,15 @@ export default function ProductCard({
 
   const ProductSize = (props) => {
     console.log("this is product size : ", props);
+    setproductSize(dt, (dt[0].pSize = props));
   };
 
   const changeQty = (props) => {
     console.log("this is qty ", props, (dt[0].qty = props));
+    setQty(props);
 
-    setEditProductQty(dt, (dt[0].qty = props));
+    // setEditProductQty(dt, (dt[0].qty = props));
+    proQtyNumberCheck(dt, (dt[0].qty = props));
   };
 
   return (
@@ -58,7 +72,7 @@ export default function ProductCard({
         style={{ border: "3px solid #fec400", borderRadius: "10px" }}
       >
         <div>
-          <div className="" style={{ width: "200px" }}>
+          <div className="" style={{ width: "150px" }}>
             <Carousel>
               {dt[1].map((dt) => (
                 <div>
@@ -66,7 +80,7 @@ export default function ProductCard({
                 </div>
               ))}
             </Carousel>
-            <div class="p-2 d-flex justify-content-between">
+            <div class="d-flex justify-content-around">
               <div
                 style={{ marginTop: "-25px" }}
                 className="d-flex justify-content-center"
@@ -91,11 +105,11 @@ export default function ProductCard({
           </div>
         </div>
         <div className=" d-flex flex-row bd-highlight" style={{}}>
-          <div className="pt-1 ">
+          <div className="pt-1 p-2">
             <div style={{ fontSize: "18px", fontWeight: "600" }}>
               {dt[0].ProductName}
             </div>
-            <div className="pt-2">
+            <div className="pt-2 ">
               <span>
                 {" "}
                 <strong>SAR </strong>
@@ -103,7 +117,7 @@ export default function ProductCard({
               <span
                 className=""
                 style={{
-                  fontSize: "21px",
+                  fontSize: "22px",
                   fontFamily: "Poppins",
                   color: "red",
                 }}
@@ -118,8 +132,11 @@ export default function ProductCard({
               <div
                 style={{
                   fontSize: "15px",
+                  paddingLeft: "4px",
                   fontFamily: "Poppins",
-                  display: `${dt[0].ProductOffer != "null" ? "block" : "none"}`,
+                  display: `${
+                    dt[0].ProductOffer != "null" ? "inline-block" : "none"
+                  }`,
                 }}
               >
                 <strong>
@@ -159,18 +176,20 @@ export default function ProductCard({
               <div>
                 <h6>Qty : </h6>
               </div>
-              <QuantityPicker
-                onChange={(value) => {
-                  // here value is the final update value of the component
-                  changeQty(value);
-                  console.log(value);
-                  setQty(value);
-                }}
-                value={dt[0].qty === undefined ? 1 : dt[0].qty}
-                min={1}
-                max={15}
-                smooth
-              />
+              <div class="d-flex justify-content-center">
+                <QuantityPicker
+                  onChange={(value) => {
+                    // here value is the final update value of the component
+                    changeQty(value);
+                    console.log(value);
+                    setQty(value);
+                  }}
+                  value={dt[0].qty === undefined ? 1 : dt[0].qty}
+                  min={1}
+                  max={15}
+                  smooth
+                />
+              </div>
             </div>
             {/* <div className="mt-2">
               <div>
@@ -200,9 +219,18 @@ export default function ProductCard({
             </div> */}
             <div className="mt-3">
               <select
+                value={dt[0].pSize != undefined && dt[0].pSize}
                 onChange={(e) => ProductSize(e.target.value)}
                 class="form-select"
                 aria-label="Default select example"
+                style={{
+                  backgroundColor: "#fff",
+                  color: "#362121",
+                  boxShadow: "0 5px 45px -10px rgb(0 0 0 / 25%)",
+                  border: "none",
+                  boxSizing: "border-box",
+                  fontWeight: "lighter",
+                }}
               >
                 <option selected>Select Size</option>
                 <option value="XS">XS</option>
@@ -212,6 +240,7 @@ export default function ProductCard({
                 <option value="XXL">XXL</option>
               </select>
             </div>
+
             <div>
               <div class="mt-2 d-flex justify-content-between">
                 <div>Product Price</div>

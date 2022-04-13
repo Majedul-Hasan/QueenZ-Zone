@@ -9,6 +9,7 @@ import FavoritePage from "./Components/Favorite/FavoritePage";
 import MyAccount from "./Components/MyAccount/MyAccount";
 import MyMessage from "./Components/MyMessage/MyMessage";
 import NaviBar from "./Components/NaviBar/NaviBar";
+import Order from "./Components/Order/Order";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import ShoppingCardPage from "./Components/ShoppinfCard/ShoppingCardPage";
 
@@ -55,12 +56,18 @@ function App() {
             <Route path="/ShoppingCard">
               <HeaderSearchBar></HeaderSearchBar>
               <ShoppingCardPage></ShoppingCardPage>
+
               <NaviBar></NaviBar>
             </Route>
 
             <Route path="/MyAccount">
               <HeaderSearchBar></HeaderSearchBar>
               <MyAccount></MyAccount>
+              <NaviBar></NaviBar>
+            </Route>
+            <Route path="/Order">
+              <HeaderSearchBar></HeaderSearchBar>
+              <Order></Order>
               <NaviBar></NaviBar>
             </Route>
             <Route path="/Cloth">
