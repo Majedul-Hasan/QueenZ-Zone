@@ -19,8 +19,6 @@ export const UserInfoContext = createContext();
 function App() {
   const [loggingUserInfo, setLoginUsserInfo] = useState({});
 
-  console.log(loggingUserInfo);
-
   return (
     <div className="App">
       {/* home page layout */}

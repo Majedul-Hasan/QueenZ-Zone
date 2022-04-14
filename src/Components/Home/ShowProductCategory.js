@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import ReSingleProductDesign from "./ReSingleProductDesign";
 import "./ShowProductCategory.css";
-
 export default function ShowProductCategory() {
   const [productData, setproductdata] = useState([]);
 
@@ -17,13 +16,9 @@ export default function ShowProductCategory() {
       });
   }, []);
 
-  console.log("this is product ddddddddddeeeeeeeeeeeeeeee ::;;  ", productData);
-
   let history = useHistory();
 
   const [oldSecData, setOldSecdata] = useState([]);
-
-  console.log(oldSecData);
 
   useEffect(() => {
     const oldDataArray = JSON.parse(

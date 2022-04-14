@@ -28,7 +28,7 @@ export default function ReSingleProductDesign({
   useEffect(() => {
     setOldSecdata(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
   }, []);
-  console.log("this is fetch product : ", oldSecData);
+
   // add to shopping card
   const addToShoppingCard = (props) => {
     setOldSecdata([...oldSecData, [dt, firstImgs]]);

@@ -7,18 +7,48 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { default as React, useContext } from "react";
+import Badge from "@mui/material/Badge";
+import IconButton from "@mui/material/IconButton";
+import { styled } from "@mui/material/styles";
+import { default as React, useContext, useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { UserInfoContext } from "../../App";
+
+// message icon style
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}));
 
 export default function NaviBar() {
   let { url } = useRouteMatch();
   // react router dom history
   let history = useHistory();
 
+  const [seasonData, setseasonData] = useState([]);
+
+  useEffect(() => {
+    setseasonData(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
+  }, []);
+
+  const [productList, setProductList] = useState([]);
+
+  useEffect(() => {
+    setInterval(() => {
+      setProductList(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
+    }, 1000);
+  }, []);
+
+  // useEffect(() => {
+  //   setProductList(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
+  // }, []);
+
   // use context
   const [loggingUserInfo, setLoginUsserInfo] = useContext(UserInfoContext);
-  console.log("this is navbar page : ", loggingUserInfo);
 
   const optionName = (props) => {
     console.log();
@@ -75,11 +105,22 @@ export default function NaviBar() {
                   </div>
                 </div>
               </div>
-              <div onClick={() => optionName("ShoppingCard")}>
-                <FontAwesomeIcon
-                  style={{ color: "white" }}
-                  icon={faCartShopping}
-                />
+
+              <div
+                onClick={() => optionName("ShoppingCard")}
+                style={{ padding: " 0px", margin: "0px", marginTop: "-4px" }}
+              >
+                <IconButton aria-label="cart">
+                  <StyledBadge
+                    badgeContent={productList.length ? productList.length : 0}
+                    color="warning"
+                  >
+                    <FontAwesomeIcon
+                      style={{ color: "white" }}
+                      icon={faCartShopping}
+                    />
+                  </StyledBadge>
+                </IconButton>
               </div>
               <div onClick={() => optionName("MyAccount")}>
                 {loggingUserInfo.photoURL ? (
