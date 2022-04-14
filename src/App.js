@@ -1,3 +1,4 @@
+import { SnackbarProvider } from "notistack";
 import React, { createContext, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HeaderSearchBar from "../src/Components/Home/HeaderSearchBar";
@@ -19,70 +20,79 @@ export const UserInfoContext = createContext();
 function App() {
   const [loggingUserInfo, setLoginUsserInfo] = useState({});
 
+  const [vertical, setvertical] = useState("top");
+  const [horizontal, sethorizontal] = useState("center");
+
   return (
     <div className="App">
       {/* home page layout */}
       <UserInfoContext.Provider value={[loggingUserInfo, setLoginUsserInfo]}>
         <Router basename="/QueenZ-Zone">
-          <Switch>
-            <Route exact path="/">
-              <HeaderSearchBar></HeaderSearchBar>
-              <Layout></Layout>
-              <NaviBar></NaviBar>
-            </Route>
-            <PrivateRoute path="/Favorite">
-              <HeaderSearchBar></HeaderSearchBar>
-              <FavoritePage></FavoritePage>
-              <NaviBar></NaviBar>
-            </PrivateRoute>
-            <Route exact path="/Home">
-              <HeaderSearchBar></HeaderSearchBar>
-              <Layout></Layout>
-              <NaviBar></NaviBar>
-            </Route>
-            <Route exact path="/Category">
-              <HeaderSearchBar></HeaderSearchBar>
-              <Layout></Layout>
-              <NaviBar></NaviBar>
-            </Route>
+          <SnackbarProvider
+            maxSnack={3}
+            key={"top" + "center"}
+            anchorOrigin={{ vertical, horizontal }}
+          >
+            <Switch>
+              <Route exact path="/">
+                <HeaderSearchBar></HeaderSearchBar>
+                <Layout></Layout>
+                <NaviBar></NaviBar>
+              </Route>
+              <PrivateRoute path="/Favorite">
+                <HeaderSearchBar></HeaderSearchBar>
+                <FavoritePage></FavoritePage>
+                <NaviBar></NaviBar>
+              </PrivateRoute>
+              <Route exact path="/Home">
+                <HeaderSearchBar></HeaderSearchBar>
+                <Layout></Layout>
+                <NaviBar></NaviBar>
+              </Route>
+              <Route exact path="/Category">
+                <HeaderSearchBar></HeaderSearchBar>
+                <Layout></Layout>
+                <NaviBar></NaviBar>
+              </Route>
 
-            <Route path="/MyMessage">
-              <HeaderSearchBar></HeaderSearchBar>
-              <MyMessage></MyMessage>
-              <NaviBar></NaviBar>
-            </Route>
-            <Route path="/ShoppingCard">
-              <HeaderSearchBar></HeaderSearchBar>
-              <ShoppingCardPage></ShoppingCardPage>
+              <Route path="/MyMessage">
+                <HeaderSearchBar></HeaderSearchBar>
+                <MyMessage></MyMessage>
+                <NaviBar></NaviBar>
+              </Route>
+              <Route path="/ShoppingCard">
+                <HeaderSearchBar></HeaderSearchBar>
+                <ShoppingCardPage></ShoppingCardPage>
 
-              <NaviBar></NaviBar>
-            </Route>
+                <NaviBar></NaviBar>
+              </Route>
 
-            <Route path="/MyAccount">
-              <HeaderSearchBar></HeaderSearchBar>
-              <MyAccount></MyAccount>
-              <NaviBar></NaviBar>
-            </Route>
-            <Route path="/Order">
-              <HeaderSearchBar></HeaderSearchBar>
-              <Order></Order>
-              <NaviBar></NaviBar>
-            </Route>
-            <Route path="/Cloth">
-              <HeaderSearchBar></HeaderSearchBar>
-              <CatagoryProduct></CatagoryProduct>
-              <NaviBar></NaviBar>
-            </Route>
-            <Route path="/Dashboard">
-              <MainDashboard></MainDashboard>
-            </Route>
+              <Route path="/MyAccount">
+                <HeaderSearchBar></HeaderSearchBar>
+                <MyAccount></MyAccount>
+                <NaviBar></NaviBar>
+              </Route>
+              <Route path="/Order">
+                <HeaderSearchBar></HeaderSearchBar>
+                <Order></Order>
+                <NaviBar></NaviBar>
+              </Route>
+              <Route path="/Cloth">
+                <HeaderSearchBar></HeaderSearchBar>
+                <CatagoryProduct></CatagoryProduct>
+                <NaviBar></NaviBar>
+              </Route>
+              <Route path="/Dashboard">
+                <MainDashboard></MainDashboard>
+              </Route>
 
-            <Route path="*">
-              <HeaderSearchBar></HeaderSearchBar>
+              <Route path="*">
+                <HeaderSearchBar></HeaderSearchBar>
 
-              <NaviBar></NaviBar>
-            </Route>
-          </Switch>
+                <NaviBar></NaviBar>
+              </Route>
+            </Switch>
+          </SnackbarProvider>
         </Router>
       </UserInfoContext.Provider>
     </div>

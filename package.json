@@ -16,6 +16,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "firebase": "^9.6.10",
+    "notistack": "^2.0.4",
     "nuka-carousel": "^5.0.8",
     "react": "^17.0.2",
     "react-awesome-slider": "^4.1.0",

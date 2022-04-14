@@ -1,16 +1,23 @@
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import ProductCard from "./ProductCard";
 
 export default function ShoppingCardPage() {
+  const { enqueueSnackbar } = useSnackbar();
   let history = useHistory();
   const [seasonData, setseasonData] = useState([]);
 
   useEffect(() => {
     setseasonData(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
   }, []);
+
+  const handleClickVariant = (variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar("Product removed success!", { variant });
+  };
 
   // error for product size
   const [errorproductSize, setErrorProductSize] = useState();
@@ -34,7 +41,9 @@ export default function ShoppingCardPage() {
 
   // remove iteam
   const removeItem = (props) => {
-    console.log(props);
+    console.log("hlwwwwwwwwwww", props);
+
+    handleClickVariant("success");
     const removeProduct = seasonData.filter((dt) => dt != props);
     console.log("weeeeeeeeeeeeeeeeeeeeeeeeee", removeProduct);
     setseasonData(removeProduct);

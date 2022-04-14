@@ -1,11 +1,15 @@
 import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import ReSingleProductDesign from "./ReSingleProductDesign";
 import "./ShowProductCategory.css";
+
 export default function ShowProductCategory() {
   const [productData, setproductdata] = useState([]);
+
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     // Update the document title using the browser API
@@ -189,6 +193,10 @@ export default function ShowProductCategory() {
     },
   ];
 
+  const ProductAdded = (variant) => {
+    enqueueSnackbar("Product added to cart", { variant });
+  };
+
   return (
     <div>
       <div className="">
@@ -291,6 +299,7 @@ export default function ShowProductCategory() {
                   oldSecData={oldSecData}
                   setOldSecdata={setOldSecdata}
                   dt={dt}
+                  ProductAdded={ProductAdded}
                 ></ReSingleProductDesign>
               </div>
             ))
