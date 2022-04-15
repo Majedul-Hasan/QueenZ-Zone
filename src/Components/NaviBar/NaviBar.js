@@ -8,11 +8,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Badge from "@mui/material/Badge";
-import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import { default as React, useContext, useEffect, useState } from "react";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { UserInfoContext } from "../../App";
+import ShoppingCardIcon from "./ShoppingCardIcon";
 
 // message icon style
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -25,6 +25,16 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 export default function NaviBar() {
+  let location = useLocation();
+
+  console.log("this is location :", location.pathname);
+
+  const [value, setValue] = React.useState("recents");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   let { url } = useRouteMatch();
   // react router dom history
   let history = useHistory();
@@ -35,14 +45,6 @@ export default function NaviBar() {
     setseasonData(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
   }, []);
 
-  const [productList, setProductList] = useState([]);
-
-  useEffect(() => {
-    setInterval(() => {
-      setProductList(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
-    }, 1000);
-  }, []);
-
   // useEffect(() => {
   //   setProductList(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
   // }, []);
@@ -51,7 +53,7 @@ export default function NaviBar() {
   const [loggingUserInfo, setLoginUsserInfo] = useContext(UserInfoContext);
 
   const optionName = (props) => {
-    console.log();
+    console.log(props);
 
     history.push(`/${props}`);
   };
@@ -70,7 +72,14 @@ export default function NaviBar() {
           >
             <div className=" p-2 d-flex justify-content-around">
               <div onClick={() => optionName("Home")}>
-                <FontAwesomeIcon style={{ color: "black" }} icon={faHouse} />
+                <FontAwesomeIcon
+                  style={{
+                    color: `${
+                      location.pathname === "/Home" ? "black" : "white"
+                    }`,
+                  }}
+                  icon={faHouse}
+                />
               </div>
               <div onClick={() => optionName("Category")}>
                 {" "}
@@ -80,12 +89,23 @@ export default function NaviBar() {
                 />
               </div>
               <div onClick={() => optionName("Favorite")}>
-                <FontAwesomeIcon style={{ color: "white" }} icon={faHeart} />
+                <FontAwesomeIcon
+                  style={{
+                    color: `${
+                      location.pathname === "/Favorite" ? "black" : "white"
+                    }`,
+                  }}
+                  icon={faHeart}
+                />
               </div>
               <div onClick={() => optionName("MyMessage")}>
                 <div ClassName="" style={{ position: "relative" }}>
                   <FontAwesomeIcon
-                    style={{ color: "white" }}
+                    style={{
+                      color: `${
+                        location.pathname === "/MyMessage" ? "black" : "white"
+                      }`,
+                    }}
                     icon={faMessage}
                   />
                   <div
@@ -110,17 +130,11 @@ export default function NaviBar() {
                 onClick={() => optionName("ShoppingCard")}
                 style={{ padding: " 0px", margin: "0px", marginTop: "-4px" }}
               >
-                <IconButton aria-label="cart">
-                  <StyledBadge
-                    badgeContent={productList.length ? productList.length : 0}
-                    color="warning"
-                  >
-                    <FontAwesomeIcon
-                      style={{ color: "white" }}
-                      icon={faCartShopping}
-                    />
-                  </StyledBadge>
-                </IconButton>
+                <ShoppingCardIcon
+                  location={location}
+                  faCartShopping={faCartShopping}
+                  StyledBadge={StyledBadge}
+                ></ShoppingCardIcon>
               </div>
               <div onClick={() => optionName("MyAccount")}>
                 {loggingUserInfo.photoURL ? (
@@ -131,7 +145,14 @@ export default function NaviBar() {
                     alt="user pic"
                   />
                 ) : (
-                  <FontAwesomeIcon style={{ color: "white" }} icon={faUser} />
+                  <FontAwesomeIcon
+                    style={{
+                      color: `${
+                        location.pathname === "/MyAccount" ? "black" : "white"
+                      }`,
+                    }}
+                    icon={faUser}
+                  />
                 )}
               </div>
             </div>

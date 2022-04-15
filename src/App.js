@@ -72,11 +72,11 @@ function App() {
                 <MyAccount></MyAccount>
                 <NaviBar></NaviBar>
               </Route>
-              <Route path="/Order">
+              <PrivateRoute path="/Order">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Order></Order>
                 <NaviBar></NaviBar>
-              </Route>
+              </PrivateRoute>
               <Route path="/Cloth">
                 <HeaderSearchBar></HeaderSearchBar>
                 <CatagoryProduct></CatagoryProduct>

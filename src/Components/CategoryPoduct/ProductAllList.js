@@ -6,10 +6,14 @@ import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Stack from "@mui/material/Stack";
+import { useSnackbar } from "notistack";
 import Carousel from "nuka-carousel";
 import React, { useEffect, useState } from "react";
 
 export default function ProductAllList({ setOldSecdata, oldSecData, dt }) {
+  // pops msg for add shoppinf card
+  const { enqueueSnackbar } = useSnackbar();
+
   // metarial ui icon click color
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -17,6 +21,12 @@ export default function ProductAllList({ setOldSecdata, oldSecData, dt }) {
   // useState for image
 
   const [imgs, setImgs] = useState(dt.ProductImage);
+
+  // pops msg for add shoppinf card
+  const handleClickVariant = (variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar("Product added successfull!", { variant });
+  };
 
   // setState for First image
   const [firstImgs, setFristImgs] = useState(dt.ProductImage[0][0].image);
@@ -28,6 +38,8 @@ export default function ProductAllList({ setOldSecdata, oldSecData, dt }) {
   // add to shopping card
   const addToShoppingCard = (props) => {
     setOldSecdata([...oldSecData, [dt, firstImgs]]);
+
+    handleClickVariant("success");
 
     // const dataOld = JSON.parse(sessionStorage.getItem("addToShoppingCard"));
 

@@ -1,5 +1,6 @@
 import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Skeleton from "@mui/material/Skeleton";
 import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -197,6 +198,19 @@ export default function ShowProductCategory() {
     enqueueSnackbar("Product added to cart", { variant });
   };
 
+  const [loadingAnimation, setLoadingAnimation] = useState([
+    "1",
+    "1",
+    "1",
+    "1",
+    "1",
+    "1",
+    "1",
+    "1",
+    "1",
+    "1",
+  ]);
+
   return (
     <div>
       <div className="">
@@ -290,20 +304,130 @@ export default function ShowProductCategory() {
             overflow: "scroll",
           }}
         >
-          {!productData.length === true ? (
-            <h3>Loading...</h3>
-          ) : (
-            productData.map((dt) => (
-              <div>
-                <ReSingleProductDesign
-                  oldSecData={oldSecData}
-                  setOldSecdata={setOldSecdata}
-                  dt={dt}
-                  ProductAdded={ProductAdded}
-                ></ReSingleProductDesign>
-              </div>
-            ))
-          )}
+          {!productData.length === true
+            ? loadingAnimation.map((dt) => (
+                <div
+                  className="p-2"
+                  style={{
+                    backgroundColor: "#FFF7BF ",
+                    borderRadius: "10px",
+                    width: "166px",
+                    margin: "0px 7px",
+                    borderRight: "10px",
+                    height: "333px",
+                  }}
+                >
+                  <div>
+                    <Skeleton
+                      sx={{
+                        bgcolor: "grey.900",
+                        borderRadius: "10px 10px 0px 0px ",
+                      }}
+                      variant="rectangular"
+                      style={{
+                        height: "144px",
+                      }}
+                    />
+                  </div>
+                  <div className="d-flex justify-content-center">
+                    <Skeleton
+                      className="m-2"
+                      sx={{ bgcolor: "grey.900", borderRadius: "5px" }}
+                      variant="rectangular"
+                      style={{
+                        width: "28px",
+                        height: "34px",
+                      }}
+                    />{" "}
+                    <Skeleton
+                      className="m-2"
+                      sx={{ bgcolor: "grey.900", borderRadius: "5px" }}
+                      variant="rectangular"
+                      style={{
+                        width: "28px",
+                        height: "34px",
+                      }}
+                    />{" "}
+                    <Skeleton
+                      className="m-2"
+                      sx={{ bgcolor: "grey.900", borderRadius: "5px" }}
+                      variant="rectangular"
+                      style={{
+                        width: "28px",
+                        height: "34px",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <Skeleton
+                      className=""
+                      sx={{ bgcolor: "grey.900", borderRadius: "5px" }}
+                      variant="rectangular"
+                      style={{
+                        height: "18px",
+                      }}
+                    />
+                    <Skeleton
+                      className="mt-1"
+                      sx={{ bgcolor: "grey.900", borderRadius: "5px" }}
+                      variant="rectangular"
+                      style={{
+                        height: "18px",
+                      }}
+                    />
+                  </div>
+                  <div class="d-flex justify-content-start">
+                    <Skeleton
+                      className="mt-4"
+                      sx={{ bgcolor: "grey.900", borderRadius: "5px" }}
+                      variant="rectangular"
+                      style={{
+                        height: "18px",
+                        width: "20px",
+                      }}
+                    />
+                    <Skeleton
+                      className="mt-3 pt-4 m-1"
+                      sx={{ bgcolor: "grey.900", borderRadius: "5px" }}
+                      variant="rectangular"
+                      style={{
+                        height: "22px",
+                        width: "20px",
+                      }}
+                    />
+                  </div>
+                  <div class="d-flex justify-content-evenly">
+                    <Skeleton
+                      className="mt-3 pt-4 m-1"
+                      sx={{ bgcolor: "grey.900", borderRadius: "5px" }}
+                      variant="rectangular"
+                      style={{
+                        height: "25px",
+                        width: "25px",
+                      }}
+                    />
+                    <Skeleton
+                      className="mt-3 pt-4 m-1"
+                      sx={{ bgcolor: "grey.900", borderRadius: "5px" }}
+                      variant="rectangular"
+                      style={{
+                        height: "25px",
+                        width: "25px",
+                      }}
+                    />
+                  </div>
+                </div>
+              ))
+            : productData.map((dt) => (
+                <div>
+                  <ReSingleProductDesign
+                    oldSecData={oldSecData}
+                    setOldSecdata={setOldSecdata}
+                    dt={dt}
+                    ProductAdded={ProductAdded}
+                  ></ReSingleProductDesign>
+                </div>
+              ))}
 
           <div
             class="d-flex align-items-center p-5"

@@ -58,13 +58,16 @@ export default function MyAccount() {
   }, [loggingUserInfo]);
 
   // back location
-  // const backLocation = () => {
-  //   if (from.pathname === "/Favorite" && loggingUserInfo.displayName) {
-  //     history.push("/Favorite");
-  //   }
-  // };
+  const backLocation = () => {
+    if (from.pathname === "/Favorite" && loggingUserInfo.displayName) {
+      history.push("/Favorite");
+    }
+    if (from.pathname === "/Order" && loggingUserInfo.displayName) {
+      history.push("/Order");
+    }
+  };
 
-  // backLocation();
+  backLocation();
 
   // history.replace(from);
 

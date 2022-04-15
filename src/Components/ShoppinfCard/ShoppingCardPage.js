@@ -138,9 +138,14 @@ export default function ShoppingCardPage() {
       console.log("please submit the product size : ", pSizeChect);
       setErrorProductSize(pSizeChect);
       alert("Please Enter the product's Size");
-    } else {
-      console.log("successFull");
-      history.push("/Order");
+    } else if (seasonData.length > 0) {
+      console.log("successFull", subMub);
+
+      if (productSubProce > 0) {
+        history.push("/Order");
+      }
+
+      //
     }
   };
 
@@ -157,54 +162,66 @@ export default function ShoppingCardPage() {
 
   return (
     <div>
-      <div className="mb-5 pb-5">
-        <div className="mb-5 pb-5">
-          {seasonData.map((dt) => (
-            <ProductCard
-              editProductQty={editProductQty}
-              setEditProductQty={setEditProductQty}
-              dt={dt}
-              removeItem={removeItem}
-              proQtyNumberCheck={proQtyNumberCheck}
-              setproductSize={setproductSize}
-              errorproductSize={errorproductSize}
-            ></ProductCard>
-          ))}
+      <div style={{ display: ` ${productSubProce === 0 ? "block" : "none"}` }}>
+        <div className=" mt-5 pt-5 d-flex justify-content-center">
+          <h3>You don't select any product </h3>
         </div>
       </div>
+      <div style={{ display: ` ${productSubProce === 0 ? "none" : "block"}` }}>
+        <div className="mb-5 pb-5">
+          <div className="mb-5 pb-5">
+            {seasonData.map((dt) => (
+              <ProductCard
+                editProductQty={editProductQty}
+                setEditProductQty={setEditProductQty}
+                dt={dt}
+                removeItem={removeItem}
+                proQtyNumberCheck={proQtyNumberCheck}
+                setproductSize={setproductSize}
+                errorproductSize={errorproductSize}
+              ></ProductCard>
+            ))}
+          </div>
+        </div>
 
-      <div className="mb-5">
         <div
-          class="p-2 fixed-bottom mb-5 pb-5 w-100"
-          style={{ backgroundColor: "white", height: "50px" }}
+          className="mb-5"
+          style={{
+            display: `${productSubProce === 0 ? "none" : "block"}`,
+          }}
         >
           <div
-            className=""
-            style={{
-              backgroundColor: "white",
-              height: "63px",
-            }}
+            class="p-2 fixed-bottom mb-5 pb-5 w-100"
+            style={{ backgroundColor: "white", height: "50px" }}
           >
-            <div>
-              <div class="d-grid gap-2">
-                <button
-                  class="btn btn-warning"
-                  type="button"
-                  onClick={() => SubTotalOrderBtn()}
-                >
-                  Subtotal : <span style={{ fontSize: "13px" }}>SAR</span>{" "}
-                  <span style={{ fontSize: "17px", fontWeight: "600" }}>
-                    {productSubProce}
-                  </span>{" "}
-                  | Proceed to Buy{" "}
-                  <span style={{ fontSize: "17px", fontWeight: "600" }}>
-                    ({seasonData.length} items)
-                  </span>
-                  <FontAwesomeIcon
-                    style={{ marginLeft: "4px" }}
-                    icon={faPaperPlane}
-                  />
-                </button>
+            <div
+              className=""
+              style={{
+                backgroundColor: "white",
+                height: "63px",
+              }}
+            >
+              <div>
+                <div class="d-grid gap-2">
+                  <button
+                    class="btn btn-warning"
+                    type="button"
+                    onClick={() => SubTotalOrderBtn()}
+                  >
+                    Subtotal : <span style={{ fontSize: "13px" }}>SAR</span>{" "}
+                    <span style={{ fontSize: "17px", fontWeight: "600" }}>
+                      {productSubProce}
+                    </span>{" "}
+                    | Proceed to Buy{" "}
+                    <span style={{ fontSize: "17px", fontWeight: "600" }}>
+                      ({seasonData.length} items)
+                    </span>
+                    <FontAwesomeIcon
+                      style={{ marginLeft: "4px" }}
+                      icon={faPaperPlane}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
