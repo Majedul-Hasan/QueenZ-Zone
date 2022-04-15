@@ -1,0 +1,24 @@
+
+
+
+.mystyle {
+    animation-duration: 4s;
+    animation-name: slidein;
+    transition: 4s;
+  }
+  
+  @keyframes slidein {
+    0% {
+     opacity: 1;
+     margin-left: 0px;
+    }
+  
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+        margin-left: -3000px;
+        margin-right: 3000px;
+    }
+  }

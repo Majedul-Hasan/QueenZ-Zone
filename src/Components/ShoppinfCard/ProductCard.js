@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { QuantityPicker } from "react-qty-picker";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import "./AnimationStyle.css";
+import "./ShoppingCardPage";
 
 export default function ProductCard({
   removeItem,
@@ -20,6 +22,20 @@ export default function ProductCard({
       errorproductSize[0] === dt
     );
   }
+
+  const [animationShow, setanimationShow] = useState("show");
+
+  const [animationProps, setanimationProps] = useState();
+
+  const removeAnimation = (props) => {
+    console.log("this is remove animation");
+    setanimationShow("tra");
+    setanimationProps(props);
+    setTimeout(() => {
+      console.log("this is remove setInterval");
+      setanimationShow("none");
+    }, 500);
+  };
 
   const [selected, setSelected] = useState([]);
 
@@ -66,10 +82,15 @@ export default function ProductCard({
   };
 
   return (
-    <div>
+    <div className={animationShow === "tra" && "mystyle"}>
       <div
         className=" mt-2 p-2  d-flex justify-content-between"
-        style={{ border: "3px solid #fec400", borderRadius: "10px" }}
+        style={{
+          border: "3px solid #fec400",
+          borderRadius: "10px",
+          // opacity: `${animationShow === "tra" && "0.5"}`,
+          // transition: "0.5s",
+        }}
       >
         <div>
           <div className="" style={{ width: "150px" }}>
@@ -86,22 +107,31 @@ export default function ProductCard({
                 className="d-flex justify-content-center"
               >
                 <button
-                  onClick={() => removeItem(dt)}
+                  onClick={() => {
+                    removeItem(dt);
+                    removeAnimation(dt);
+                  }}
                   type="button"
-                  class="btn btn-danger"
+                  class="btn  btn-danger"
                 >
                   Remove
                 </button>
               </div>
+
               <div
                 style={{ marginTop: "-25px" }}
                 className="d-flex justify-content-center"
               >
-                <button type="button" class="btn btn-warning">
+                <button
+                  onClick={() => {}}
+                  type="button"
+                  class="btn btn-warning"
+                >
                   View
                 </button>
               </div>
             </div>
+            <div></div>
           </div>
         </div>
         <div className=" d-flex flex-row bd-highlight" style={{}}>

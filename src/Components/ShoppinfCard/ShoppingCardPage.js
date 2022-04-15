@@ -41,13 +41,18 @@ export default function ShoppingCardPage() {
 
   // remove iteam
   const removeItem = (props) => {
-    console.log("hlwwwwwwwwwww", props);
+    setTimeout(() => {
+      console.log("hlwwwwwwwwwww", props);
 
-    handleClickVariant("success");
-    const removeProduct = seasonData.filter((dt) => dt != props);
-    console.log("weeeeeeeeeeeeeeeeeeeeeeeeee", removeProduct);
-    setseasonData(removeProduct);
-    sessionStorage.setItem("addToShoppingCard", JSON.stringify(removeProduct));
+      handleClickVariant("success");
+      const removeProduct = seasonData.filter((dt) => dt != props);
+      console.log("weeeeeeeeeeeeeeeeeeeeeeeeee", removeProduct);
+      setseasonData(removeProduct);
+      sessionStorage.setItem(
+        "addToShoppingCard",
+        JSON.stringify(removeProduct)
+      );
+    }, 500);
   };
 
   const proQtyNumberCheck = (props) => {
