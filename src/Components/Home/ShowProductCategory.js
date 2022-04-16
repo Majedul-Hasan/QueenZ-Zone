@@ -230,7 +230,7 @@ export default function ShowProductCategory({ setAniImg }) {
                 margin: "",
               }}
             >
-              Catagary : <strong> Jewelry</strong>
+              Category : <strong> Jewelry</strong>
             </span>
           </div>
           <div

@@ -65,6 +65,10 @@ export default function MyAccount() {
     if (from.pathname === "/Order" && loggingUserInfo.displayName) {
       history.push("/Order");
     }
+    // UserOrderPage
+    if (from.pathname === "/UserOrderPage" && loggingUserInfo.displayName) {
+      history.push("/UserOrderPage");
+    }
   };
 
   backLocation();

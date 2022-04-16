@@ -25,7 +25,10 @@ export default function ShoppingCardIcon({
           <FontAwesomeIcon
             style={{
               color: `${
-                location.pathname === "/ShoppingCard" ? "black" : "white"
+                location.pathname === "/ShoppingCard" ||
+                location.pathname === "/Order"
+                  ? "black"
+                  : "white"
               }`,
             }}
             icon={faCartShopping}

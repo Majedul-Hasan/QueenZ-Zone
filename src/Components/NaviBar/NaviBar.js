@@ -116,13 +116,7 @@ export default function NaviBar({
                   icon={faHouse}
                 />
               </div>
-              <div onClick={() => optionName("Category")}>
-                {" "}
-                <FontAwesomeIcon
-                  style={{ color: "white" }}
-                  icon={faClipboardList}
-                />
-              </div>
+
               <div onClick={() => optionName("Favorite")}>
                 <FontAwesomeIcon
                   style={{
@@ -170,6 +164,17 @@ export default function NaviBar({
                   faCartShopping={faCartShopping}
                   StyledBadge={StyledBadge}
                 ></ShoppingCardIcon>
+              </div>
+              <div onClick={() => optionName("UserOrderPage")}>
+                {" "}
+                <FontAwesomeIcon
+                  style={{
+                    color: `${
+                      location.pathname === "/UserOrderPage" ? "black" : "white"
+                    }`,
+                  }}
+                  icon={faClipboardList}
+                />
               </div>
               <div onClick={() => optionName("MyAccount")}>
                 {loggingUserInfo.photoURL ? (

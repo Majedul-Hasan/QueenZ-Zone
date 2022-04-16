@@ -89,6 +89,8 @@ export default function ShoppingCardPage() {
     // });
     console.log(sum);
     setProductSubPrice(sum);
+
+    sessionStorage.setItem("ProductSubTotal", JSON.stringify(sum));
   }, [updateProductQty]);
 
   setTimeout(() => {
@@ -115,6 +117,7 @@ export default function ShoppingCardPage() {
     // });
     console.log(sum);
     setProductSubPrice(sum);
+    sessionStorage.setItem("ProductSubTotal", JSON.stringify(sum));
   }, 1000);
 
   // product size
@@ -212,13 +215,14 @@ export default function ShoppingCardPage() {
                     class="btn btn-warning"
                     type="button"
                     onClick={() => SubTotalOrderBtn()}
+                    style={{ fontSize: "15px" }}
                   >
-                    Subtotal : <span style={{ fontSize: "13px" }}>SAR</span>{" "}
-                    <span style={{ fontSize: "17px", fontWeight: "600" }}>
+                    Subtotal : <span style={{ fontSize: "12px" }}>SAR</span>{" "}
+                    <span style={{ fontSize: "16px", fontWeight: "600" }}>
                       {productSubProce}
                     </span>{" "}
                     | Proceed to Buy{" "}
-                    <span style={{ fontSize: "17px", fontWeight: "600" }}>
+                    <span style={{ fontSize: "16px", fontWeight: "600" }}>
                       ({seasonData.length} items)
                     </span>
                     <FontAwesomeIcon

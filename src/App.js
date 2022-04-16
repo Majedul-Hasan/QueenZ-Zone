@@ -11,6 +11,7 @@ import MyAccount from "./Components/MyAccount/MyAccount";
 import MyMessage from "./Components/MyMessage/MyMessage";
 import NaviBar from "./Components/NaviBar/NaviBar";
 import Order from "./Components/Order/Order";
+import OrderPage from "./Components/OrderPage/OrderPage";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import ShoppingCardPage from "./Components/ShoppinfCard/ShoppingCardPage";
 
@@ -89,6 +90,11 @@ function App() {
               <PrivateRoute path="/Order">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Order></Order>
+                <NaviBar></NaviBar>
+              </PrivateRoute>
+              <PrivateRoute path="/UserOrderPage">
+                <HeaderSearchBar></HeaderSearchBar>
+                <OrderPage></OrderPage>
                 <NaviBar></NaviBar>
               </PrivateRoute>
               <Route path="/Cloth">
