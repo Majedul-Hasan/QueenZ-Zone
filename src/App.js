@@ -23,6 +23,14 @@ function App() {
   const [vertical, setvertical] = useState("top");
   const [horizontal, sethorizontal] = useState("center");
 
+  const [productShowAnimation, setProductShowAnimation] = useState();
+
+  // drilling image for animation
+  const setAniImg = (props) => {
+    console.log(props);
+    setProductShowAnimation(props);
+  };
+
   return (
     <div className="App">
       {/* home page layout */}
@@ -36,8 +44,11 @@ function App() {
             <Switch>
               <Route exact path="/">
                 <HeaderSearchBar></HeaderSearchBar>
-                <Layout></Layout>
-                <NaviBar></NaviBar>
+                <Layout setAniImg={setAniImg}></Layout>
+                <NaviBar
+                  productShowAnimation={productShowAnimation}
+                  setProductShowAnimation={setProductShowAnimation}
+                ></NaviBar>
               </Route>
               <PrivateRoute path="/Favorite">
                 <HeaderSearchBar></HeaderSearchBar>
@@ -46,8 +57,11 @@ function App() {
               </PrivateRoute>
               <Route exact path="/Home">
                 <HeaderSearchBar></HeaderSearchBar>
-                <Layout></Layout>
-                <NaviBar></NaviBar>
+                <Layout setAniImg={setAniImg}></Layout>
+                <NaviBar
+                  productShowAnimation={productShowAnimation}
+                  setProductShowAnimation={setProductShowAnimation}
+                ></NaviBar>
               </Route>
               <Route exact path="/Category">
                 <HeaderSearchBar></HeaderSearchBar>

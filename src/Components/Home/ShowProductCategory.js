@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import ReSingleProductDesign from "./ReSingleProductDesign";
 import "./ShowProductCategory.css";
 
-export default function ShowProductCategory() {
+export default function ShowProductCategory({ setAniImg }) {
   const [productData, setproductdata] = useState([]);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -421,6 +421,7 @@ export default function ShowProductCategory() {
             : productData.map((dt) => (
                 <div>
                   <ReSingleProductDesign
+                    setAniImg={setAniImg}
                     oldSecData={oldSecData}
                     setOldSecdata={setOldSecdata}
                     dt={dt}

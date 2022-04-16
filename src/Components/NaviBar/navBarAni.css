@@ -1,0 +1,24 @@
+.aniimg {
+    animation: picAni 1s;
+   
+    margin-left: 100px;
+    width: 100px;
+  }
+  
+  @keyframes picAni {
+    from {
+     
+        margin-left: 100px;
+    }
+ 
+  
+    to {
+        
+        margin-left:275px;
+        margin-top:135px;
+        width: 30px;
+        border-radius: 50%;
+        
+    }
+  }
+

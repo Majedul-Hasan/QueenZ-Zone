@@ -14,6 +14,7 @@ export default function ReSingleProductDesign({
   oldSecData,
   dt,
   ProductAdded,
+  setAniImg,
 }) {
   const [imgs, setImgs] = useState(dt.ProductImage);
 
@@ -34,6 +35,7 @@ export default function ReSingleProductDesign({
   const addToShoppingCard = (props) => {
     setOldSecdata([...oldSecData, [dt, firstImgs]]);
     ProductAdded("success");
+    setAniImg(firstImgs[0]);
 
     // const dataOld = JSON.parse(sessionStorage.getItem("addToShoppingCard"));
 

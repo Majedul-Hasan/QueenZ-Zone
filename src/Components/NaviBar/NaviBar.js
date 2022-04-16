@@ -12,6 +12,7 @@ import { styled } from "@mui/material/styles";
 import { default as React, useContext, useEffect, useState } from "react";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { UserInfoContext } from "../../App";
+import "./navBarAni.css";
 import ShoppingCardIcon from "./ShoppingCardIcon";
 
 // message icon style
@@ -24,7 +25,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-export default function NaviBar() {
+export default function NaviBar({
+  productShowAnimation,
+  setProductShowAnimation,
+}) {
   let location = useLocation();
 
   console.log("this is location :", location.pathname);
@@ -49,6 +53,24 @@ export default function NaviBar() {
   //   setProductList(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
   // }, []);
 
+  const [animationOn, setAnimationOn] = useState(false);
+
+  const [animationimage, setAnimationimage] = useState();
+
+  useEffect(() => {
+    if (productShowAnimation != undefined) {
+      console.log("this is nav bar : ", productShowAnimation);
+      setAnimationOn(true);
+
+      setAnimationimage(productShowAnimation);
+
+      setTimeout(() => {
+        setAnimationOn(false);
+        setProductShowAnimation();
+      }, 1000);
+    }
+  }, [productShowAnimation]);
+
   // use context
   const [loggingUserInfo, setLoginUsserInfo] = useContext(UserInfoContext);
 
@@ -61,6 +83,19 @@ export default function NaviBar() {
   return (
     <div>
       <div className="fixed-bottom ">
+        <div
+          className={(animationOn === true && "picAni", "w-100")}
+          style={{
+            height: "150px",
+            display: `${animationOn === true ? "block" : "none"}`,
+          }}
+        >
+          <div>
+            <div>
+              <img className="aniimg" src={animationimage} alt="" />
+            </div>
+          </div>
+        </div>
         <div className="mx-auto" style={{ width: "100%" }}>
           <div
             className="w-100"

@@ -169,7 +169,7 @@ export default function ShoppingCardPage() {
     <div>
       <div style={{ display: ` ${productSubProce === 0 ? "block" : "none"}` }}>
         <div className=" mt-5 pt-5 d-flex justify-content-center">
-          <h3>You don't select any product </h3>
+          <h3>Your cart is empty 🛒</h3>
         </div>
       </div>
       <div style={{ display: ` ${productSubProce === 0 ? "none" : "block"}` }}>

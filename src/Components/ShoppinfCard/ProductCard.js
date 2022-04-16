@@ -82,7 +82,12 @@ export default function ProductCard({
   };
 
   return (
-    <div className={animationShow === "tra" && "mystyle"}>
+    <div
+      className={animationShow === "tra" && "mystyle"}
+      style={{
+        transition: "2s",
+      }}
+    >
       <div
         className=" mt-2 p-2  d-flex justify-content-between"
         style={{
