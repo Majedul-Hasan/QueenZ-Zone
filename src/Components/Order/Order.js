@@ -269,7 +269,10 @@ export default function Order() {
               label="Phone 2 (optional)"
             />
 
-            <div className="mt-2 p-2 border rounded" style={{}}>
+            <div
+              className="mt-2 p-2 border rounded"
+              style={{ display: "none" }}
+            >
               <div style={{ padding: "0px", margin: "10px", height: "10px" }}>
                 <h5>Allow Location</h5>
               </div>
