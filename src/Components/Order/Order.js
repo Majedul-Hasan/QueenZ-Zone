@@ -165,11 +165,6 @@ export default function Order() {
         UserExpectedDeliveryTime: time,
         UserSelectproduct: productSubTotal,
         UserIp: state,
-        userCurrentPositionLocation: {
-          latitude: userCurrentPosition.coords.latitude,
-          longitude: userCurrentPosition.coords.longitude,
-          accuracy: userCurrentPosition.coords.accuracy,
-        },
       };
 
       // navigator.geolocation.getCurrentPosition(function (position) {
