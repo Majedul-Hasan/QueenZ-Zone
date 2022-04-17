@@ -125,6 +125,9 @@ export default function Order() {
 
   const [userCurrentPosition, setUserCurrentPosition] = useState();
 
+  const [userCurrentsdfasdgPosition, setUsefdgdfgdrCurrentPosition] =
+    useState();
+
   const UserLocation = () => {
     navigator.geolocation.getCurrentPosition(
       function (position) {
