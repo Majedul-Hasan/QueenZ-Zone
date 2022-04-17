@@ -15,6 +15,7 @@ export default function ReSingleProductDesign({
   dt,
   ProductAdded,
   setAniImg,
+  PushSingleProductpage,
 }) {
   const [imgs, setImgs] = useState(dt.ProductImage);
 
@@ -152,61 +153,63 @@ export default function ReSingleProductDesign({
                   </div>
                 )}
               </div>
-
-              <div className="mt-2" style={{ fontSize: "12px" }}>
-                {dt.ProductName}
-              </div>
-              <div
-                className="pt-1"
-                style={{
-                  fontSize: "13px",
-                  fontFamily: "Poppins",
-                  display: "inline-block",
-                }}
-              >
-                <span>SAR </span>
-                <span
-                  className=""
-                  style={{
-                    fontSize: "18px",
-                    fontFamily: "Poppins",
-                    color: "red",
-                  }}
-                >
-                  {" "}
-                  <strong>{dt.ProductPrice}</strong>
-                </span>
-              </div>
-              <s>
+              <div onClick={() => PushSingleProductpage(dt)}>
+                <div className="mt-2" style={{ fontSize: "12px" }}>
+                  {dt.ProductName}
+                </div>
                 <div
+                  className="pt-1"
                   style={{
-                    fontSize: "10px",
+                    fontSize: "13px",
                     fontFamily: "Poppins",
-                    paddingLeft: "5px",
-                    display: `${
-                      dt.ProductOffer != "null" ? "inline-block" : "none"
-                    }`,
+                    display: "inline-block",
                   }}
                 >
-                  <strong>
-                    <s>SAR</s>
-                  </strong>
+                  <span>SAR </span>
                   <span
                     className=""
                     style={{
-                      fontSize: "10px",
+                      fontSize: "18px",
                       fontFamily: "Poppins",
                       color: "red",
                     }}
                   >
                     {" "}
-                    <strong>
-                      <s>{dt.ProductOffer}</s>
-                    </strong>
+                    <strong>{dt.ProductPrice}</strong>
                   </span>
                 </div>
-              </s>
+                <s>
+                  <div
+                    style={{
+                      fontSize: "10px",
+                      fontFamily: "Poppins",
+                      paddingLeft: "5px",
+                      display: `${
+                        dt.ProductOffer != "null" ? "inline-block" : "none"
+                      }`,
+                    }}
+                  >
+                    <strong>
+                      <s>SAR</s>
+                    </strong>
+                    <span
+                      className=""
+                      style={{
+                        fontSize: "10px",
+                        fontFamily: "Poppins",
+                        color: "red",
+                      }}
+                    >
+                      {" "}
+                      <strong>
+                        <s>{dt.ProductOffer}</s>
+                      </strong>
+                    </span>
+                  </div>
+                </s>
+              </div>
             </div>
+
             <div
               className="pt-2 d-flex justify-content-around"
               style={{

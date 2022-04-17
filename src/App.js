@@ -14,6 +14,7 @@ import Order from "./Components/Order/Order";
 import OrderPage from "./Components/OrderPage/OrderPage";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import ShoppingCardPage from "./Components/ShoppinfCard/ShoppingCardPage";
+import SingleProdductPage from "./Components/SingleProductPage/SingleProdductPage";
 
 // user info create context
 export const UserInfoContext = createContext();
@@ -67,6 +68,12 @@ function App() {
               <Route exact path="/Category">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Layout></Layout>
+                <NaviBar></NaviBar>
+              </Route>
+              <Route exact path="/Category/:Category/:PNAME/:PID">
+                <HeaderSearchBar></HeaderSearchBar>
+                <SingleProdductPage></SingleProdductPage>
+
                 <NaviBar></NaviBar>
               </Route>
 

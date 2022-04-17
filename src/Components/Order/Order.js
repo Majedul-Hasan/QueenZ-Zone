@@ -100,13 +100,17 @@ export default function Order() {
       .get("https://ipapi.co/json/")
       .then((response) => {
         let data = response.data;
-        setState(data);
+        setState({ data });
         console.log(data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    getGeoInfo();
+  }, []);
 
   const [time, setTime] = useState("");
 

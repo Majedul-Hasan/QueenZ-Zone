@@ -198,6 +198,13 @@ export default function ShowProductCategory({ setAniImg }) {
     enqueueSnackbar("Product added to cart", { variant });
   };
 
+  const PushSingleProductpage = (props) => {
+    history.push(
+      `/Category/${props.ProductCategory}/${props.ProductName}/${props._id}`
+    );
+    console.log(props);
+  };
+
   const [loadingAnimation, setLoadingAnimation] = useState([
     "1",
     "1",
@@ -421,6 +428,7 @@ export default function ShowProductCategory({ setAniImg }) {
             : productData.map((dt) => (
                 <div>
                   <ReSingleProductDesign
+                    PushSingleProductpage={PushSingleProductpage}
                     setAniImg={setAniImg}
                     oldSecData={oldSecData}
                     setOldSecdata={setOldSecdata}
