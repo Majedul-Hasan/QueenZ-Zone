@@ -52,11 +52,6 @@ function App() {
                   productShowAnimation={productShowAnimation}
                   setProductShowAnimation={setProductShowAnimation}
                 ></NaviBar>
-                <MessengerCustomerChat
-                  pageId="107458131944956"
-                  appId="375532847792797"
-                />
-                ,
               </Route>
               <PrivateRoute path="/Favorite">
                 <HeaderSearchBar></HeaderSearchBar>
@@ -127,6 +122,10 @@ function App() {
             </Switch>
           </SnackbarProvider>
         </Router>
+        <MessengerCustomerChat
+          pageId="107458131944956"
+          appId="375532847792797"
+        />
       </UserInfoContext.Provider>
     </div>
   );

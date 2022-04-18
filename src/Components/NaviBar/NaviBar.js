@@ -127,7 +127,10 @@ export default function NaviBar({
                   icon={faHeart}
                 />
               </div>
-              <div onClick={() => optionName("MyMessage")}>
+              <div
+                style={{ display: "none" }}
+                onClick={() => optionName("MyMessage")}
+              >
                 <div ClassName="" style={{ position: "relative" }}>
                   <FontAwesomeIcon
                     style={{
