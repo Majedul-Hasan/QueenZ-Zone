@@ -1,4 +1,8 @@
-import { faTruck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBagShopping,
+  faCartPlus,
+  faTruck,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -6,6 +10,8 @@ import { QuantityPicker } from "react-qty-picker";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { useParams } from "react-router-dom";
+import ShowMoreText from "react-show-more-text";
+import "./AnimationSingleproductPage.css";
 
 export default function SingleProdductPage() {
   let { Category, PNAME, PID } = useParams();
@@ -35,6 +41,10 @@ export default function SingleProdductPage() {
   // setTimeout(console.log(product[0].ProductPrice), 10000);
 
   console.log("this is product : ", !product.length);
+
+  const executeOnClick = (isExpanded) => {
+    console.log(isExpanded);
+  };
 
   return (
     <div>
@@ -67,10 +77,11 @@ export default function SingleProdductPage() {
                 class="m-2 d-flex justify-content-start"
                 style={{
                   marginTop: "-30px",
-                  backgroundColor: "#F4ECB6",
+
                   borderRadius: "5px",
                   alignItems: "center",
-                  boxShadow: "rgb(213 205 149) 0px 3px 7px",
+                  border: "2px solid #fec400",
+                  overflow: "scroll",
                 }}
               >
                 <div>
@@ -209,21 +220,19 @@ export default function SingleProdductPage() {
                 >
                   <span>
                     {" "}
-                    <FontAwesomeIcon icon={faTruck} />
+                    <FontAwesomeIcon className="carAni" icon={faTruck} />
                   </span>
 
                   <span style={{ marginLeft: "20px" }}>Cash On Delivery</span>
                 </div>
               </div>
             </div>
-            <div className="m-2">
+            <div className="m-2 mt-2">
               <div
-                className="p-2"
+                className="pt-2"
                 style={{
-                  backgroundColor: "#F4ECB6",
                   borderRadius: "5px",
                   alignItems: "center",
-                  boxShadow: "rgb(213 205 149) 0px 3px 7px",
                 }}
               >
                 <div
@@ -265,7 +274,7 @@ export default function SingleProdductPage() {
               </div>
             </div>
 
-            <div className="m-2">
+            <div className="m-2" style={{ display: "none" }}>
               <div
                 className="p-2"
                 style={{
@@ -290,6 +299,88 @@ export default function SingleProdductPage() {
                   </span>
                 </div>
               </div>
+            </div>
+
+            <div class="m-2 d-flex justify-content-between">
+              <div className="w-100 p-2">
+                <Button
+                  style={{
+                    backgroundColor: "#fec400",
+
+                    fontWeight: "500",
+                    fontSize: "17px",
+                  }}
+                  variant="warning"
+                  type="button"
+                  class="btn btn-warning btn-lg w-100"
+                >
+                  <FontAwesomeIcon
+                    icon={faCartPlus}
+                    style={{ marginRight: "5px" }}
+                  />
+                  <span>Add To Card</span>
+                </Button>
+              </div>
+              <div className="w-100 p-2">
+                <Button
+                  style={{
+                    backgroundColor: "#fec400",
+                    fontWeight: "500",
+                    fontSize: "17px",
+                  }}
+                  variant="warning"
+                  class="btn btn-warning btn-lg w-100"
+                >
+                  <FontAwesomeIcon
+                    icon={faBagShopping}
+                    style={{ marginRight: "5px" }}
+                  />
+                  <span>Buy Now</span>
+                </Button>
+              </div>
+            </div>
+            <div>
+              {!product.length === false && (
+                <div
+                  className="m-2"
+                  style={{
+                    display: `${
+                      product[0].ProductDescription === "null"
+                        ? "none"
+                        : "block"
+                    }`,
+                  }}
+                >
+                  <span style={{ color: "#686868", fontSize: "20px" }}>
+                    Details
+                  </span>
+                  <ShowMoreText
+                    /* Default options */
+                    lines={3}
+                    more="Show more"
+                    less="Show less"
+                    className="content-css"
+                    anchorClass="my-anchor-css-class"
+                    onClick={executeOnClick}
+                    expanded={false}
+                    width={500}
+                    truncatedEndingComponent={"... "}
+                  >
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna amet,
+                    consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi
+                    ut aliquip ex Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis
+                    nostrud exercitation ullamco laboris nisi ut aliquip ex
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                  </ShowMoreText>
+                </div>
+              )}
             </div>
           </div>
         )}
