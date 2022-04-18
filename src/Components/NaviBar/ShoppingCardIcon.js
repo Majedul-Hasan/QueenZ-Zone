@@ -15,11 +15,15 @@ export default function ShoppingCardIcon({
     }, 1000);
   }, []);
 
+  // console.log(window.sessionStorage.length);
+
   return (
     <div>
       <IconButton aria-label="cart">
         <StyledBadge
-          badgeContent={productList.length ? productList.length : 0}
+          badgeContent={
+            window.sessionStorage.length != 0 ? productList.length : 0
+          }
           color="warning"
         >
           <FontAwesomeIcon

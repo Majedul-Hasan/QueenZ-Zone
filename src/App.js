@@ -1,5 +1,6 @@
 import { SnackbarProvider } from "notistack";
 import React, { createContext, useState } from "react";
+import MessengerCustomerChat from "react-messenger-customer-chat";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HeaderSearchBar from "../src/Components/Home/HeaderSearchBar";
 import Layout from "../src/Components/Home/Layout";
@@ -51,6 +52,11 @@ function App() {
                   productShowAnimation={productShowAnimation}
                   setProductShowAnimation={setProductShowAnimation}
                 ></NaviBar>
+                <MessengerCustomerChat
+                  pageId="107458131944956"
+                  appId="375532847792797"
+                />
+                ,
               </Route>
               <PrivateRoute path="/Favorite">
                 <HeaderSearchBar></HeaderSearchBar>
