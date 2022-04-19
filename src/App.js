@@ -2,6 +2,8 @@ import { SnackbarProvider } from "notistack";
 import React, { createContext, useState } from "react";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import WhatsAppWidget from "react-whatsapp-widget";
+import "react-whatsapp-widget/dist/index.css";
 import HeaderSearchBar from "../src/Components/Home/HeaderSearchBar";
 import Layout from "../src/Components/Home/Layout";
 import "./App.css";
@@ -122,6 +124,13 @@ function App() {
             </Switch>
           </SnackbarProvider>
         </Router>
+        <div>
+          <WhatsAppWidget
+            style={{ bottom: "130px" }}
+            phoneNumber="966555967091"
+          />
+        </div>
+
         <MessengerCustomerChat
           pageId="107458131944956"
           appId="375532847792797"
