@@ -126,7 +126,9 @@ function App() {
         </Router>
         <div>
           <WhatsAppWidget
-            style={{ bottom: "130px" }}
+            textReplyTime="Online Shopping"
+            companyName="Queenz Zone"
+            class="_1bpcM"
             phoneNumber="966555967091"
           />
         </div>
