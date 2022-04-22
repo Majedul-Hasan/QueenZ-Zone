@@ -11,7 +11,13 @@ export default function ShoppingCardPage() {
   const [seasonData, setseasonData] = useState([]);
 
   useEffect(() => {
-    setseasonData(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
+    console.log(
+      "this is check for any info in season stroage : ",
+      window.sessionStorage.addToShoppingCard
+    );
+    if (!window.sessionStorage.addToShoppingCard === false) {
+      setseasonData(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
+    }
   }, []);
 
   const handleClickVariant = (variant) => {

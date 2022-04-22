@@ -32,7 +32,7 @@ function App() {
 
   // drilling image for animation
   const setAniImg = (props) => {
-    console.log(props);
+    console.log("this is app js for animation product picture : ", props);
     setProductShowAnimation(props);
   };
 
@@ -51,66 +51,241 @@ function App() {
                 <HeaderSearchBar></HeaderSearchBar>
                 <Layout setAniImg={setAniImg}></Layout>
                 <NaviBar
+                  setAniImg={setAniImg}
                   productShowAnimation={productShowAnimation}
                   setProductShowAnimation={setProductShowAnimation}
                 ></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="107458131944956"
+                    appId="375532847792797"
+                  />
+                </div>
               </Route>
               <PrivateRoute path="/Favorite">
                 <HeaderSearchBar></HeaderSearchBar>
                 <FavoritePage></FavoritePage>
                 <NaviBar></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="107458131944956"
+                    appId="375532847792797"
+                  />
+                </div>
               </PrivateRoute>
               <Route exact path="/Home">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Layout setAniImg={setAniImg}></Layout>
                 <NaviBar
+                  setAniImg={setAniImg}
                   productShowAnimation={productShowAnimation}
                   setProductShowAnimation={setProductShowAnimation}
                 ></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="107458131944956"
+                    appId="375532847792797"
+                  />
+                </div>
               </Route>
               <Route exact path="/Category">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Layout></Layout>
                 <NaviBar></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="107458131944956"
+                    appId="375532847792797"
+                  />
+                </div>
               </Route>
               <Route exact path="/Category/:Category/:PNAME/:PID">
                 <HeaderSearchBar></HeaderSearchBar>
-                <SingleProdductPage></SingleProdductPage>
+                <SingleProdductPage setAniImg={setAniImg}></SingleProdductPage>
 
-                <NaviBar></NaviBar>
+                <NaviBar
+                  setAniImg={setAniImg}
+                  productShowAnimation={productShowAnimation}
+                  setProductShowAnimation={setProductShowAnimation}
+                ></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="107458131944956"
+                    appId="375532847792797"
+                  />
+                </div>
               </Route>
 
               <Route path="/MyMessage">
                 <HeaderSearchBar></HeaderSearchBar>
                 <MyMessage></MyMessage>
                 <NaviBar></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="107458131944956"
+                    appId="375532847792797"
+                  />
+                </div>
               </Route>
               <Route path="/ShoppingCard">
                 <HeaderSearchBar></HeaderSearchBar>
                 <ShoppingCardPage></ShoppingCardPage>
 
                 <NaviBar></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="107458131944956"
+                    appId="375532847792797"
+                  />
+                </div>
               </Route>
 
               <Route path="/MyAccount">
                 <HeaderSearchBar></HeaderSearchBar>
                 <MyAccount></MyAccount>
                 <NaviBar></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="107458131944956"
+                    appId="375532847792797"
+                  />
+                </div>
               </Route>
               <PrivateRoute path="/Order">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Order></Order>
                 <NaviBar></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="107458131944956"
+                    appId="375532847792797"
+                  />
+                </div>
               </PrivateRoute>
               <PrivateRoute path="/UserOrderPage">
                 <HeaderSearchBar></HeaderSearchBar>
                 <OrderPage></OrderPage>
                 <NaviBar></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="107458131944956"
+                    appId="375532847792797"
+                  />
+                </div>
               </PrivateRoute>
-              <Route path="/Cloth">
+              <Route path="/Category/:Cname">
                 <HeaderSearchBar></HeaderSearchBar>
-                <CatagoryProduct></CatagoryProduct>
-                <NaviBar></NaviBar>
+                <CatagoryProduct setAniImg={setAniImg}></CatagoryProduct>
+                <NaviBar
+                  setAniImg={setAniImg}
+                  productShowAnimation={productShowAnimation}
+                  setProductShowAnimation={setProductShowAnimation}
+                ></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="107458131944956"
+                    appId="375532847792797"
+                  />
+                </div>
               </Route>
               <Route path="/Dashboard">
                 <MainDashboard></MainDashboard>
@@ -120,23 +295,25 @@ function App() {
                 <HeaderSearchBar></HeaderSearchBar>
 
                 <NaviBar></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="107458131944956"
+                    appId="375532847792797"
+                  />
+                </div>
               </Route>
             </Switch>
           </SnackbarProvider>
         </Router>
-        <div>
-          <WhatsAppWidget
-            textReplyTime="Online Shopping"
-            companyName="Queenz Zone"
-            class="_1bpcM"
-            phoneNumber="966555967091"
-          />
-        </div>
-
-        <MessengerCustomerChat
-          pageId="107458131944956"
-          appId="375532847792797"
-        />
       </UserInfoContext.Provider>
     </div>
   );

@@ -1,10 +1,12 @@
 import React from "react";
 import ShowProductCategory from "./ShowProductCategory";
 
-export default function AllProductCatagaryShow({ setAniImg }) {
+export default function AllProductCatagaryShow({ ca, setAniImg }) {
+  console.log("this is category layout  : ", ca);
+
   return (
     <div>
-      <ShowProductCategory setAniImg={setAniImg}></ShowProductCategory>
+      <ShowProductCategory ca={ca} setAniImg={setAniImg}></ShowProductCategory>
     </div>
   );
 }

@@ -1,23 +1,32 @@
+.mainLogoShopping{
+  position: relative;
+}
 .aniimg {
-    animation: picAni 1s;
-   
-    margin-left: 100px;
+    animation: picAni 2s;
+    position: absolute;
+    /* margin-left: 100px; */
     width: 100px;
+    bottom: 200px;
   }
   
   @keyframes picAni {
     from {
      
-        margin-left: 100px;
+        /* margin-left: 100px;
+        bottom: 100px; */
+        width: 100px;
+        bottom: 200px;
     }
  
   
     to {
-        
-        margin-left:215px;
+      width: 10px;
+      bottom: 10px;
+      margin-left: 10px;
+        /* margin-left:215px;
         margin-top:135px;
         width: 30px;
-        border-radius: 50%;
+        border-radius: 50%; */
         
     }
   }

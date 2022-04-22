@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import ShowMoreText from "react-show-more-text";
 import "./AnimationSingleproductPage.css";
 
-export default function SingleProdductPage() {
+export default function SingleProdductPage({ setAniImg }) {
   let { Category, PNAME, PID } = useParams();
 
   console.log(Category, PNAME, PID);
@@ -38,9 +38,49 @@ export default function SingleProdductPage() {
       });
   }, []);
 
+  // useEffect for season Stroage old product
+  useEffect(() => {
+    // Update the document title using the browser API
+    console.log("is old product : ", !window.sessionStorage.addToShoppingCard);
+  }, []);
+
+  const setSeasonProduct = (props) => {
+    console.log("this is ", props);
+
+    if (!window.sessionStorage.addToShoppingCard === false) {
+      // inderect product link
+
+      const oldSeasonProduct = JSON.parse(
+        sessionStorage.getItem("addToShoppingCard")
+      );
+
+      const newProduct = [...oldSeasonProduct, [product[0], fristImage]];
+
+      sessionStorage.setItem("addToShoppingCard", JSON.stringify(newProduct));
+
+      console.log("this is inderect");
+    } else {
+      // derict
+      console.log("this is derict");
+      // const oldSeasonProduct = JSON.parse(
+      //   sessionStorage.getItem("addToShoppingCard")
+      // );
+      // const oldData = JSON.parse(sessionStorage.getItem("addToShoppingCard"));
+
+      // if (oldData === null) {
+      //   sessionStorage.setItem("addToShoppingCard", JSON.stringify([]));
+      // }
+
+      const newProduct = [[product[0], fristImage]];
+
+      sessionStorage.setItem("addToShoppingCard", JSON.stringify(newProduct));
+    }
+  };
+
   // setTimeout(console.log(product[0].ProductPrice), 10000);
 
   console.log("this is product : ", !product.length);
+  // console.log("this is frist image : ", );
 
   const executeOnClick = (isExpanded) => {
     console.log(isExpanded);
@@ -303,7 +343,11 @@ export default function SingleProdductPage() {
 
             <div class="m-2 d-flex justify-content-between">
               <div className="w-100 p-2">
-                <Button
+                <button
+                  onClick={() => {
+                    setAniImg(fristImage[0]);
+                    setSeasonProduct(fristImage);
+                  }}
                   style={{
                     backgroundColor: "#fec400",
 
@@ -319,10 +363,10 @@ export default function SingleProdductPage() {
                     style={{ marginRight: "5px" }}
                   />
                   <span>Add To Card</span>
-                </Button>
+                </button>
               </div>
               <div className="w-100 p-2">
-                <Button
+                <button
                   style={{
                     backgroundColor: "#fec400",
                     fontWeight: "500",
@@ -336,7 +380,7 @@ export default function SingleProdductPage() {
                     style={{ marginRight: "5px" }}
                   />
                   <span>Buy Now</span>
-                </Button>
+                </button>
               </div>
             </div>
             <div>

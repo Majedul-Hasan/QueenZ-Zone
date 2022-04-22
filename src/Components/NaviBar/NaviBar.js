@@ -28,6 +28,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 export default function NaviBar({
   productShowAnimation,
   setProductShowAnimation,
+  setAniImg,
 }) {
   let location = useLocation();
 
@@ -83,19 +84,6 @@ export default function NaviBar({
   return (
     <div>
       <div className="fixed-bottom ">
-        <div
-          className={(animationOn === true && "picAni", "w-100")}
-          style={{
-            height: "150px",
-            display: `${animationOn === true ? "block" : "none"}`,
-          }}
-        >
-          <div>
-            <div>
-              <img className="aniimg" src={animationimage} alt="" />
-            </div>
-          </div>
-        </div>
         <div className="mx-auto" style={{ width: "100%" }}>
           <div
             className="w-100"
@@ -163,10 +151,25 @@ export default function NaviBar({
                 style={{ padding: " 0px", margin: "0px", marginTop: "-4px" }}
               >
                 <ShoppingCardIcon
+                  setAniImg={setAniImg}
+                  className="mainLogoShopping"
                   location={location}
                   faCartShopping={faCartShopping}
                   StyledBadge={StyledBadge}
                 ></ShoppingCardIcon>
+                <div
+                  className={(animationOn === true && "picAni", "w-100")}
+                  style={{
+                    height: "150px",
+                    display: `${animationOn === true ? "block" : "none"}`,
+                  }}
+                >
+                  <div>
+                    <div>
+                      <img className="aniimg" src={animationimage} alt="" />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div onClick={() => optionName("UserOrderPage")}>
                 {" "}

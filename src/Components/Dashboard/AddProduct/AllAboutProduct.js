@@ -1,6 +1,6 @@
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import AddProductReDesign from "./AddProductReDesign";
 import ImgCarousel from "./ImgCarousel";
 
@@ -102,7 +102,7 @@ export default function AllAboutProduct() {
           console.error("Error:", error);
         });
 
-      window.location.reload(false);
+      // window.location.reload(false);
     }
   };
 
@@ -178,6 +178,19 @@ export default function AllAboutProduct() {
   const cancel = () => {
     window.location.reload(false);
   };
+
+  // category
+
+  const [category, sstcategory] = useState([]);
+
+  useEffect(() => {
+    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneCategoryRead")
+      .then((response) => response.json())
+      .then((json) => {
+        sstcategory(json);
+        console.log("tyhis is catttttttt :;;  ", json);
+      });
+  }, []);
 
   return (
     <AlllllProductInfoContext.Provider
@@ -266,13 +279,9 @@ export default function AllAboutProduct() {
                       aria-label="Default select example"
                     >
                       <option selected>Select Category</option>
-                      <option value="Jewelry">Jewelry</option>
-                      <option value="Electronics">Electronics</option>
-                      <option value="Watches">Watches</option>
-
-                      <option value="Shoes">Shoes</option>
-                      <option value="Bag">Bag</option>
-                      <option value="Cloths">Cloths</option>
+                      {category.map((ca) => (
+                        <option value={ca.postCa}>{ca.postCa}</option>
+                      ))}
                     </select>
                   </div>
                   <div></div>

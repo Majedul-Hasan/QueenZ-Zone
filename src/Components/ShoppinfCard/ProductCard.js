@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { QuantityPicker } from "react-qty-picker";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { useHistory } from "react-router-dom";
 import "./AnimationStyle.css";
 import "./ShoppingCardPage";
 
@@ -14,6 +15,7 @@ export default function ProductCard({
   errorproductSize,
   setproductSize,
 }) {
+  let history = useHistory();
   console.log("ttttttttttttttttttttttttttttttttttttttt", dt);
 
   if (errorproductSize != undefined) {
@@ -117,7 +119,7 @@ export default function ProductCard({
                     removeAnimation(dt);
                   }}
                   type="button"
-                  class="btn  btn-danger"
+                  class="btn  btn-danger m-1"
                 >
                   Remove
                 </button>
@@ -128,9 +130,13 @@ export default function ProductCard({
                 className="d-flex justify-content-center"
               >
                 <button
-                  onClick={() => {}}
+                  onClick={() => {
+                    history.push(
+                      `/Category/${dt[0].ProductCategory}/${dt[0].ProductName}/${dt[0]._id}`
+                    );
+                  }}
                   type="button"
-                  class="btn btn-warning"
+                  class="btn btn-warning m-1"
                 >
                   View
                 </button>

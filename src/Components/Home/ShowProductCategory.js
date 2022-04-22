@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import ReSingleProductDesign from "./ReSingleProductDesign";
 import "./ShowProductCategory.css";
 
-export default function ShowProductCategory({ setAniImg }) {
+export default function ShowProductCategory({ ca, setAniImg }) {
   const [productData, setproductdata] = useState([]);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -17,9 +17,30 @@ export default function ShowProductCategory({ setAniImg }) {
     fetch("https://glacial-shore-36532.herokuapp.com/queenZoneFindAllProduct")
       .then((response) => response.json())
       .then((json) => {
-        setproductdata(json);
+        const filterProduct = json.filter(
+          (Prp) => Prp.ProductCategory === ca[0]
+        );
+
+        // if (filterProduct.length >= 1) {
+        //   setproductdata(filterProduct);
+        //   console.log(" milse : ", ca.postCa);
+        // } else {
+        //   setproductdata("no value");
+        //   console.log(" naii : ", ca.postCa);
+        // }
+
+        if (!filterProduct.length === false) {
+          setproductdata(filterProduct);
+        } else {
+          setproductdata(false);
+        }
+
+        console.log("huiuuuuuuuuuuuuuuuuuuuuuuuu", filterProduct);
+        console.log(json);
       });
   }, []);
+
+  console.log("this caaaaaaaaaaaaa : ", productData);
 
   let history = useHistory();
 
@@ -38,6 +59,8 @@ export default function ShowProductCategory({ setAniImg }) {
   }, []);
 
   useEffect(() => {
+    console.log("this is old season data : ", oldSecData);
+
     if (oldSecData.length != 0) {
       sessionStorage.setItem("addToShoppingCard", JSON.stringify(oldSecData));
     }
@@ -220,7 +243,10 @@ export default function ShowProductCategory({ setAniImg }) {
 
   return (
     <div>
-      <div className="">
+      <div
+        className=""
+        style={{ display: `${productData === false ? "none" : "block"}` }}
+      >
         <div class="d-flex justify-content-between">
           <div
             className="p-2 m-3 mt-4 "
@@ -237,7 +263,7 @@ export default function ShowProductCategory({ setAniImg }) {
                 margin: "",
               }}
             >
-              Category : <strong> Jewelry</strong>
+              Category : <strong>{ca[0]}</strong>
             </span>
           </div>
           <div
@@ -248,7 +274,7 @@ export default function ShowProductCategory({ setAniImg }) {
               borderRadius: "5px",
               backgroundColor: "#FFF7BF",
             }}
-            onClick={() => history.push("/Cloth")}
+            onClick={() => history.push(`/Category/${ca[0]}`)}
           >
             <span
               className="d-flex justify-content-center"
@@ -264,7 +290,7 @@ export default function ShowProductCategory({ setAniImg }) {
           </div>
         </div>
 
-        <div className="" style={{ backgroundColor: "#fff7bf" }}>
+        {/* <div className="" style={{ backgroundColor: "#fff7bf" }}>
           <div className="d-flex justify-content-around">
             <div className="p-1">
               <img
@@ -300,7 +326,7 @@ export default function ShowProductCategory({ setAniImg }) {
               ></img>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div
           className="p-2 productHomepage"
@@ -322,6 +348,7 @@ export default function ShowProductCategory({ setAniImg }) {
                     margin: "0px 7px",
                     borderRight: "10px",
                     height: "333px",
+                    display: `${productData === false ? "none" : "block"}`,
                   }}
                 >
                   <div>

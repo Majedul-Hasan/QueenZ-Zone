@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import LogoLoging from "../../Asset/Mask Group 1.png";
 import "./Loading.css";
 import ProductAllList from "./ProductAllList";
-export default function CatagoryProduct() {
+
+export default function CatagoryProduct({ setAniImg }) {
   const allProductList = [
     {
       img: "https://i.ibb.co/Y2rTPPP/pexels-skylar-kang-6044266-Cropped.jpg",
@@ -153,6 +155,9 @@ export default function CatagoryProduct() {
       reviewRate: "4",
     },
   ];
+  let { Cname } = useParams();
+
+  console.log("this is cname : ", Cname);
 
   // useState fetch product
   const [products, setProducts] = useState([]);
@@ -162,7 +167,11 @@ export default function CatagoryProduct() {
     fetch("https://glacial-shore-36532.herokuapp.com/queenZoneFindAllProduct")
       .then((response) => response.json())
       .then((json) => {
-        setProducts(json);
+        console.log("this is json ", json);
+
+        const FilterPro = json.filter((Pro) => Pro.ProductCategory === Cname);
+
+        setProducts(FilterPro);
       });
   }, []);
 
@@ -216,6 +225,7 @@ export default function CatagoryProduct() {
           ) : (
             products.map((dt) => (
               <ProductAllList
+                setAniImg={setAniImg}
                 oldSecData={oldSecData}
                 setOldSecdata={setOldSecdata}
                 dt={dt}

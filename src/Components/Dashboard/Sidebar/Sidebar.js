@@ -132,7 +132,7 @@ export default function Sidebar() {
                   <FontAwesomeIcon icon={faCartShopping} />
                 </div>
                 <div className="fw-bold" style={{ marginLeft: "10px" }}>
-                  Add Category
+                  Category
                 </div>
               </div>
             </div>

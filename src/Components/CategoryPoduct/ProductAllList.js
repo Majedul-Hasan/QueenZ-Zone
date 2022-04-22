@@ -10,7 +10,12 @@ import { useSnackbar } from "notistack";
 import Carousel from "nuka-carousel";
 import React, { useEffect, useState } from "react";
 
-export default function ProductAllList({ setOldSecdata, oldSecData, dt }) {
+export default function ProductAllList({
+  setOldSecdata,
+  oldSecData,
+  dt,
+  setAniImg,
+}) {
   // pops msg for add shoppinf card
   const { enqueueSnackbar } = useSnackbar();
 
@@ -224,7 +229,12 @@ export default function ProductAllList({ setOldSecdata, oldSecData, dt }) {
             />
           </div>
 
-          <div onClick={() => addToShoppingCard(dt)}>
+          <div
+            onClick={() => {
+              addToShoppingCard(dt);
+              setAniImg(firstImgs[0]);
+            }}
+          >
             {/* <FontAwesomeIcon
               icon={faCartShopping}
               className=""
