@@ -24,6 +24,7 @@ export default function LogInUserInfoPage() {
   // sign out
   const signOutUser = () => {
     setLoginUsserInfo("");
+    localStorage.removeItem("UserInfo");
   };
 
   // react from hook

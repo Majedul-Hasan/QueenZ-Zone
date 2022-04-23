@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import DeliveryFee from "../DeliveryFee/DeliveryFee";
 import AllProductCatagaryShow from "./AllProductCatagaryShow";
 import CarouselHome from "./CarouselHome";
 import ShowGroupPicFirst from "./ShowGroupPicFirst";
@@ -37,6 +38,7 @@ export default function Layout({ setAniImg }) {
     <div className="mb-5 pb-3">
       <CarouselHome></CarouselHome>
       <ShowGroupPicFirst></ShowGroupPicFirst>
+      <DeliveryFee></DeliveryFee>
       {category.map((ca) => (
         <AllProductCatagaryShow
           ca={ca}

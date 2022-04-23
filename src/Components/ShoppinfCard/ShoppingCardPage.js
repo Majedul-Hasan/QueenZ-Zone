@@ -183,6 +183,31 @@ export default function ShoppingCardPage() {
       </div>
       <div style={{ display: ` ${productSubProce === 0 ? "none" : "block"}` }}>
         <div className="mb-5 pb-5">
+          <div
+            className="mt-2 p-2"
+            style={{
+              border: "2px solid #fec400",
+              borderRadius: "10px",
+              // opacity: `${animationShow === "tra" && "0.5"}`,
+              // transition: "0.5s",
+            }}
+          >
+            <div class="d-flex justify-content-between">
+              <div>Total :</div> <div>{productSubProce}</div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>Delivery Fee : </div> <div>20</div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div></div> <div>------------------------</div>
+            </div>
+            <div
+              style={{ color: "red", fontWeight: "bold" }}
+              class="d-flex justify-content-between"
+            >
+              <div>Subtotal</div> <div>{productSubProce + 20}</div>
+            </div>
+          </div>
           <div className="mb-5 pb-5">
             {seasonData.map((dt) => (
               <ProductCard
@@ -221,11 +246,11 @@ export default function ShoppingCardPage() {
                     class="btn btn-warning"
                     type="button"
                     onClick={() => SubTotalOrderBtn()}
-                    style={{ fontSize: "15px" }}
+                    style={{ fontSize: "13px" }}
                   >
                     Subtotal : <span style={{ fontSize: "12px" }}>SAR</span>{" "}
                     <span style={{ fontSize: "16px", fontWeight: "600" }}>
-                      {productSubProce}
+                      {productSubProce + 20}
                     </span>{" "}
                     | Proceed to Buy{" "}
                     <span style={{ fontSize: "16px", fontWeight: "600" }}>

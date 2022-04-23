@@ -37,6 +37,36 @@ export default function MyAccount() {
     msg: "",
   });
 
+  // useEfect for read user info in local stroage
+  useEffect(() => {
+    var localStroageuserInfo = JSON.parse(localStorage.getItem("UserInfo"));
+
+    console.log("localStroageuserInfo", localStroageuserInfo);
+
+    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneGooglePopUser", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ localStroageuserInfo }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("this check data : ", data);
+
+        if (!data.length) {
+          console.log("empty array  ");
+          fetchUserInfo(localStroageuserInfo);
+        } else {
+          console.log("full array  ");
+          setLoginUsserInfo(data[0]._id);
+        }
+      })
+      .catch((error) => {
+        console.log("this check error : ", error);
+      });
+  }, []);
+
   // useEfect for read user info
   useEffect(() => {
     // fetch fins user
@@ -148,7 +178,7 @@ export default function MyAccount() {
             time: realTime,
             address: data.address,
           };
-
+          localStorage.setItem("UserInfo", JSON.stringify(shortdata));
           fetchUserInfo(shortdata);
         })
         .catch((error) => {
@@ -191,7 +221,7 @@ export default function MyAccount() {
           // Signed in
           const user = userCredential.user;
           // ...
-
+          localStorage.setItem("UserInfo", JSON.stringify(user));
           fetchUserInfo(user);
         })
         .catch((error) => {
@@ -211,7 +241,7 @@ export default function MyAccount() {
   const registerBtn = (props) => {
     setSignInOrRegister(props);
   };
-  // LogInwithGoogle
+  // Log In with Google
   const LogInwithGoogle = () => {
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
@@ -235,6 +265,7 @@ export default function MyAccount() {
 
         // setLoginUsserInfo(shortdata);
         // fetchUserInfo(shortdata);
+        localStorage.setItem("UserInfo", JSON.stringify(shortdata));
         isUserAlreadyCreate(shortdata);
       })
       .catch((error) => {

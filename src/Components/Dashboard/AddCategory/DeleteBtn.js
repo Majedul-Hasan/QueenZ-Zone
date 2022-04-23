@@ -14,23 +14,26 @@ export default function DeleteBtn({ dt, deleteCategory }) {
       .then((response) => response.json())
       .then((json) => {
         const filterProduct = json.filter(
-          (Prp) => Prp.ProductCategory != dt.postCa
+          (Prp) => Prp.ProductCategory === dt.postCa
         );
         console.log(json);
         console.log("this is filter : ", filterProduct);
         setProLength(filterProduct);
+        ///
+        // console.log(json);
+        // console.log("this is catagory : ", dt.postCa);
       });
   }, []);
 
   return (
     <div>
       {proLength.length === 0 ? (
-        <IconButton disabled aria-label="delete">
-          <DeleteIcon />
-        </IconButton>
-      ) : (
         <IconButton onClick={() => deleteCategory(dt)} aria-label="delete">
           <DeleteIcon style={{ color: "red" }} />
+        </IconButton>
+      ) : (
+        <IconButton disabled aria-label="delete">
+          <DeleteIcon />
         </IconButton>
       )}{" "}
     </div>

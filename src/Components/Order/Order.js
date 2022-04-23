@@ -196,6 +196,8 @@ export default function Order() {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+
+          sessionStorage.removeItem("addToShoppingCard");
           history.push("/UserOrderPage");
         })
         .catch((error) => {

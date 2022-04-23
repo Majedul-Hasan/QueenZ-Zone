@@ -9,6 +9,7 @@ import Layout from "../src/Components/Home/Layout";
 import "./App.css";
 import CatagoryProduct from "./Components/CategoryPoduct/CatagoryProduct";
 import MainDashboard from "./Components/Dashboard/MainDashboard/MainDashboard";
+import EditOrderCommingSoon from "./Components/EditOrderCommingSoon/EditOrderCommingSoon";
 import FavoritePage from "./Components/Favorite/FavoritePage";
 import MyAccount from "./Components/MyAccount/MyAccount";
 import MyMessage from "./Components/MyMessage/MyMessage";
@@ -139,6 +140,31 @@ function App() {
                 <HeaderSearchBar></HeaderSearchBar>
                 <SingleProdductPage setAniImg={setAniImg}></SingleProdductPage>
 
+                <NaviBar
+                  setAniImg={setAniImg}
+                  productShowAnimation={productShowAnimation}
+                  setProductShowAnimation={setProductShowAnimation}
+                ></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="107458131944956"
+                    appId="375532847792797"
+                  />
+                </div>
+              </Route>
+              <Route exact path="/Edit/EditMyOrder/:ONumber">
+                <HeaderSearchBar></HeaderSearchBar>
+                {/* <EditOrder></EditOrder> */}
+                <EditOrderCommingSoon></EditOrderCommingSoon>
                 <NaviBar
                   setAniImg={setAniImg}
                   productShowAnimation={productShowAnimation}
