@@ -109,13 +109,16 @@ export default function MyAccount() {
   const isUserAlreadyCreate = (props) => {
     console.log(props);
 
-    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneGooglePopUser", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ props }),
-    })
+    fetch(
+      "https://glacial-shore-36532.herokuapp.com/queenZoneGooglePopUserFind",
+      {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ props }),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log("this check data : ", data);
