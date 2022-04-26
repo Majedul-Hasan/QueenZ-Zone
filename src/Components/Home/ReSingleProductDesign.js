@@ -1,4 +1,8 @@
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faEye,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ShoppingCartOutlined } from "@mui/icons-material";
 import Favorite from "@mui/icons-material/Favorite";
@@ -238,6 +242,9 @@ export default function ReSingleProductDesign({
                   checkedIcon={<Favorite />}
                 />
               </div>
+              <div onClick={() => PushSingleProductpage(dt)}>
+                <FontAwesomeIcon icon={faEye} />
+              </div>
 
               <div onClick={() => addToShoppingCard(dt)}>
                 {/* <FontAwesomeIcon
@@ -250,7 +257,11 @@ export default function ReSingleProductDesign({
               }}
             /> */}
 
-                <Stack spacing={2} direction="row">
+                <Stack
+                  spacing={2}
+                  direction="row"
+                  style={{ padding: "0px", margin: "0px" }}
+                >
                   <Button variant="text">
                     <ShoppingCartOutlined />
                   </Button>

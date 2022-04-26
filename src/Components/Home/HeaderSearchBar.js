@@ -24,7 +24,12 @@ export default function HeaderSearchBar() {
         style={{ height: "60px", backgroundColor: "#FEC400" }}
       >
         <div style={{ marginRight: "0px" }}>
-          <img src={queenz_zone_logo} className="img-fluid" alt="ded" />
+          <img
+            style={{ width: "60px" }}
+            src={queenz_zone_logo}
+            className="img-fluid"
+            alt="ded"
+          />
         </div>
         <div
           className="d-flex justify-content-evenly"
@@ -56,8 +61,8 @@ export default function HeaderSearchBar() {
             </button>
           </div>
           <div
-            className="d-flex align-items-center"
-            style={{ fontSize: "20px" }}
+            // className="d-flex align-items-center"
+            style={{ fontSize: "20px", display: "none" }}
           >
             <div
               className=""

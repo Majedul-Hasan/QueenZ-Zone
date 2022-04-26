@@ -1698,7 +1698,7 @@ export default function ShowProductCategory({
 
             <div
               class="d-flex align-items-center p-5"
-              onClick={() => history.push("/Cloth")}
+              onClick={() => history.push(`/Category/${ca[0]}`)}
             >
               <div
                 style={{
