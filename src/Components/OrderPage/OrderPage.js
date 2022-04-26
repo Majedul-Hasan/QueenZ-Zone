@@ -15,6 +15,9 @@ export default function OrderPage() {
 
   // order
   const [orderList, setOrderList] = useState([]);
+  let count = 0;
+
+  let [subprice, setsubprice] = useState();
 
   // // useEfect for read order info
   useEffect(() => {
@@ -23,10 +26,64 @@ export default function OrderPage() {
     )
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
+        console.log(
+          "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+          json[0].UserSelectproduct.selectedProduct
+        );
         setOrderList(json);
+
+        // for price
+        // json[0].UserSelectproduct.selectedProduct.map((pc) =>
+        //   console.log(
+        //     "hyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy ::::::::",
+        //     pc[0].ProductOffer === "null"
+        //       ? pc[0].ProductOffer
+        //       : pc[0].ProductPrice
+        //   )
+        // );
+
+        for (
+          let i = 0;
+          i < json[0].UserSelectproduct.selectedProduct.length;
+          i++
+        ) {
+          count =
+            count +
+            parseInt(
+              json[0].UserSelectproduct.selectedProduct[i][0].ProductPrice
+            );
+
+          console.log(
+            "this is loop : ",
+            json[0].UserSelectproduct.selectedProduct[i][0].ProductOffer
+          );
+        }
+
+        console.log("this sub total :::::: ", count);
+        setsubprice(count);
       });
   }, []);
+
+  // // useEfect for read order info
+  useEffect(() => {
+    if (orderList.length) {
+      console.log(
+        "this is order list : ",
+        orderList[0].UserSelectproduct.selectedProduct
+      );
+
+      orderList[0].UserSelectproduct.selectedProduct.map((pri) =>
+        console.log("this is order list map :", pri[0].ProductPrice)
+      );
+    }
+  }, [orderList]);
+
+  // // // useEfect for read order info
+  // useEffect(() => {
+  //   for (let index = 0; index < orderList; index++) {
+  //     console.log("this is loop");
+  //   }
+  // }, [orderList]);
 
   console.log("this is user info :", loggingUserInfo.email);
 
@@ -113,12 +170,12 @@ export default function OrderPage() {
                   <div class="d-flex justify-content-between">
                     <div>Total : </div>
 
-                    <div>SC</div>
+                    <div>{subprice}</div>
                   </div>
                   <div class="d-flex justify-content-between">
                     <div>Delivery fee : </div>
 
-                    <div>SC</div>
+                    <div>20</div>
                   </div>
                   <div class="d-flex justify-content-between">
                     <div></div>
@@ -131,7 +188,7 @@ export default function OrderPage() {
                   >
                     <div>SubTotal</div>
 
-                    <div>SAR 350</div>
+                    <div>SAR {subprice + 20}</div>
                   </div>
                 </div>
                 <div className="mt-2 ">

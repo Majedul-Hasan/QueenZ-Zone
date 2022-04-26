@@ -1,5 +1,5 @@
 import { SnackbarProvider } from "notistack";
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import WhatsAppWidget from "react-whatsapp-widget";
@@ -31,10 +31,57 @@ function App() {
 
   const [productShowAnimation, setProductShowAnimation] = useState();
 
+  const [seasonStroageProductlist, setSeasonStroageProductlist] = useState([]);
+
+  useEffect(() => {
+    const seasonData = JSON.parse(sessionStorage.getItem("addToShoppingCard"));
+
+    console.log("this is Season data  : ", seasonData);
+
+    if (seasonStroageProductlist.length) {
+      console.log("vhai kaj hoise :::::::;;");
+
+      if (!seasonData.length === true) {
+        sessionStorage.setItem(
+          "addToShoppingCard",
+          JSON.stringify([seasonStroageProductlist])
+        );
+      } else {
+        sessionStorage.setItem(
+          "addToShoppingCard",
+          JSON.stringify([...seasonData, seasonStroageProductlist])
+        );
+      }
+    }
+
+    // setTimeout(function () {
+    //   console.log("this is Season data  : ", seasonData);
+
+    //   if (seasonData.length === true) {
+    //     localStorage.setItem(
+    //       "addToShoppingCard",
+    //       JSON.stringify(seasonStroageProductlist)
+    //     );
+    //   }
+    // }, 500);
+
+    // if (seasonData === null || seasonData.length === false) {
+    //   localStorage.setItem(
+    //     "addToShoppingCard",
+    //     JSON.stringify(seasonStroageProductlist)
+    //   );
+    // }
+  }, [seasonStroageProductlist]);
+
   // drilling image for animation
   const setAniImg = (props) => {
     console.log("this is app js for animation product picture : ", props);
-    setProductShowAnimation(props);
+    setSeasonStroageProductlist(props.dt);
+    setProductShowAnimation(props.firstImgs);
+  };
+
+  const seasonStroageProductFunction = (props) => {
+    console.log("this is season stroage product : ", props);
   };
 
   return (
@@ -50,7 +97,10 @@ function App() {
             <Switch>
               <Route exact path="/">
                 <HeaderSearchBar></HeaderSearchBar>
-                <Layout setAniImg={setAniImg}></Layout>
+                <Layout
+                  seasonStroageProductFunction={seasonStroageProductFunction}
+                  setAniImg={setAniImg}
+                ></Layout>
                 <NaviBar
                   setAniImg={setAniImg}
                   productShowAnimation={productShowAnimation}

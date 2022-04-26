@@ -231,8 +231,11 @@ export default function ProductAllList({
 
           <div
             onClick={() => {
-              addToShoppingCard(dt);
-              setAniImg(firstImgs[0]);
+              // addToShoppingCard(dt);
+              setAniImg({
+                firstImgs: firstImgs[0],
+                dt: [dt, firstImgs],
+              });
             }}
           >
             {/* <FontAwesomeIcon

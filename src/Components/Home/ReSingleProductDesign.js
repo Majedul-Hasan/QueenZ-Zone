@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Stack from "@mui/material/Stack";
 import Carousel from "nuka-carousel";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 export default function ReSingleProductDesign({
   setOldSecdata,
@@ -16,6 +16,7 @@ export default function ReSingleProductDesign({
   ProductAdded,
   setAniImg,
   PushSingleProductpage,
+  seasonStroageProductFunction,
 }) {
   const [imgs, setImgs] = useState(dt.ProductImage);
 
@@ -28,20 +29,32 @@ export default function ReSingleProductDesign({
   // love btn
   const [love, setLove] = useState(false);
 
-  useEffect(() => {
-    setOldSecdata(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
-  }, []);
+  /// comment
+  // useEffect(() => {
+  //   setOldSecdata(JSON.parse(sessionStorage.getItem("addToShoppingCard")));
+  // }, []);
 
   // add to shopping card
   const addToShoppingCard = (props) => {
-    setOldSecdata([...oldSecData, [dt, firstImgs]]);
+    ////// setOldSecdata([...oldSecData, [dt, firstImgs]]);
     ProductAdded("success");
-    setAniImg(firstImgs[0]);
+
+    let localData = {
+      firstImgs: firstImgs[0],
+      dt: [dt, firstImgs],
+    };
+
+    setAniImg(localData);
 
     // const dataOld = JSON.parse(sessionStorage.getItem("addToShoppingCard"));
 
     //  setSelectedProductImage([...selectedProductImage, firstImgs]);
   };
+
+  // // add to shopping card
+  // const addToShoppingCard = (props) => {
+  //   seasonStroageProductFunction(props);
+  // };
 
   return (
     <div>

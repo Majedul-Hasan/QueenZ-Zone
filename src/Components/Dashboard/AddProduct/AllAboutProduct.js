@@ -1,5 +1,6 @@
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Switch } from "@mui/material";
 import React, { createContext, useEffect, useState } from "react";
 import AddProductReDesign from "./AddProductReDesign";
 import ImgCarousel from "./ImgCarousel";
@@ -23,6 +24,9 @@ export default function AllAboutProduct() {
   const [FinalProductCategory, setFinalProductCategory] = useState();
 
   const [FinalProductDescription, setFinalProductDescription] = useState();
+
+  // product size on off
+  const [isSizeShow, setIsSizeShow] = useState(true);
 
   // use state for addtag
   const [tag, setTag] = useState("");
@@ -68,6 +72,7 @@ export default function AllAboutProduct() {
     } else {
       const productDetails = [
         {
+          isSizeShow: isSizeShow,
           ProductName: FinalProductName,
           ProductPrice: FinalProductPrice,
           ProductImage: AllInfo,
@@ -379,12 +384,37 @@ export default function AllAboutProduct() {
                   ))}
                 </div>
               </div>
+
               <div className="col">
                 <ImgCarousel
                   AlOverProductInfoContext={AlOverProductInfoContext}
                   AllInfo={AllInfo}
                 ></ImgCarousel>
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="col">
+          <div class="d-flex justify-content-center">
+            <span>Product Size</span>
+          </div>
+
+          <div
+            class="m-3 d-flex justify-content-center"
+            style={{ alignItems: "center" }}
+          >
+            <div>
+              <span>Off</span>
+            </div>
+            <div>
+              <Switch
+                onClick={() => setIsSizeShow(!isSizeShow)}
+                defaultChecked
+                color="warning"
+              />
+            </div>
+            <div>
+              <span>On</span>
             </div>
           </div>
         </div>

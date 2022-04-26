@@ -22,6 +22,10 @@ export default function SingleProdductPage({ setAniImg }) {
   // useState for product
   const [product, setProduct] = useState([]);
 
+  console.log(product);
+
+  const [dt, setDt] = useState();
+
   // this is first image when page was load
   const [fristImage, setFristImage] = useState([]);
 
@@ -35,6 +39,7 @@ export default function SingleProdductPage({ setAniImg }) {
       .then((json) => {
         console.log(json);
         setProduct(json);
+        setDt(json);
         setFristImage(json[0].ProductImage[0][0].image);
       });
   }, []);
@@ -43,6 +48,12 @@ export default function SingleProdductPage({ setAniImg }) {
   useEffect(() => {
     // Update the document title using the browser API
     console.log("is old product : ", !window.sessionStorage.addToShoppingCard);
+
+    if (!window.sessionStorage.addToShoppingCard === true) {
+      // inderect product link
+
+      sessionStorage.setItem("addToShoppingCard", JSON.stringify([]));
+    }
   }, []);
 
   const setSeasonProduct = (props) => {
@@ -271,7 +282,16 @@ export default function SingleProdductPage({ setAniImg }) {
             <div className="mt-2">
               <DeliveryFee></DeliveryFee>
             </div>
-            <div className="m-2 mt-2">
+            <div
+              className="m-2 mt-2"
+              style={{
+                display: `${
+                  product[0] && product[0].isSizeShow === false
+                    ? "none"
+                    : "block"
+                }`,
+              }}
+            >
               <div
                 className="pt-2"
                 style={{
@@ -349,8 +369,11 @@ export default function SingleProdductPage({ setAniImg }) {
               <div className="w-100 p-2">
                 <button
                   onClick={() => {
-                    setAniImg(fristImage[0]);
-                    setSeasonProduct(fristImage);
+                    setAniImg({
+                      firstImgs: fristImage[0],
+                      dt: [dt[0], [fristImage[0]]],
+                    });
+                    // setSeasonProduct(fristImage);
                   }}
                   style={{
                     backgroundColor: "#fec400",

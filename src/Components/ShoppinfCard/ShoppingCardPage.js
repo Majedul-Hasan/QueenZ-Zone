@@ -28,7 +28,7 @@ export default function ShoppingCardPage() {
   // error for product size
   const [errorproductSize, setErrorProductSize] = useState();
 
-  const [updateProductQty, setUpdateProductQty] = useState();
+  const [updateProductQty, setUpdateProductQty] = useState([]);
 
   const [editProductQty, setEditProductQty] = useState();
 
@@ -71,33 +71,83 @@ export default function ShoppingCardPage() {
 
   const [productSubProce, setProductSubPrice] = useState();
 
+  // useEffetc for product qty
   useEffect(() => {
-    let sum = 0;
+    console.log("this is updateProductQty : ", seasonData);
 
-    let demSubTotal = seasonData;
+    seasonData.map((dt) => console.log("this is dt : ", dt[0]));
 
-    for (let i = 0; i < demSubTotal.length; i++) {
-      let product_price =
-        demSubTotal[i][0].ProductOffer === "null"
-          ? demSubTotal[i][0].ProductPrice
-          : demSubTotal[i][0].ProductOffer;
+    let count_sum = 0;
 
-      let product_qty =
-        demSubTotal[i][0].qty === undefined ? 1 : demSubTotal[i][0].qty;
+    // seasonData.map((dt) => {
+    //   count_sum =
+    //     count_sum + dt[0].ProductOffer != "null"
+    //       ? dt[0].ProductPrice
+    //       : dt[0].ProductOffer;
 
-      console.log(product_price);
-
-      sum = sum + product_price * product_qty;
-    }
-
-    // let demSubTotal = seasonData.map((sr) => {
-    //   sr[0].ProductPrice * sr[0].qty;
+    //   // console.log(
+    //   //   "hiii  ",
+    //   //   dt[0].ProductOffer != "null" ? dt[0].ProductPrice : dt[0].ProductOffer
+    //   // );
     // });
-    console.log(sum);
-    setProductSubPrice(sum);
 
-    sessionStorage.setItem("ProductSubTotal", JSON.stringify(sum));
-  }, [updateProductQty]);
+    console.log("this is loop : ");
+
+    console.log("yess kah hoise : ");
+
+    seasonData.map(
+      (dt) =>
+        (count_sum =
+          count_sum + dt[0].ProductOffer != "null"
+            ? dt[0].ProductPrice
+            : dt[0].ProductOffer)
+    );
+
+    // for (let i = 1; i <= seasonData.length; i++) {
+    //   console.log("this is loop : ", seasonData[i]);
+
+    //   // let dt = seasonData[0];
+
+    //   // count_sum =
+    //   //   count_sum + dt[0].ProductOffer != "null"
+    //   //     ? dt[0].ProductPrice
+    //   //     : dt[0].ProductOffer;
+    // }
+
+    console.log("hiii  count : ", count_sum);
+  }, [!seasonData.length === true]);
+
+  // useEffect(() => {
+  //   let sum = 0;
+
+  //   let demSubTotal = seasonData;
+
+  //   console.log("this is demoSubTotal check : ", demSubTotal);
+
+  //   for (let i = 0; i < demSubTotal.length; i++) {
+  //     console.log("this is check for loop ");
+
+  //     let product_price =
+  //       demSubTotal[i][0].ProductOffer != "null"
+  //         ? demSubTotal[i][0].ProductPrice
+  //         : demSubTotal[i][0].ProductOffer;
+
+  //     let product_qty =
+  //       demSubTotal[i][0].qty === undefined ? 1 : demSubTotal[i][0].qty;
+
+  //     console.log("this is single product price : ", product_price);
+
+  //     sum = sum + product_price * product_qty;
+  //   }
+
+  //   // let demSubTotal = seasonData.map((sr) => {
+  //   //   sr[0].ProductPrice * sr[0].qty;
+  //   // });
+  //   console.log(sum);
+  //   setProductSubPrice(sum);
+
+  //   sessionStorage.setItem("ProductSubTotal", JSON.stringify(sum));
+  // }, [updateProductQty]);
 
   setTimeout(() => {
     let sum = 0;
@@ -107,8 +157,8 @@ export default function ShoppingCardPage() {
     for (let i = 0; i < demSubTotal.length; i++) {
       let product_price =
         demSubTotal[i][0].ProductOffer === "null"
-          ? demSubTotal[i][0].ProductPrice
-          : demSubTotal[i][0].ProductOffer;
+          ? demSubTotal[i][0].ProductOffer
+          : demSubTotal[i][0].ProductPrice;
 
       let product_qty =
         demSubTotal[i][0].qty === undefined ? 1 : demSubTotal[i][0].qty;
@@ -146,12 +196,28 @@ export default function ShoppingCardPage() {
   const SubTotalOrderBtn = () => {
     let subMub = JSON.parse(sessionStorage.getItem("addToShoppingCard"));
 
-    const pSizeChect = subMub.filter((dt) => dt[0].pSize === undefined);
+    console.log(subMub);
+
+    const pSizeChectShow = subMub.filter((dt) => dt[0].isSizeShow === true);
+
+    console.log(pSizeChectShow);
+
+    // console.log(subMub);
+
+    const pSizeChect = pSizeChectShow.filter((dt) => dt[0].pSize === undefined);
 
     if (pSizeChect.length) {
-      console.log("please submit the product size : ", pSizeChect);
-      setErrorProductSize(pSizeChect);
-      alert("Please Enter the product's Size");
+      if (pSizeChect[0][0].isSizeShow === true) {
+        console.log("please submit the product size : ", pSizeChect);
+        setErrorProductSize(pSizeChect);
+        alert("Please Enter the product's Size");
+      } else {
+      }
+
+      // console.log(
+      //   "please submit the product size : ",
+      //   pSizeChect[0][0].isSizeShow
+      // );
     } else if (seasonData.length > 0) {
       console.log("successFull", subMub);
 
@@ -159,7 +225,7 @@ export default function ShoppingCardPage() {
         history.push("/Order");
       }
 
-      //
+      //   //
     }
   };
 

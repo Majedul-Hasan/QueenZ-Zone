@@ -4,7 +4,7 @@ import AllProductCatagaryShow from "./AllProductCatagaryShow";
 import CarouselHome from "./CarouselHome";
 import ShowGroupPicFirst from "./ShowGroupPicFirst";
 
-export default function Layout({ setAniImg }) {
+export default function Layout({ setAniImg, seasonStroageProductFunction }) {
   // category
 
   const [category, sstcategory] = useState([]);
@@ -31,6 +31,7 @@ export default function Layout({ setAniImg }) {
         sstcategory(json[0].layout);
         console.log("this is layout ", json[0].layout);
         console.log("this is caaatagory : ", category);
+        seasonStroageProductFunction(json[0].layout);
       });
   }, []);
 
@@ -42,6 +43,7 @@ export default function Layout({ setAniImg }) {
       {category.map((ca) => (
         <AllProductCatagaryShow
           ca={ca}
+          seasonStroageProductFunction={seasonStroageProductFunction}
           setAniImg={setAniImg}
         ></AllProductCatagaryShow>
       ))}

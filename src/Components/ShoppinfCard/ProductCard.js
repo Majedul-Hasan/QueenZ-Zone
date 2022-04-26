@@ -166,8 +166,8 @@ export default function ProductCard({
                 {" "}
                 <strong>
                   {dt[0].ProductOffer != "null"
-                    ? dt[0].ProductOffer
-                    : dt[0].ProductPrice}
+                    ? dt[0].ProductPrice
+                    : dt[0].ProductOffer}
                 </strong>
               </span>
               <div
@@ -193,7 +193,7 @@ export default function ProductCard({
                 >
                   {" "}
                   <strong>
-                    <s>{dt[0].ProductPrice}</s>
+                    <s>{dt[0].ProductOffer}</s>
                   </strong>
                 </span>
               </div>
@@ -258,7 +258,12 @@ export default function ProductCard({
                 labelledBy="Select Size"
               />
             </div> */}
-            <div className="mt-3">
+            <div
+              className="mt-3"
+              style={{
+                display: `${dt[0].isSizeShow === true ? "block" : "none"}`,
+              }}
+            >
               <select
                 value={dt[0].pSize != undefined && dt[0].pSize}
                 onChange={(e) => ProductSize(e.target.value)}
@@ -287,8 +292,8 @@ export default function ProductCard({
                 <div>Product Price</div>
                 <div>
                   {dt[0].ProductOffer != "null"
-                    ? dt[0].ProductOffer
-                    : dt[0].ProductPrice}
+                    ? dt[0].ProductPrice
+                    : dt[0].ProductOffer}
                 </div>
               </div>
               <div class="d-flex justify-content-between">
@@ -316,8 +321,8 @@ export default function ProductCard({
                 >
                   <strong>
                     {dt[0].ProductOffer != "null"
-                      ? dt[0].ProductOffer * qty
-                      : dt[0].ProductPrice * qty}
+                      ? dt[0].ProductPrice * qty
+                      : dt[0].ProductOffer * qty}
                   </strong>
                 </span>
               </div>

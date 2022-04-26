@@ -58,7 +58,7 @@ export default function OrderImage({ dt }) {
                     }}
                   >
                     SAR{" "}
-                    {dt[0].ProductOffer === "null"
+                    {dt[0].ProductOffer != "null"
                       ? dt[0].ProductPrice
                       : dt[0].ProductOffer}
                   </span>{" "}
@@ -73,7 +73,7 @@ export default function OrderImage({ dt }) {
                         }`,
                       }}
                     >
-                      SAR {dt[0].ProductPrice}
+                      SAR {dt[0].ProductOffer}
                     </span>
                   </del>
                 </div>
