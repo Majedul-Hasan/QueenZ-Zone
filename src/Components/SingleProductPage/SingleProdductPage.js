@@ -392,7 +392,7 @@ export default function SingleProdductPage({ setAniImg }) {
                   <span>Add To Card</span>
                 </button>
               </div>
-              <div className="w-100 p-2">
+              <div className="w-100 p-2" style={{ display: "none" }}>
                 <button
                   style={{
                     backgroundColor: "#fec400",
