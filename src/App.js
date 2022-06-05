@@ -14,7 +14,7 @@ import FavoritePage from "./Components/Favorite/FavoritePage";
 import MyAccount from "./Components/MyAccount/MyAccount";
 import MyMessage from "./Components/MyMessage/MyMessage";
 import NaviBar from "./Components/NaviBar/NaviBar";
-import Order from "./Components/Order/Order";
+import { default as Order } from "./Components/Order/Order";
 import OrderPage from "./Components/OrderPage/OrderPage";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import ShoppingCardPage from "./Components/ShoppinfCard/ShoppingCardPage";

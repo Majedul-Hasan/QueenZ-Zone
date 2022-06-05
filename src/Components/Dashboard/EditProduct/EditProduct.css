@@ -1,0 +1,5 @@
+.editProductCate:hover{
+    background-color: #fec400;
+    border-radius: 5px;
+    transition: 0.5s;
+}

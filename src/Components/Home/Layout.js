@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import DeliveryFee from "../DeliveryFee/DeliveryFee";
+import HomePageLoadingAni from "../HomePageLoadingAni/HomePageLoadingAni";
 import AllProductCatagaryShow from "./AllProductCatagaryShow";
 import CarouselHome from "./CarouselHome";
 
@@ -9,7 +9,7 @@ export default function Layout({ setAniImg, seasonStroageProductFunction }) {
   const [category, sstcategory] = useState([]);
 
   // useEffect(() => {
-  //   fetch("http://localhost:5000/queenZoneCategoryRead")
+  //   fetch("https://glacial-shore-36532.herokuapp.com/queenZoneCategoryRead")
   //     .then((response) => response.json())
   //     .then((json) => {
   //       sstcategory(json);
@@ -38,14 +38,27 @@ export default function Layout({ setAniImg, seasonStroageProductFunction }) {
     <div className="mb-5 pb-3">
       <CarouselHome></CarouselHome>
       {/* <ShowGroupPicFirst></ShowGroupPicFirst> */}
-      <DeliveryFee></DeliveryFee>
-      {category.map((ca) => (
-        <AllProductCatagaryShow
-          ca={ca}
-          seasonStroageProductFunction={seasonStroageProductFunction}
-          setAniImg={setAniImg}
-        ></AllProductCatagaryShow>
-      ))}
+      {/* <DeliveryFee></DeliveryFee> */}
+      {!category.length === false ? (
+        category.map((ca) => (
+          <AllProductCatagaryShow
+            ca={ca}
+            seasonStroageProductFunction={seasonStroageProductFunction}
+            setAniImg={setAniImg}
+          ></AllProductCatagaryShow>
+        ))
+      ) : (
+        <div>
+          <HomePageLoadingAni></HomePageLoadingAni>
+          <HomePageLoadingAni></HomePageLoadingAni>
+          <HomePageLoadingAni></HomePageLoadingAni>
+          <HomePageLoadingAni></HomePageLoadingAni>
+          <HomePageLoadingAni></HomePageLoadingAni>
+          <HomePageLoadingAni></HomePageLoadingAni>
+          <HomePageLoadingAni></HomePageLoadingAni>
+          <HomePageLoadingAni></HomePageLoadingAni>
+        </div>
+      )}
     </div>
   );
 }

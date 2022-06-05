@@ -1,5 +1,9 @@
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import ClassIcon from "@mui/icons-material/Class";
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
+import Shop2Icon from "@mui/icons-material/Shop2";
 import { default as React, useContext, useState } from "react";
 import logo from "../../../Asset/queenz_zone_logo.png";
 import { FunctionBarSelectionContext } from "../MainDashboard/MainDashboard";
@@ -55,7 +59,7 @@ export default function Sidebar() {
             <div
               onClick={() => optionSelect("order")}
               style={{
-                padding: `${optionSelectState === "order" ? "4px" : "8px"}`,
+                padding: `${optionSelectState === "order" ? "4px" : "4px"}`,
               }}
             >
               <div
@@ -71,7 +75,7 @@ export default function Sidebar() {
                 }}
               >
                 <div>
-                  <FontAwesomeIcon icon={faCartShopping} />
+                  <Shop2Icon></Shop2Icon>
                 </div>
                 <div className="fw-bold" style={{ marginLeft: "10px" }}>
                   Order
@@ -83,7 +87,7 @@ export default function Sidebar() {
               onClick={() => optionSelect("Add Product")}
               style={{
                 padding: `${
-                  optionSelectState === "Add Product" ? "4px" : "8px"
+                  optionSelectState === "Add Product" ? "4px" : "4px"
                 }`,
               }}
             >
@@ -100,7 +104,7 @@ export default function Sidebar() {
                 }}
               >
                 <div>
-                  <FontAwesomeIcon icon={faCartShopping} />
+                  <AddShoppingCartIcon></AddShoppingCartIcon>
                 </div>
                 <div className="fw-bold" style={{ marginLeft: "10px" }}>
                   Add Product
@@ -109,10 +113,39 @@ export default function Sidebar() {
             </div>
             <div
               className=""
+              onClick={() => optionSelect("Edit Product")}
+              style={{
+                padding: `${
+                  optionSelectState === "Edit Product" ? "4px" : "4px"
+                }`,
+              }}
+            >
+              <div
+                class="d-flex justify-content-start p-2 "
+                style={{
+                  backgroundColor: ` ${
+                    optionSelectState === "Edit Product"
+                      ? " rgb(255 240 128 / 60%)"
+                      : "rgb(254, 196, 0)"
+                  }  `,
+                  height: "35px",
+                  cursor: "pointer",
+                }}
+              >
+                <div>
+                  <ModeEditOutlineIcon></ModeEditOutlineIcon>
+                </div>
+                <div className="fw-bold" style={{ marginLeft: "10px" }}>
+                  Edit Product
+                </div>
+              </div>
+            </div>
+            <div
+              className=""
               onClick={() => optionSelect("Add Category")}
               style={{
                 padding: `${
-                  optionSelectState === "Add Category" ? "4px" : "8px"
+                  optionSelectState === "Add Category" ? "4px" : "4px"
                 }`,
               }}
             >
@@ -129,7 +162,7 @@ export default function Sidebar() {
                 }}
               >
                 <div>
-                  <FontAwesomeIcon icon={faCartShopping} />
+                  <ClassIcon></ClassIcon>
                 </div>
                 <div className="fw-bold" style={{ marginLeft: "10px" }}>
                   Category
@@ -141,7 +174,7 @@ export default function Sidebar() {
               className=""
               onClick={() => optionSelect("Stock")}
               style={{
-                padding: `${optionSelectState === "Stock" ? "4px" : "8px"}`,
+                padding: `${optionSelectState === "Stock" ? "4px" : "4px"}`,
               }}
             >
               <div

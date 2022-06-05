@@ -175,7 +175,7 @@ export default function OrderPage() {
                   <div class="d-flex justify-content-between">
                     <div>Delivery fee : </div>
 
-                    <div>20</div>
+                    <div>25</div>
                   </div>
                   <div class="d-flex justify-content-between">
                     <div></div>
@@ -188,7 +188,7 @@ export default function OrderPage() {
                   >
                     <div>SubTotal</div>
 
-                    <div>SAR {subprice + 20}</div>
+                    <div>SAR {subprice + 25}</div>
                   </div>
                 </div>
                 <div className="mt-2 ">

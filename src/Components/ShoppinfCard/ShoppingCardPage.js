@@ -262,7 +262,7 @@ export default function ShoppingCardPage() {
               <div>Total :</div> <div>{productSubProce}</div>
             </div>
             <div class="d-flex justify-content-between">
-              <div>Delivery Fee : </div> <div>20</div>
+              <div>Delivery Fee : </div> <div>25</div>
             </div>
             <div class="d-flex justify-content-between">
               <div></div> <div>------------------------</div>
@@ -271,7 +271,7 @@ export default function ShoppingCardPage() {
               style={{ color: "red", fontWeight: "bold" }}
               class="d-flex justify-content-between"
             >
-              <div>Subtotal</div> <div>{productSubProce + 20}</div>
+              <div>Subtotal</div> <div>{productSubProce + 25}</div>
             </div>
           </div>
           <div className="mb-5 pb-5">
@@ -316,7 +316,7 @@ export default function ShoppingCardPage() {
                   >
                     Subtotal : <span style={{ fontSize: "12px" }}>SAR</span>{" "}
                     <span style={{ fontSize: "16px", fontWeight: "600" }}>
-                      {productSubProce + 20}
+                      {productSubProce + 25}
                     </span>{" "}
                     | Proceed to Buy{" "}
                     <span style={{ fontSize: "16px", fontWeight: "600" }}>

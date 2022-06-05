@@ -11,7 +11,6 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { useParams } from "react-router-dom";
 import ShowMoreText from "react-show-more-text";
-import DeliveryFee from "../DeliveryFee/DeliveryFee";
 import "./AnimationSingleproductPage.css";
 
 export default function SingleProdductPage({ setAniImg }) {
@@ -279,9 +278,9 @@ export default function SingleProdductPage({ setAniImg }) {
                 </div>
               </div>
             </div>
-            <div className="mt-2">
+            {/* <div className="mt-2">
               <DeliveryFee></DeliveryFee>
-            </div>
+            </div> */}
             <div
               className="m-2 mt-2"
               style={{

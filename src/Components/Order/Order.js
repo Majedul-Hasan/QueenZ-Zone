@@ -78,6 +78,7 @@ export default function Order() {
   const [loggingUserInfo, setLoginUsserInfo] = useContext(UserInfoContext);
 
   const [startDate, setStartDate] = useState(new Date());
+  const [UserDateAndTime, setUserDateAndTime] = useState(new Date());
 
   const orderUserName = (props) => {
     console.log("this is order user name : ", props);
@@ -172,6 +173,7 @@ export default function Order() {
         UserExpectedDeliveryTime: time,
         UserSelectproduct: productSubTotal,
         UserIp: state,
+        UserCurrentDateAndTime: UserDateAndTime,
       };
 
       // navigator.geolocation.getCurrentPosition(function (position) {
