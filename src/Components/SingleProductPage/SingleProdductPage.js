@@ -102,7 +102,9 @@ export default function SingleProdductPage({ setAniImg }) {
       <div className="mb-5 pb-5">
         {product.length === true ? (
           <div>
-            <h3>loading</h3>
+            <div class="spinner-border text-warning" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </div>
         ) : (
           <div>
@@ -115,7 +117,9 @@ export default function SingleProdductPage({ setAniImg }) {
                     </div>
                   ))
                 ) : (
-                  <h4>hello</h4>
+                  <div class="spinner-border text-warning" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
                 )}
               </Carousel>
             </div>
@@ -169,7 +173,9 @@ export default function SingleProdductPage({ setAniImg }) {
                         </div>
                       ))
                     ) : (
-                      <h4>hello</h4>
+                      <div class="spinner-border text-warning" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
                     )}
                   </div>
                   <div class="d-flex justify-content-center">
@@ -191,9 +197,30 @@ export default function SingleProdductPage({ setAniImg }) {
                         </Button>
                       ))
                     ) : (
-                      <h4>hello</h4>
+                      <div class="spinner-border text-warning" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
                     )}
                   </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="m-2"
+              style={{ margintop: "-13px", fontSize: "25px" }}
+            >
+              <div>
+                <div>
+                  <span style={{ color: "#686868", fontSize: "22px" }}>
+                    Name :{" "}
+                  </span>
+                  <span style={{ color: "black", fontSize: "22px" }}>
+                    <b>
+                      {" "}
+                      {!product.length === false && product[0].ProductName}
+                    </b>
+                  </span>
                 </div>
               </div>
             </div>
@@ -436,18 +463,7 @@ export default function SingleProdductPage({ setAniImg }) {
                     width={500}
                     truncatedEndingComponent={"... "}
                   >
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna amet,
-                    consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis
-                    nostrud exercitation ullamco laboris nisi ut aliquip ex
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    {product[0].ProductDescription}
                   </ShowMoreText>
                 </div>
               )}
