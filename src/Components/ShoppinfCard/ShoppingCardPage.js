@@ -155,10 +155,12 @@ export default function ShoppingCardPage() {
     let demSubTotal = seasonData;
 
     for (let i = 0; i < demSubTotal.length; i++) {
-      let product_price =
-        demSubTotal[i][0].ProductOffer === "null"
-          ? demSubTotal[i][0].ProductOffer
-          : demSubTotal[i][0].ProductPrice;
+      // let product_price =
+      //   demSubTotal[i][0].ProductOffer === "null"
+      //     ? demSubTotal[i][0].ProductOffer
+      //     : demSubTotal[i][0].ProductPrice;
+
+      let product_price = demSubTotal[i][0].ProductPrice;
 
       let product_qty =
         demSubTotal[i][0].qty === undefined ? 1 : demSubTotal[i][0].qty;

@@ -16,7 +16,8 @@ export default function ProductCard({
   setproductSize,
 }) {
   let history = useHistory();
-  console.log("ttttttttttttttttttttttttttttttttttttttt", dt);
+  console.log("this is dt : ", dt);
+  console.log("this is dt[0].ProductPrice : ", dt[0].ProductPrice);
 
   if (errorproductSize != undefined) {
     console.log(
@@ -164,11 +165,7 @@ export default function ProductCard({
                 }}
               >
                 {" "}
-                <strong>
-                  {dt[0].ProductOffer != "null"
-                    ? dt[0].ProductPrice
-                    : dt[0].ProductOffer}
-                </strong>
+                <strong>{dt[0].ProductPrice}</strong>
               </span>
               <div
                 style={{
@@ -290,11 +287,7 @@ export default function ProductCard({
             <div>
               <div class="mt-2 d-flex justify-content-between">
                 <div>Product Price</div>
-                <div>
-                  {dt[0].ProductOffer != "null"
-                    ? dt[0].ProductPrice
-                    : dt[0].ProductOffer}
-                </div>
+                <div>{dt[0].ProductPrice}</div>
               </div>
               <div class="d-flex justify-content-between">
                 <div>Quantity</div>
@@ -319,11 +312,7 @@ export default function ProductCard({
                     paddingLeft: "5px",
                   }}
                 >
-                  <strong>
-                    {dt[0].ProductOffer != "null"
-                      ? dt[0].ProductPrice * qty
-                      : dt[0].ProductOffer * qty}
-                  </strong>
+                  <strong>{dt[0].ProductPrice * qty}</strong>
                 </span>
               </div>
             </div>
