@@ -117,8 +117,8 @@ function App() {
                   </div>
 
                   <MessengerCustomerChat
-                    pageId="107458131944956"
-                    appId="375532847792797"
+                    pageId="109450594159775"
+                    appId="897437511658333"
                   />
                 </div>
               </Route>
@@ -137,8 +137,8 @@ function App() {
                   </div>
 
                   <MessengerCustomerChat
-                    pageId="107458131944956"
-                    appId="375532847792797"
+                    pageId="109450594159775"
+                    appId="897437511658333"
                   />
                 </div>
               </PrivateRoute>
@@ -161,8 +161,8 @@ function App() {
                   </div>
 
                   <MessengerCustomerChat
-                    pageId="107458131944956"
-                    appId="375532847792797"
+                    pageId="109450594159775"
+                    appId="897437511658333"
                   />
                 </div>
               </Route>
@@ -181,8 +181,8 @@ function App() {
                   </div>
 
                   <MessengerCustomerChat
-                    pageId="107458131944956"
-                    appId="375532847792797"
+                    pageId="109450594159775"
+                    appId="897437511658333"
                   />
                 </div>
               </Route>
@@ -206,8 +206,8 @@ function App() {
                   </div>
 
                   <MessengerCustomerChat
-                    pageId="107458131944956"
-                    appId="375532847792797"
+                    pageId="109450594159775"
+                    appId="897437511658333"
                   />
                 </div>
               </Route>
@@ -231,8 +231,8 @@ function App() {
                   </div>
 
                   <MessengerCustomerChat
-                    pageId="107458131944956"
-                    appId="375532847792797"
+                    pageId="109450594159775"
+                    appId="897437511658333"
                   />
                 </div>
               </Route>
@@ -252,8 +252,8 @@ function App() {
                   </div>
 
                   <MessengerCustomerChat
-                    pageId="107458131944956"
-                    appId="375532847792797"
+                    pageId="109450594159775"
+                    appId="897437511658333"
                   />
                 </div>
               </Route>
@@ -273,8 +273,8 @@ function App() {
                   </div>
 
                   <MessengerCustomerChat
-                    pageId="107458131944956"
-                    appId="375532847792797"
+                    pageId="109450594159775"
+                    appId="897437511658333"
                   />
                 </div>
               </Route>
@@ -294,8 +294,8 @@ function App() {
                   </div>
 
                   <MessengerCustomerChat
-                    pageId="107458131944956"
-                    appId="375532847792797"
+                    pageId="109450594159775"
+                    appId="897437511658333"
                   />
                 </div>
               </Route>
@@ -314,8 +314,8 @@ function App() {
                   </div>
 
                   <MessengerCustomerChat
-                    pageId="107458131944956"
-                    appId="375532847792797"
+                    pageId="109450594159775"
+                    appId="897437511658333"
                   />
                 </div>
               </PrivateRoute>
@@ -334,8 +334,8 @@ function App() {
                   </div>
 
                   <MessengerCustomerChat
-                    pageId="107458131944956"
-                    appId="375532847792797"
+                    pageId="109450594159775"
+                    appId="897437511658333"
                   />
                 </div>
               </PrivateRoute>
@@ -358,8 +358,8 @@ function App() {
                   </div>
 
                   <MessengerCustomerChat
-                    pageId="107458131944956"
-                    appId="375532847792797"
+                    pageId="109450594159775"
+                    appId="897437511658333"
                   />
                 </div>
               </Route>
@@ -382,8 +382,8 @@ function App() {
                   </div>
 
                   <MessengerCustomerChat
-                    pageId="107458131944956"
-                    appId="375532847792797"
+                    pageId="109450594159775"
+                    appId="897437511658333"
                   />
                 </div>
               </Route>
