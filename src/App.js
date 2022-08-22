@@ -96,6 +96,7 @@ function App() {
           >
             <Switch>
               <Route exact path="/">
+                <h1>hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii</h1>
                 <HeaderSearchBar></HeaderSearchBar>
                 <Layout
                   seasonStroageProductFunction={seasonStroageProductFunction}
