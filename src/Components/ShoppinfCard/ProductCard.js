@@ -276,11 +276,9 @@ export default function ProductCard({
                 }}
               >
                 <option selected>Select Size</option>
-                <option value="XS">XS</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
-                <option value="XXL">XXL</option>
+                {dt[0].productSize.map((sz) => (
+                  <option value={sz}>{sz}</option>
+                ))}
               </select>
             </div>
 

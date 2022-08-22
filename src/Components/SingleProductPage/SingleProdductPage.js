@@ -5,12 +5,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@mui/material";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { QuantityPicker } from "react-qty-picker";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { useParams } from "react-router-dom";
-import ShowMoreText from "react-show-more-text";
 import "./AnimationSingleproductPage.css";
 
 export default function SingleProdductPage({ setAniImg }) {
@@ -28,6 +28,54 @@ export default function SingleProdductPage({ setAniImg }) {
   // this is first image when page was load
   const [fristImage, setFristImage] = useState([]);
 
+  // visitor info
+  const [visitorInfo, setVisitorInfo] = useState(false);
+
+  // call useEffect
+  const [callUseEffectForVisitorInfo, setCallUseEffectForVisitorInfo] =
+    useState(0);
+
+  useEffect(() => {
+    if (visitorInfo !== false) {
+      fetch("https://glacial-shore-36532.herokuapp.com/visitorInfo", {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ visitorInfo }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  }, [callUseEffectForVisitorInfo === 2]);
+
+  /// post user info
+  //creating function to load ip address from the API
+  const getData = async (props) => {
+    const res = await axios.get("https://geolocation-db.com/json/");
+    //import axios from "axios";
+    const vData = {
+      IPv4: res.data.IPv4 ? res.data.IPv4 : "null",
+      city: res.data.city ? res.data.city : "null",
+      country_code: res.data.country_code ? res.data.country_code : "null",
+      country_name: res.data.country_name ? res.data.country_name : "null",
+      latitude: res.data.latitude ? res.data.latitude : "null",
+      longitude: res.data.longitude ? res.data.longitude : "null",
+      postal: res.data.postal ? res.data.postal : "null",
+      state: res.data.state ? res.data.state : "null",
+      time: new Date(),
+      product: props,
+    };
+
+    setVisitorInfo(vData);
+    setCallUseEffectForVisitorInfo(2);
+  };
+
   // useEffect for fetch data
   useEffect(() => {
     // Update the document title using the browser API
@@ -39,6 +87,7 @@ export default function SingleProdductPage({ setAniImg }) {
         console.log(json);
         setProduct(json);
         setDt(json);
+        getData(json);
         setFristImage(json[0].ProductImage[0][0].image);
       });
   }, []);
@@ -144,13 +193,13 @@ export default function SingleProdductPage({ setAniImg }) {
                     style={{
                       marginTop: "-20px",
                       margin: "0px",
-                      padding: "0px",
+                      padding: "2px",
                       marginLeft: "10px",
                       color: "#686868",
                       fontSize: "20px",
                     }}
                   >
-                    Color :{" "}
+                    Color:{" "}
                   </h5>
                 </div>
                 <div>
@@ -192,6 +241,7 @@ export default function SingleProdductPage({ setAniImg }) {
                               backgroundColor: img[0].color,
                               width: "50px",
                               height: "15px",
+                              borderRadius: "5px",
                             }}
                           ></div>
                         </Button>
@@ -314,7 +364,7 @@ export default function SingleProdductPage({ setAniImg }) {
                 display: `${
                   product[0] && product[0].isSizeShow === false
                     ? "none"
-                    : "block"
+                    : "none"
                 }`,
               }}
             >
@@ -448,23 +498,36 @@ export default function SingleProdductPage({ setAniImg }) {
                     }`,
                   }}
                 >
-                  <span style={{ color: "#686868", fontSize: "20px" }}>
+                  <span
+                    style={{
+                      color: "#686868",
+                      fontSize: "20px",
+                    }}
+                  >
                     Details
                   </span>
-                  <ShowMoreText
-                    /* Default options */
-                    lines={3}
-                    more="Show more"
-                    less="Show less"
-                    className="content-css"
-                    anchorClass="my-anchor-css-class"
-                    onClick={executeOnClick}
-                    expanded={false}
-                    width={500}
-                    truncatedEndingComponent={"... "}
-                  >
-                    {product[0].ProductDescription}
-                  </ShowMoreText>
+
+                  {/* 
+                  <ShowMoreText */}
+
+                  {/* // lines={3}
+                    // more="Show more"
+                    // less="Show less"
+                    // className="content-css"
+                    // anchorClass="my-anchor-css-class"
+                    // onClick={executeOnClick}
+                    // expanded={false}
+                    // width={100}
+                    // truncatedEndingComponent={"... "} */}
+                  {/* > */}
+                  {/* <span> </span> */}
+                  {/* </ShowMoreText> */}
+
+                  <div>
+                    <div class="c" style={{ width: " 90%", padding: "5px" }}>
+                      {product[0].ProductDescription}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>

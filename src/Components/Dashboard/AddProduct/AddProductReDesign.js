@@ -40,7 +40,7 @@ export default function AddProductReDesign({ demo }) {
           <div>
             <div>
               {addSingleProduct.map((product) => (
-                <div className="p-2" style={{}}>
+                <div className="pt-2" style={{}}>
                   <AddLink
                     product={product}
                     setEnableColor={setEnableColor}

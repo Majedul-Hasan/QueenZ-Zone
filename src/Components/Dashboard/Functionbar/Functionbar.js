@@ -4,6 +4,7 @@ import AllAboutProduct from "../AddProduct/AllAboutProduct";
 import EditProduct from "../EditProduct/EditProduct";
 import { FunctionBarSelectionContext } from "../MainDashboard/MainDashboard";
 import Order from "../Order/Order";
+import ViewsDashboard from "../ViewsDashboard/ViewsDashboard";
 
 export default function Functionbar() {
   // use context for sidebar name
@@ -39,6 +40,9 @@ export default function Functionbar() {
       {FunctionBarSelectionName === "order" && <Order></Order>}
       {FunctionBarSelectionName === "Edit Product" && (
         <EditProduct></EditProduct>
+      )}
+      {FunctionBarSelectionName === "Views" && (
+        <ViewsDashboard></ViewsDashboard>
       )}
     </div>
   );

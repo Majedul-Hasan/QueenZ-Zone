@@ -334,7 +334,11 @@ export default function AddLink({
               <div>
                 <span>
                   Shortcut Image square sizing{" "}
-                  <a target="_blank" href="https://bulkimagecrop.com/">
+                  <a
+                    target="_blank"
+                    href="https://bulkimagecrop.com/"
+                    rel="noreferrer"
+                  >
                     <strong>WEBSITE</strong>
                   </a>
                 </span>
@@ -349,7 +353,7 @@ export default function AddLink({
             >
               <span>
                 Image uploading{" "}
-                <a target="_blank" href="https://imgbb.com/">
+                <a target="_blank" href="https://imgbb.com/" rel="noreferrer">
                   <strong>WEBSITE</strong>
                 </a>
               </span>

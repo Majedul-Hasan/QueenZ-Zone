@@ -46,11 +46,9 @@ export default function EditImage({ dt }) {
                   }}
                 >
                   <option selected>Select Size</option>
-                  <option value="XS">XS</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
-                  <option value="XXL">XXL</option>
+                  {dt.productSize.map((sz) => (
+                    <option value={sz}>{sz}</option>
+                  ))}
                 </select>
               </div>
             </div>

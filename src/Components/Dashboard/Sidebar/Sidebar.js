@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import ClassIcon from "@mui/icons-material/Class";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Shop2Icon from "@mui/icons-material/Shop2";
 import { default as React, useContext, useState } from "react";
 import logo from "../../../Asset/queenz_zone_logo.png";
@@ -19,7 +20,6 @@ export default function Sidebar() {
 
   // option select
   const optionSelect = (props) => {
-    console.log(props);
     setOptionSelectState(props);
     setFunctionBarSelectionName(props);
   };
@@ -199,9 +199,9 @@ export default function Sidebar() {
             </div>
             <div
               className=""
-              onClick={() => optionSelect("offer")}
+              onClick={() => optionSelect("Views")}
               style={{
-                padding: `${optionSelectState === "offer" ? "4px" : "8px"}`,
+                padding: `${optionSelectState === "Views" ? "4px" : "4px"}`,
               }}
             >
               <div
@@ -209,13 +209,18 @@ export default function Sidebar() {
                 style={{
                   height: "35px",
                   cursor: "pointer",
+                  backgroundColor: ` ${
+                    optionSelectState === "Views"
+                      ? " rgb(255 240 128 / 60%)"
+                      : "rgb(254, 196, 0)"
+                  }  `,
                 }}
               >
                 <div>
-                  <FontAwesomeIcon icon={faCartShopping} />
+                  <RemoveRedEyeIcon />
                 </div>
                 <div className="fw-bold" style={{ marginLeft: "10px" }}>
-                  offer
+                  Views
                 </div>
               </div>
             </div>

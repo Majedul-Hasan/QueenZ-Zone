@@ -190,7 +190,7 @@ export default function ProductAllList({
                 fontFamily: "Poppins",
                 paddingLeft: "5px",
                 display: `${
-                  dt.ProductOffer != "null" ? "inline-block" : "none"
+                  dt.ProductOffer !== "null" ? "inline-block" : "none"
                 }`,
               }}
             >

@@ -20,6 +20,7 @@
     "antd": "^4.19.5",
     "axios": "^0.26.1",
     "firebase": "^9.6.10",
+    "javascript-time-ago": "^2.5.7",
     "notistack": "^2.0.4",
     "nuka-carousel": "^5.0.8",
     "react": "^16.14.0",

@@ -9,6 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
+import axios from "axios";
 import { default as React, useContext, useEffect, useState } from "react";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { UserInfoContext } from "../../App";
@@ -80,6 +81,59 @@ export default function NaviBar({
 
     history.push(`/${props}`);
   };
+
+  // visitor info
+  const [visitorInfo, setVisitorInfo] = useState(false);
+
+  // call useEffect
+  const [callUseEffectForVisitorInfo, setCallUseEffectForVisitorInfo] =
+    useState(0);
+
+  useEffect(() => {
+    if (visitorInfo !== false) {
+      fetch("https://glacial-shore-36532.herokuapp.com/visitorInfo", {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ visitorInfo }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  }, [callUseEffectForVisitorInfo === 2]);
+
+  /// post user info
+  //creating function to load ip address from the API
+  const getData = async () => {
+    const res = await axios.get("https://geolocation-db.com/json/");
+    //import axios from "axios";
+    const vData = {
+      IPv4: res.data.IPv4 ? res.data.IPv4 : "null",
+      city: res.data.city ? res.data.city : "null",
+      country_code: res.data.country_code ? res.data.country_code : "null",
+      country_name: res.data.country_name ? res.data.country_name : "null",
+      latitude: res.data.latitude ? res.data.latitude : "null",
+      longitude: res.data.longitude ? res.data.longitude : "null",
+      postal: res.data.postal ? res.data.postal : "null",
+      state: res.data.state ? res.data.state : "null",
+      time: new Date(),
+      product: "",
+    };
+
+    setVisitorInfo(vData);
+    setCallUseEffectForVisitorInfo(2);
+  };
+
+  useEffect(() => {
+    //passing getData method to the lifecycle method
+    getData();
+  }, []);
 
   return (
     <div>

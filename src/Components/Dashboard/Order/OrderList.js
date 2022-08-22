@@ -5,14 +5,17 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from "react";
 import "./Order.css";
+const now = new Date();
 
 export default function OrderList({ or }) {
-  // console.log("this is single order page : ", or);
+  //console.log("this is single order page : ", or);
 
   let userCarentTime = or.UserCurrentDateAndTime;
 
   const [editDate, setEditDate] = useState([userCarentTime]);
   const [editTime, setEditTime] = useState([userCarentTime]);
+
+  //console.log(or);
 
   // if (!or.length === true) {
   //   userCarentTime = userCarentTime.split("T");
@@ -20,6 +23,7 @@ export default function OrderList({ or }) {
   // }
 
   // Similar to componentDidMount and componentDidUpdate:
+
   useEffect(() => {
     setTimeout(function () {
       setEditDate(editDate[0].split("T"));
@@ -130,8 +134,8 @@ export default function OrderList({ or }) {
             <div className="row ">
               <div className="col">
                 <div>
-                  <span>
-                    <b>#38937429385</b>
+                  <span style={{ fontSize: "12px" }}>
+                    <b>{or._id}</b>
                   </span>
                 </div>
               </div>
@@ -140,7 +144,7 @@ export default function OrderList({ or }) {
                 {" "}
                 <div>
                   <span>
-                    <b>385 SAR</b>
+                    <b>{or.UserSelectproduct.SubTotal}</b>
                   </span>
                 </div>
               </div>
@@ -156,7 +160,7 @@ export default function OrderList({ or }) {
                 {" "}
                 <div>
                   <span>
-                    <b>2022-04-17</b>
+                    <b>{editDate[0]}</b>
                   </span>
                 </div>
               </div>
@@ -164,7 +168,7 @@ export default function OrderList({ or }) {
                 {" "}
                 <div>
                   <span>
-                    <b>3:30 PM</b>
+                    <b>{editTime[1]}</b>
                   </span>
                 </div>
               </div>
@@ -248,7 +252,7 @@ export default function OrderList({ or }) {
                 {" "}
                 <div>
                   <span>
-                    <b>{or.UserAddress}</b>
+                    <b>{or.UserAddress ? or.UserAddress : "null"}</b>
                   </span>
                 </div>
               </div>
@@ -297,12 +301,12 @@ export default function OrderList({ or }) {
                   </div>
                   <div className="row">
                     <div className="col" style={{ fontSize: "13px" }}>
-                      {or.UserIp.data.ip}
+                      {or.UserIp ? or.UserIp.data.ip : "null"}
                     </div>
                     <div className="col">{or.UserIp.data.country}</div>
                     <div className="col">{or.UserIp.data.region}</div>
                     <div className="col" style={{ color: "red" }}>
-                      {or.UserIp.data.latitude}
+                      {or.UserIp ? or.UserIp.data.latitude : "null"}
                     </div>
                   </div>
                   <div className="row">
@@ -313,12 +317,14 @@ export default function OrderList({ or }) {
                     <div className="col">Longitude</div>
                   </div>
                   <div className="row">
-                    <div className="col">{or.UserIp.data.version}</div>
+                    <div className="col">
+                      {or.UserIp ? or.UserIp.data.version : "null"}
+                    </div>
                     <div className="col">{editDate[0]}</div>
                     <div className="col">{editTime[1]}</div>
 
                     <div className="col" style={{ color: "red" }}>
-                      {or.UserIp.data.longitude}
+                      {or.UserIp ? or.UserIp.data.longitude : "null"}
                     </div>
                   </div>
                 </div>
@@ -357,13 +363,17 @@ export default function OrderList({ or }) {
                             </div>
                             <div className="col-10">
                               <div className="row">
-                                <div className="col-4 ">
+                                <div className="col-2">
                                   <b>Product Name</b>
                                 </div>
-                                <div className="col-4">
+                                {pd[0].isSizeShow && (
+                                  <div className="col-2">
+                                    <b>Product's Size</b>
+                                  </div>
+                                )}{" "}
+                                <div className="col-2">
                                   <b>Product Category</b>
                                 </div>
-
                                 <div className="col-2">
                                   <b>Product Price</b>
                                 </div>
@@ -372,8 +382,11 @@ export default function OrderList({ or }) {
                                 </div>
                               </div>
                               <div className="row">
-                                <div className="col-4">{pd[0].ProductName}</div>
-                                <div className="col-4">
+                                <div className="col-2">{pd[0].ProductName}</div>
+                                {pd[0].isSizeShow && (
+                                  <div className="col-2">{pd[0].pSize}</div>
+                                )}
+                                <div className="col-2">
                                   {pd[0].ProductCategory}
                                 </div>
                                 <div className="col-2">

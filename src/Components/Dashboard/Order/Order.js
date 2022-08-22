@@ -17,17 +17,12 @@ export default function Order() {
   //   window.location.reload();
   // }, [reload === 3]);
 
-  if (reload === 2) {
-  }
-
   // find this user order
   useEffect(() => {
     fetch(`https://glacial-shore-36532.herokuapp.com/queenZoneAllOrder/`)
       .then((response) => response.json())
       .then((json) => {
         setOrder(json);
-
-        console.log("reload");
       });
   }, [reload]);
 

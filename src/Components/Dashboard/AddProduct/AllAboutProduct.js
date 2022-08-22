@@ -1,6 +1,6 @@
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Switch } from "@mui/material";
+import { Button } from "@mui/material";
 import React, { createContext, useEffect, useState } from "react";
 import AddProductReDesign from "./AddProductReDesign";
 import ImgCarousel from "./ImgCarousel";
@@ -28,6 +28,34 @@ export default function AllAboutProduct() {
   // product size on off
   const [isSizeShow, setIsSizeShow] = useState(true);
 
+  // input size
+  const [inputAllSize, setInputAllSize] = useState([]);
+
+  // input single size
+  const [inputOneSize, setInputOneSize] = useState();
+
+  const inputSizeBtn = () => {
+    inputOneSize && setInputAllSize([...inputAllSize, inputOneSize]);
+    setInputOneSize("");
+  };
+
+  const handleSizeKeypress = (e) => {
+    //it triggers by pressing the enter key
+
+    if (e.keyCode === 13) {
+      if (inputOneSize !== "") {
+        setInputAllSize([...inputAllSize, inputOneSize]);
+        setInputOneSize("");
+      }
+    }
+  };
+
+  // delete size btn
+  const deleteSizeBtn = (props) => {
+    const newSize = inputAllSize.filter((sz) => sz !== props);
+    setInputAllSize(newSize);
+  };
+
   // use state for addtag
   const [tag, setTag] = useState("");
 
@@ -49,30 +77,77 @@ export default function AllAboutProduct() {
       FinalProductName === undefined &&
         setGloError({
           err: true,
-          msg: "Plaese,fill up the product's name input field",
+          msg: "Please,fill up the product's name input field",
         });
 
       FinalProductPrice === undefined &&
         setGloError({
           err: true,
-          msg: "Plaese,fill up the product's Price input field",
+          msg: "Please,fill up the product's Price input field",
         });
 
       FinalProductCategory === undefined &&
         setGloError({
           err: true,
-          msg: "Plaese,fill up the product's Category",
+          msg: "Please,fill up the product's Category",
         });
 
       !AllInfo.length === true &&
         setGloError({
           err: true,
-          msg: "Plaese,Upload one or more product image",
+          msg: "Please,Upload one or more product image",
         });
+    } else if (isSizeShow === true) {
+      if (inputAllSize.length === 0) {
+        setGloError({
+          err: true,
+          msg: "Please,fill up the product's Size",
+        });
+      } else {
+        const productDetails = [
+          {
+            isSizeShow: isSizeShow,
+            productSize: inputAllSize,
+            ProductName: FinalProductName,
+            ProductPrice: FinalProductPrice,
+            ProductImage: AllInfo,
+            ProductOffer:
+              FinalProductOffer === undefined ? "null" : FinalProductOffer,
+            ProductCategory: FinalProductCategory,
+            ProductDescription:
+              FinalProductDescription === undefined
+                ? "null"
+                : FinalProductDescription,
+            ProductTags: tagArray,
+          },
+        ];
+
+        console.log("vhai submit hoise");
+
+        fetch(
+          "https://glacial-shore-36532.herokuapp.com/queenZoneUserProductUpload",
+          {
+            method: "POST", // or 'PUT'
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ productDetails }),
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+            window.location.reload(false);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
     } else {
       const productDetails = [
         {
           isSizeShow: isSizeShow,
+          productSize: false,
           ProductName: FinalProductName,
           ProductPrice: FinalProductPrice,
           ProductImage: AllInfo,
@@ -87,8 +162,6 @@ export default function AllAboutProduct() {
         },
       ];
 
-      console.log(productDetails);
-
       fetch(
         "https://glacial-shore-36532.herokuapp.com/queenZoneUserProductUpload",
         {
@@ -102,6 +175,7 @@ export default function AllAboutProduct() {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+          window.location.reload(false);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -353,7 +427,7 @@ export default function AllAboutProduct() {
                     border: "2px solid #fec400",
                     borderRadius: "10px",
                     backgroundColor: "#f9d55a21",
-                    height: "150px",
+                    height: "470px",
                   }}
                 >
                   {tagArray.map((singleTag) => (
@@ -393,28 +467,140 @@ export default function AllAboutProduct() {
               </div>
             </div>
           </div>
-        </div>
-        <div className="col">
-          <div class="d-flex justify-content-center">
-            <span>Product Size</span>
-          </div>
 
-          <div
-            class="m-3 d-flex justify-content-center"
-            style={{ alignItems: "center" }}
-          >
-            <div>
-              <span>Off</span>
-            </div>
-            <div>
-              <Switch
-                onClick={() => setIsSizeShow(!isSizeShow)}
-                defaultChecked
-                color="warning"
-              />
-            </div>
-            <div>
-              <span>On</span>
+          <div className="p-3">
+            <div
+              className="row pt-2 pb-3"
+              style={{ border: "2px solid #fec400", borderRadius: "10px" }}
+            >
+              <div className="col-2">
+                <div class="pb-2">
+                  <span>Product Size</span>
+                </div>
+                <Button
+                  className=" p-2"
+                  style={{
+                    backgroundColor: `${isSizeShow ? "#fec400" : "#dc3545"}`,
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    width: "100%",
+                    textAlign: "center",
+                    transition: "1s",
+                    color: `${isSizeShow ? "black" : "white"}`,
+                  }}
+                  onClick={() => setIsSizeShow(!isSizeShow)}
+                  variant="contained"
+                >
+                  {" "}
+                  <b>{isSizeShow ? "On" : "Off"}</b>
+                </Button>
+              </div>
+
+              <div
+                className="col-3"
+                style={{ display: `${isSizeShow ? "block" : "none"}` }}
+              >
+                <div class="">
+                  <span>Add Product Size</span>
+                </div>
+                <div className="pt-2">
+                  <input
+                    className="p-2"
+                    type="text"
+                    placeholder="size..."
+                    name="size"
+                    onKeyUp={handleSizeKeypress}
+                    onChange={(e) => {
+                      setInputOneSize(e.target.value.toUpperCase());
+                    }}
+                    value={inputOneSize}
+                    id="size"
+                    style={{
+                      borderRadius: "5px",
+                      border: ".5px solid #ced4da",
+                      width: "100%",
+                    }}
+                  />
+                </div>
+                <div class=" pt-2 d-flex justify-content-between">
+                  <div>
+                    <Button
+                      className="px-2 p-2"
+                      onClick={() => setInputOneSize("")}
+                      style={{
+                        backgroundColor: `#dc3545`,
+                        borderRadius: "5px",
+                        cursor: "pointer",
+
+                        textAlign: "center",
+                        transition: "1s",
+                        color: `white`,
+                      }}
+                      variant="contained"
+                    >
+                      cancel
+                    </Button>
+                  </div>
+                  <div>
+                    <Button
+                      className=" px-2 p-2"
+                      onClick={() => inputSizeBtn()}
+                      style={{
+                        backgroundColor: `${isSizeShow ? "#fec400" : "red"}`,
+                        borderRadius: "5px",
+                        cursor: "pointer",
+
+                        textAlign: "center",
+                        transition: "1s",
+                        color: `${isSizeShow ? "black" : "white"}`,
+                      }}
+                      variant="contained"
+                    >
+                      add
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="col-7"
+                style={{ display: `${isSizeShow ? "block" : "none"}` }}
+              >
+                <div
+                  className=" p-2"
+                  style={{
+                    overflow: "scroll",
+                    border: "2px solid #fec400",
+                    borderRadius: "10px",
+                    backgroundColor: "#f9d55a21",
+                    height: "150px",
+                  }}
+                >
+                  {inputAllSize.map((sz) => (
+                    <div
+                      className="p-1 m-1"
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: "5px",
+                        display: "inline-block",
+                      }}
+                    >
+                      <span>{sz}</span>
+                      <div
+                        onClick={() => deleteSizeBtn(sz)}
+                        style={{
+                          fontSize: "14px",
+                          padding: "0px 5px",
+                          display: "inline-block",
+                          color: "red",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
