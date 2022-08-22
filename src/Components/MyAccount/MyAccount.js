@@ -17,6 +17,7 @@ export default function MyAccount() {
   let history = useHistory();
   let location = useLocation();
 
+  //
   //  back location not working
   let { from } = location.state || { from: { pathname: "/" } };
 
