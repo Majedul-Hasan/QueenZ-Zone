@@ -20,10 +20,7 @@ export default function ProductCard({
   console.log("this is dt[0].ProductPrice : ", dt[0].ProductPrice);
 
   if (errorproductSize != undefined) {
-    console.log(
-      "ttttttttttttttttttttttttttttttttttttttt",
-      errorproductSize[0] === dt
-    );
+    console.log("tttt : ", errorproductSize[0] === dt);
   }
 
   const [animationShow, setanimationShow] = useState("show");
@@ -262,7 +259,7 @@ export default function ProductCard({
               }}
             >
               <select
-                value={dt[0].pSize != undefined && dt[0].pSize}
+                value={dt[0].pSize !== undefined && dt[0].pSize}
                 onChange={(e) => ProductSize(e.target.value)}
                 class="form-select"
                 aria-label="Default select example"
@@ -276,9 +273,10 @@ export default function ProductCard({
                 }}
               >
                 <option selected>Select Size</option>
-                {dt[0].productSize.map((sz) => (
-                  <option value={sz}>{sz}</option>
-                ))}
+                {dt[0].productSize !== false &&
+                  dt[0].productSize.map((sz) => (
+                    <option value={sz}>{sz}</option>
+                  ))}
               </select>
             </div>
 
