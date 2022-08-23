@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
-export default function SingleProductEdit({ pd }) {
+export default function SingleProductEdit({ pd, editProductBtn }) {
   const [productImage, srtProductImage] = useState([
     pd.ProductImage[0][0].image,
   ]);
@@ -83,7 +83,9 @@ export default function SingleProductEdit({ pd }) {
             </div>
             <div class="mt-3 d-flex justify-content-between">
               <div>
-                <Button variant="outlined">Edit</Button>
+                <Button variant="outlined" onClick={() => editProductBtn(pd)}>
+                  Edit
+                </Button>
               </div>
               <div onClick={() => deleteProduct(pd)}>
                 <Button variant="outlined" color="error">
