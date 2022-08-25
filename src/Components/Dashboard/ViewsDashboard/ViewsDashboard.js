@@ -71,7 +71,10 @@ export default function ViewsDashboard() {
                   style={{ border: "1px solid #fec400", borderRadius: "5px" }}
                 >
                   <div>
-                    <div className="row" style={{ fontWeight: "bold" }}>
+                    <div
+                      className="row"
+                      style={{ fontWeight: "bold", color: "#fec400" }}
+                    >
                       <div className="col-2">IPv4</div>
                       <div className="col-2">city</div>
                       <div className="col-2">country_code</div>

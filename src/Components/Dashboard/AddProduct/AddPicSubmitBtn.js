@@ -22,9 +22,10 @@ export default function AddPicSubmitBtn({
           }}
           onClick={() => {}}
         >
-          Submit Pic
+          Submit Product
         </button>
       ) : (
+        // main
         <button
           className="btn btn-warning btn-lg"
           style={{
@@ -43,7 +44,7 @@ export default function AddPicSubmitBtn({
             vusOk(setSubmitPicBtndisabled(submitPicBtndisabled + 2));
           }}
         >
-          Submit Pic
+          Submit Product
         </button>
       )}
     </div>

@@ -90,7 +90,7 @@ export default function AddCategory() {
       });
   }, []);
 
-  // push categery
+  // push category
   const pushCate = (props) => {
     console.log(props);
     var digits = Math.floor(Math.random() * 9000000000) + 1000000000;

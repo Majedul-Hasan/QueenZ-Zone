@@ -1,12 +1,9 @@
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import Select from "@mui/material/Select";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import Slide from "@mui/material/Slide";
+import Snackbar from "@mui/material/Snackbar";
 import { useTheme } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
@@ -47,7 +44,23 @@ function getStyles(name, personName, theme) {
   };
 }
 
+function TransitionLeft(props) {
+  return <Slide {...props} direction="left" />;
+}
+
 export default function EditProduct() {
+  const [open, setOpen] = React.useState(false);
+  const [transition, setTransition] = React.useState(undefined);
+
+  const handleClick = (Transition) => {
+    setTransition(() => Transition);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const theme = useTheme();
 
   const [personName, setPersonName] = React.useState([]);
@@ -86,12 +99,16 @@ export default function EditProduct() {
   const [btnEditOneProductProductSize, setBtnEditOneProductProductSize] =
     useState([]);
   const [btnEditOneProductProductTag, setBtnEditOneProductProductTag] =
-    useState();
+    useState([]);
 
   const [isProductSize, setIsporductSize] = useState(false);
+  // productId
+  const [productId, setproductId] = useState();
 
   // edit product button
   const editProductBtn = (props) => {
+    setproductId(props._id);
+    setProdcutEditDisplay(true);
     //  setBtnEditProductImage(props.ProductImage[0][0].image[0][0]);
     //   setBtnEditProduct(props.ProductImage[0]);
     setEditOneProduct(props);
@@ -104,13 +121,27 @@ export default function EditProduct() {
     setBtnEditOneProductProductDes(props.ProductDescription);
     setBtnEditOneProductProductSize(props.isSizeShow ? props.productSize : []);
     setIsporductSize(props.isSizeShow);
+    setBtnEditOneProductProductTag(props.ProductTags);
 
     setdefoldEditOneProductImage(props.ProductImage[0][0].image);
   };
 
   // add product size
-  const AddProductProductSize = (props) => {
-    console.log(props);
+  const [AddProductProductSize, setAddProductProductSize] = useState("");
+
+  // add product Tag
+  const [AddProductProductTag, setAddProductProductTag] = useState("");
+
+  // delete size btn
+  const deleteSizeBtn = (props) => {
+    const newSize = btnEditOneProductProductSize.filter((sz) => sz !== props);
+    setBtnEditOneProductProductSize(newSize);
+  };
+
+  // delete tag btn
+  const deleteTagBtn = (props) => {
+    const newTag = btnEditOneProductProductTag.filter((tg) => tg !== props);
+    setBtnEditOneProductProductTag(newTag);
   };
 
   // product state
@@ -130,24 +161,120 @@ export default function EditProduct() {
       .then((response) => response.json())
       .then((json) => {
         setPCategory(json);
+        console.log("this is cate : ", json);
       });
   }, []);
 
+  // is product edit display on
+  const [isProductEditDisplay, setProdcutEditDisplay] = useState(false);
+
+  // all cancel edit
+  const allCancelEdit = () => {
+    setEditOneProduct("");
+
+    setBtnEditProduct("");
+    setBtnEditOneProductProductName("");
+    setBtnEditOneProductProductPrice("");
+    setBtnEditOneProductProductOffer("");
+    setBtnEditOneProductProductCate("");
+    setBtnEditOneProductProductDes("");
+    setBtnEditOneProductProductSize([]);
+    setIsporductSize(false);
+    setBtnEditOneProductProductTag([]);
+
+    setdefoldEditOneProductImage("");
+    setProdcutEditDisplay(false);
+  };
+
+  // error
+  const [error, setError] = useState({
+    state: false,
+    message: "",
+  });
+
+  /// edit all submit btn
+  const allEditSubmitBtn = () => {
+    if (
+      btnEditOneProductProductName !== "" &&
+      btnEditOneProductProductPrice !== ""
+    ) {
+      console.log(btnEditOneProductProductName !== "");
+      console.log(btnEditOneProductProductPrice !== "");
+      if (isProductSize && !btnEditOneProductProductSize.length) {
+        setError({
+          state: true,
+          message: "hui",
+        });
+      } else {
+        const allEditList = {
+          product_id: productId,
+          Product_name: btnEditOneProductProductName,
+          Product_price: btnEditOneProductProductPrice,
+          product_offer:
+            btnEditOneProductProductOffer === ""
+              ? "null"
+              : btnEditOneProductProductOffer,
+          product_cate: btnEditOneProductProductCate,
+          product_des: btnEditOneProductProductDes,
+          product_size: isProductSize ? btnEditOneProductProductSize : false,
+          product_tag: btnEditOneProductProductTag,
+          isSizeShow: isProductSize,
+        };
+
+        // post data
+        fetch("http://localhost:5000/queenZoneEditedProduct", {
+          method: "POST", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ allEditList }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+            handleClick(TransitionLeft);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    } else {
+      setError({
+        state: true,
+        message: "hui",
+      });
+    }
+  };
+
   return (
     <div className="p-2">
+      <Snackbar
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={transition}
+        message="I love snacks"
+        key={transition ? transition.name : ""}
+      />
       <div style={{ fontSize: "24px", fontWeight: "bold" }}>Edit Product</div>
       <div
         className="p-2 mt-3"
         style={{ borderRadius: "10px", border: "2px solid #fec400" }}
       >
         <div
-          className="p-2"
-          style={{ borderRadius: "5px", border: "1px solid #fec400" }}
+          className="p-2 mb-3"
+          style={{
+            borderRadius: "5px",
+            border: "1px solid #fec400",
+
+            display: `${isProductEditDisplay ? "block" : "none"}`,
+          }}
         >
           <div>
-            <span>Edit Product</span>
+            <span style={{ color: "", fontSize: "20px", fontWeight: "" }}>
+              Edit Product
+            </span>
           </div>
-          <div>
+          <div className="mt-3">
             <div className="row">
               <div className="col-3">
                 {/* <Carousel>
@@ -246,16 +373,19 @@ export default function EditProduct() {
                       <select
                         class="form-select"
                         aria-label="Default select example"
+                        onChange={(e) =>
+                          setBtnEditOneProductProductCate(e.target.value)
+                        }
                       >
-                        <option
-                          value={btnEditOneProduct.ProductCategory}
-                          selected
-                        >
-                          Open this select menu
-                        </option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        {category.map((ca) =>
+                          ca.postCa === btnEditOneProductProductCate ? (
+                            <option selected value={ca.postCa}>
+                              {ca.postCa}
+                            </option>
+                          ) : (
+                            <option value={ca.postCa}>{ca.postCa}</option>
+                          )
+                        )}
                       </select>
                     </div>
                   </div>
@@ -291,8 +421,12 @@ export default function EditProduct() {
                         <input
                           type="text"
                           onChange={(e) =>
-                            AddProductProductSize(e.target.value.toUpperCase())
+                            setAddProductProductSize(
+                              e.target.value.toUpperCase()
+                            )
                           }
+                          value={AddProductProductSize}
+                          style={{ textTransform: "uppercase" }}
                           class="form-control"
                           placeholder="size..."
                           aria-label="Recipient's username"
@@ -302,6 +436,14 @@ export default function EditProduct() {
                           class=" btn btn-warning"
                           type="button"
                           id="button-addon2"
+                          onClick={() => {
+                            AddProductProductSize !== "" &&
+                              setBtnEditOneProductProductSize([
+                                ...btnEditOneProductProductSize,
+                                AddProductProductSize,
+                              ]);
+                            setAddProductProductSize("");
+                          }}
                         >
                           Button
                         </button>
@@ -316,11 +458,23 @@ export default function EditProduct() {
                         placeholder="tag..."
                         aria-label="Recipient's username"
                         aria-describedby="button-addon2"
+                        onChange={(e) =>
+                          setAddProductProductTag(e.target.value)
+                        }
+                        value={AddProductProductTag}
                       />
                       <button
                         class=" btn btn-warning"
                         type="button"
                         id="button-addon2"
+                        onClick={() => {
+                          AddProductProductTag !== "" &&
+                            setBtnEditOneProductProductTag([
+                              ...btnEditOneProductProductTag,
+                              AddProductProductTag,
+                            ]);
+                          setAddProductProductTag("");
+                        }}
                       >
                         Button
                       </button>
@@ -348,7 +502,9 @@ export default function EditProduct() {
                           >
                             <span>{sz}</span>
                             <div
-                              // onClick={() => deleteSizeBtn(sz)}
+                              onClick={() => {
+                                deleteSizeBtn(sz);
+                              }}
                               style={{
                                 fontSize: "14px",
                                 padding: "0px 5px",
@@ -365,7 +521,7 @@ export default function EditProduct() {
                     </div>
                   )}
 
-                  <div className={isProductSize ? "col-6 p-1" : "col-12 p-1"}>
+                  <div className={isProductSize ? "col-6 p-1" : "col-12 p-1 "}>
                     <div
                       style={{
                         overflow: "scroll",
@@ -374,14 +530,70 @@ export default function EditProduct() {
                         backgroundColor: "rgba(249, 213, 90, 0.13)",
                         height: "100px",
                       }}
-                    ></div>
+                    >
+                      {btnEditOneProductProductTag.map((tg) => (
+                        <div
+                          className="p-2 m-2"
+                          style={{
+                            backgroundColor: "white",
+                            borderRadius: "5px",
+                            display: "inline-block",
+                          }}
+                        >
+                          <span>{tg}</span>
+                          <div
+                            onClick={() => {
+                              deleteTagBtn(tg);
+                            }}
+                            style={{
+                              fontSize: "14px",
+                              padding: "0px 5px",
+                              display: "inline-block",
+                              color: "red",
+                              cursor: "pointer",
+                            }}
+                          >
+                            <FontAwesomeIcon icon={faTrashCan} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  {error.state && (
+                    <div className="col-12 mt-2">
+                      <Alert variant="outlined" severity="error">
+                        This is an error alert — check it out!
+                      </Alert>
+                    </div>
+                  )}
+                  <div className="mt-2 d-flex justify-content-between">
+                    <div>
+                      <Button
+                        className="px-5"
+                        variant="contained"
+                        color="error"
+                        onClick={() => allCancelEdit()}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                    <div>
+                      <Button
+                        onClick={() => allEditSubmitBtn()}
+                        className="px-5"
+                        style={{ backgroundColor: "#fec400", color: "black" }}
+                        variant="contained"
+                      >
+                        Submit
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div
+        {/* <div
           className="p-2"
           style={{ borderRadius: "5px", border: "1px solid #fec400" }}
         >
@@ -402,55 +614,55 @@ export default function EditProduct() {
                 </div>
               ))}
             </div> */}
-            <div>
-              <FormControl sx={{ m: 1, width: 600 }}>
-                <InputLabel id="demo-multiple-chip-label">Category</InputLabel>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
-                  multiple
-                  value={personName}
-                  onChange={handleChange}
-                  input={
-                    <OutlinedInput id="select-multiple-chip" label="Category" />
-                  }
-                  renderValue={(selected) => (
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                      {selected.map((value) => (
-                        <Chip key={value} label={value} />
-                      ))}
-                    </Box>
-                  )}
-                  MenuProps={MenuProps}
-                >
-                  {!category.length === true ? (
-                    <div class="d-flex justify-content-center">
-                      <button class="btn btn-warning" type="button" disabled>
-                        <span
-                          class="spinner-grow spinner-grow-sm"
-                          role="status"
-                          aria-hidden="true"
-                          style={{ paddingRight: "5px" }}
-                        ></span>
-                        <span style={{ paddingLeft: "5px" }}>Loading...</span>
-                      </button>
-                    </div>
-                  ) : (
-                    category.map((name) => (
-                      <MenuItem
-                        key={name.postCa}
-                        value={name.postCa}
-                        style={getStyles(name.postCa, personName, theme)}
-                      >
-                        {name.postCa}
-                      </MenuItem>
-                    ))
-                  )}
-                </Select>
-              </FormControl>
-            </div>
-          </div>
-        </div>
+        {/* <div>
+          <FormControl sx={{ m: 1, width: 600 }}>
+            <InputLabel id="demo-multiple-chip-label">Category</InputLabel>
+            <Select
+              labelId="demo-multiple-chip-label"
+              id="demo-multiple-chip"
+              multiple
+              value={personName}
+              onChange={handleChange}
+              input={
+                <OutlinedInput id="select-multiple-chip" label="Category" />
+              }
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              MenuProps={MenuProps}
+            >
+              {!category.length === true ? (
+                <div class="d-flex justify-content-center">
+                  <button class="btn btn-warning" type="button" disabled>
+                    <span
+                      class="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                      style={{ paddingRight: "5px" }}
+                    ></span>
+                    <span style={{ paddingLeft: "5px" }}>Loading...</span>
+                  </button>
+                </div>
+              ) : (
+                category.map((name) => (
+                  <MenuItem
+                    key={name.postCa}
+                    value={name.postCa}
+                    style={getStyles(name.postCa, personName, theme)}
+                  >
+                    {name.postCa}
+                  </MenuItem>
+                ))
+              )}
+            </Select>
+          </FormControl>
+        </div> */}
+        {/* </div>
+        </div> */}
         <div className="row mt-3">
           {porduct.map((pd) => (
             <div className="col-4">

@@ -205,7 +205,7 @@ export default function AllAboutProduct() {
         image: AlOverProductInfoContext,
       },
     ];
-
+    console.log("this is producttttt : ", fullColorPic);
     setAllInfo([...AllInfo, fullColorPic]);
 
     console.log("this is pic submit first : ", props);
@@ -381,7 +381,10 @@ export default function AllAboutProduct() {
             </div>
           </div>
           <div>
-            <AddProductReDesign demo={picSubmit}></AddProductReDesign>
+            <AddProductReDesign
+              AllProInfo={AllInfo}
+              demo={picSubmit}
+            ></AddProductReDesign>
           </div>
           <div
             className="mt-3 p-2"

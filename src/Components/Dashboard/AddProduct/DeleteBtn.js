@@ -35,6 +35,7 @@ export default function DeleteBtn({
         submitPicBtndisabled > 1 ? (
           <button
             style={{
+              padding: "3px 25px",
               border: `${
                 submitPicBtndisabled > 1 ? " 1px solid #999999" : "none"
               }`,
@@ -53,6 +54,7 @@ export default function DeleteBtn({
         ) : (
           <button
             style={{
+              padding: "3px 25px",
               border: `${
                 submitPicBtndisabled > 1 ? " 1px solid #999999" : "none"
               }`,
@@ -76,6 +78,7 @@ export default function DeleteBtn({
       ) : (
         <button
           style={{
+            padding: "3px 25px",
             border: `${dltSucc === true ? "none" : "1px solid #999999"}`,
 
             backgroundColor: `${dltSucc === true ? "#cccccc" : "red"}`,
@@ -85,7 +88,7 @@ export default function DeleteBtn({
           type="button"
           class="btn btn-danger"
         >
-          {dltSucc === false ? "Delete" : "Successfully Deleted"}
+          {dltSucc === false ? "Delete" : "Delete"}
         </button>
       )}
     </div>

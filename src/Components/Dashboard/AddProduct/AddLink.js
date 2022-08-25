@@ -44,10 +44,13 @@ export default function AddLink({
 
   const [photo, setPhoto] = useState([]);
 
-  const viewLink = (props) => {
-    if (props != "") {
+  // submit image input
+  const [submitBtn, setSubmitBtn] = useState("");
+
+  const viewLink = () => {
+    if (submitBtn != "") {
       const findProduct = AllProductInfo.filter(
-        (product) => product[0] === props
+        (product) => product[0] === submitBtn
       );
 
       if (!findProduct.length === true) {
@@ -57,15 +60,17 @@ export default function AddLink({
         };
         setError(demError);
 
-        setPhoto([...photo, props]);
+        setPhoto([...photo, submitBtn]);
 
-        setAddAllLink([...addAllLink, [props]]);
+        setAddAllLink([...addAllLink, [submitBtn]]);
+        setSubmitBtn("");
       } else {
         const demError = {
           err: true,
           msg: "This photo is exist*",
         };
         setError(demError);
+        setSubmitBtn("");
       }
     }
   };
@@ -103,7 +108,8 @@ export default function AddLink({
                     </label>
                     <div class="input-group ">
                       <input
-                        onBlur={(e) => viewLink(e.target.value)}
+                        onChange={(e) => setSubmitBtn(e.target.value)}
+                        value={submitBtn}
                         type="text"
                         class="form-control"
                         placeholder=" image url..."
@@ -128,10 +134,11 @@ export default function AddLink({
                 {error.msg}
               </span>
             )}
-            <div className="d-flex justify-content-between">
+            <div className="d-flex flex-row-reverse">
               {submitPicBtndisabled > 1 ? (
                 <button
                   style={{
+                    display: "none",
                     border: `${
                       submitPicBtndisabled > 1 ? " 1px solid #999999" : "none"
                     }`,
@@ -152,6 +159,7 @@ export default function AddLink({
                 <button
                   class="mt-2 btn btn-warning"
                   onClick={() => addLink("1")}
+                  style={{ display: "none" }}
                 >
                   Add Link
                 </button>
@@ -173,35 +181,50 @@ export default function AddLink({
                   }}
                   class="mt-2 btn btn-warning"
                 >
-                  OK
+                  Add Image
                 </button>
               ) : (
-                <button class="mt-2 btn btn-warning">OK</button>
+                <button onClick={() => viewLink()} class="mt-2 btn btn-warning">
+                  Add Image
+                </button>
               )}
             </div>
           </div>
         </div>
-        <div className="col-4" style={{ width: "100px" }}>
-          {photo.map((pt) => (
-            <div className=" d-flex justify-content-center">
-              <img
-                className="mb-1 mt-1 d-flex justify-content-center"
-                style={{ width: "100px", borderRadius: "5px" }}
-                src={pt}
-                alt=""
-              />
-              <hr
-                style={{
-                  padding: "0px",
-                  margin: "0px",
-                  height: "2px",
-                  backgroundColor: " #fec400",
-                }}
-              />
-            </div>
-          ))}
+        <div className="col-4" style={{ width: "350px" }}>
+          <div className="row">
+            {photo.map((pt) => (
+              <div className="col-4">
+                <div>
+                  <img
+                    className="mb-1 mt-1 d-flex justify-content-center"
+                    style={{ width: "100px", borderRadius: "5px" }}
+                    src={pt}
+                    alt=""
+                  />
+                  {/* <hr
+                    style={{
+                      padding: "0px",
+                      margin: "0px",
+                      height: "2px",
+                      backgroundColor: " #fec400",
+                    }}
+                  /> */}
+                </div>
+
+                <div className=" " style={{ height: "" }}>
+                  <DeleteBtn
+                    submitPicBtndisabled={submitPicBtndisabled}
+                    filterDeleteArray={filterDeleteArray}
+                    pt={pt}
+                    deleteUrl={deleteUrl}
+                  ></DeleteBtn>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="col-2" style={{ height: "108px" }}>
+        <div className="col-2" style={{ height: "108px", display: "none" }}>
           <div className="d-flex align-items-end">
             <div>
               {photo.map((pt) => (
@@ -221,7 +244,7 @@ export default function AddLink({
           </div>
         </div>
 
-        <div className="col">
+        <div className="col px-4">
           {submitPicBtndisabled > 1 ? (
             <div class=" form-check form-switch">
               <input
@@ -361,7 +384,7 @@ export default function AddLink({
           </div>
 
           <div
-            class="mt-5 pt-5 d-flex justify-content-cente"
+            class="mt-5 pt-5 d-flex justify-content-center"
             style={{ justifyContent: "center" }}
           >
             {" "}
@@ -382,7 +405,7 @@ export default function AddLink({
                   }`,
                 }}
               >
-                Submit Pic
+                Submit Product
               </button>
             ) : (
               <AddPicSubmitBtn

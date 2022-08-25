@@ -23,6 +23,7 @@ export default function Order() {
       .then((response) => response.json())
       .then((json) => {
         setOrder(json);
+        console.log("this is order : ", order);
       });
   }, [reload]);
 
@@ -94,9 +95,13 @@ export default function Order() {
             borderRadius: "10px ",
           }}
         >
-          {order.map((or) => (
-            <OrderList or={or}></OrderList>
-          ))}
+          {order
+            .sort((a, b) =>
+              b.UserCurrentDateAndTime.localeCompare(a.UserCurrentDateAndTime)
+            )
+            .map((or) => (
+              <OrderList or={or}></OrderList>
+            ))}
         </div>
       </div>
     </div>

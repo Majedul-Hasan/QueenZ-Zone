@@ -3,12 +3,21 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
+import TimeAgo from "javascript-time-ago";
 import React, { useEffect, useState } from "react";
 import "./Order.css";
+
+// English.
+import { Button } from "@mui/material";
+import en from "javascript-time-ago/locale/en";
 const now = new Date();
+
+TimeAgo.addDefaultLocale(en);
 
 export default function OrderList({ or }) {
   //console.log("this is single order page : ", or);
+
+  const timeAgo = new TimeAgo("en-US");
 
   let userCarentTime = or.UserCurrentDateAndTime;
 
@@ -117,14 +126,12 @@ export default function OrderList({ or }) {
                     Status :{" "}
                     <span
                       className="p-1"
-                      style={{
-                        color: "white",
-                        backgroundColor: "hwb(46deg 0% 0%)",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      <b>Pending</b>
-                    </span>
+                      // style={{
+                      //   color: "white",
+                      //   backgroundColor: "hwb(46deg 0% 0%)",
+                      //   borderRadius: "5px",
+                      // }}
+                    ></span>
                   </span>
                 </div>
               </div>
@@ -168,12 +175,12 @@ export default function OrderList({ or }) {
                 {" "}
                 <div>
                   <span>
-                    <b>{editTime[1]}</b>
+                    <b>{or.UserExpectedDeliveryTime}</b>
                   </span>
                 </div>
               </div>
               <div className="col">
-                <div></div>
+                <div> Pending</div>
               </div>
             </div>
           </div>
@@ -321,7 +328,16 @@ export default function OrderList({ or }) {
                       {or.UserIp ? or.UserIp.data.version : "null"}
                     </div>
                     <div className="col">{editDate[0]}</div>
-                    <div className="col">{editTime[1]}</div>
+                    <div className="col">
+                      {new Date(or.UserCurrentDateAndTime).getHours() +
+                        ":" +
+                        new Date(or.UserCurrentDateAndTime).getMinutes() +
+                        ":" +
+                        new Date(or.UserCurrentDateAndTime).getSeconds()}
+                      {`  (${timeAgo.format(
+                        new Date(or.UserCurrentDateAndTime)
+                      )})`}
+                    </div>
 
                     <div className="col" style={{ color: "red" }}>
                       {or.UserIp ? or.UserIp.data.longitude : "null"}
@@ -348,7 +364,7 @@ export default function OrderList({ or }) {
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
-                      <Typography>Show Details</Typography>
+                      <Typography>Order Details</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                       <div>
@@ -380,6 +396,9 @@ export default function OrderList({ or }) {
                                 <div className="col-2">
                                   <b>Product Offer</b>
                                 </div>
+                                <div className="col-1">
+                                  <b>Qty</b>
+                                </div>
                               </div>
                               <div className="row">
                                 <div className="col-2">{pd[0].ProductName}</div>
@@ -395,10 +414,95 @@ export default function OrderList({ or }) {
                                 <div className="col-2">
                                   {pd[0].ProductOffer}
                                 </div>
+                                <div className="col-1">
+                                  {pd[0].qty ? pd[0].qty : 1}
+                                </div>
                               </div>
                             </div>
                           </div>
                         ))}
+                      </div>
+                    </AccordionDetails>
+                  </Accordion>
+                  <Accordion
+                    style={{ backgroundColor: "#ffde4d" }}
+                    className="mt-2"
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography>State Change</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <div>
+                        <div className="row">
+                          <div className="col-6">
+                            <div
+                              class="px-4 d-flex "
+                              style={{ alignItems: "center" }}
+                            >
+                              <div>
+                                <span style={{ fontSize: "18px" }}>
+                                  <b> State :</b>{" "}
+                                </span>
+                              </div>
+                              <div className="px-3">
+                                <select
+                                  style={{ fontSize: "15px" }}
+                                  class="form-select"
+                                  aria-label="Default select example"
+                                >
+                                  <option selected>
+                                    Open this select menu
+                                  </option>
+                                  <option value="1">One</option>
+                                  <option value="2">Two</option>
+                                  <option value="3">Three</option>
+                                </select>
+                              </div>
+                              <div>
+                                <Button
+                                  style={{
+                                    backgroundColor: "#fec400",
+                                    color: "black",
+                                  }}
+                                  variant="contained"
+                                >
+                                  Contained
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-1">
+                            <div style={{ height: "42px" }} class="vr"></div>
+                          </div>
+
+                          <div className="col-5">
+                            <div
+                              class="d-flex justify-content-around"
+                              style={{ alignItems: "center" }}
+                            >
+                              <div>
+                                <span>
+                                  <b style={{ color: "red" }}>
+                                    Cancel The Order
+                                  </b>
+                                </span>
+                              </div>
+                              <div>
+                                <Button
+                                  className="px-5"
+                                  variant="contained"
+                                  color="error"
+                                >
+                                  Cancel
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </AccordionDetails>
                   </Accordion>

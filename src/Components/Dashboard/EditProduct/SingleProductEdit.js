@@ -33,7 +33,7 @@ export default function SingleProductEdit({ pd, editProductBtn }) {
           <Carousel>
             {productImage.map((img) => (
               <div>
-                <img src={img} />
+                <img src={img} alt="" />
               </div>
             ))}
           </Carousel>
