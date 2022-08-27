@@ -30,7 +30,7 @@ export default function ProductAllList({
   // pops msg for add shoppinf card
   const handleClickVariant = (variant) => {
     // variant could be success, error, warning, info, or default
-    enqueueSnackbar("Product added successfull!", { variant });
+    enqueueSnackbar("Product added successfully!", { variant });
   };
 
   // setState for First image
@@ -107,6 +107,7 @@ export default function ProductAllList({
                 borderRadius: "5px 5px 0px 0px ",
               }}
               src={img}
+              alt=""
             />
           ))}
         </Carousel>

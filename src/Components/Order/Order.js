@@ -88,20 +88,14 @@ export default function Order() {
   const [allowlocation, setAllowLocation] = useState(false);
 
   // user ip address
-  const [state, setState] = useState({
-    ip: "",
-    countryName: "",
-    countryCode: "",
-    city: "",
-    timezone: "",
-  });
+  const [state, setState] = useState("");
 
   const getGeoInfo = () => {
     axios
       .get("https://ipapi.co/json/")
       .then((response) => {
         let data = response.data;
-        setState({ data });
+        setState(data ? data : "");
         console.log(data);
       })
       .catch((error) => {
@@ -173,7 +167,9 @@ export default function Order() {
         UserExpectedDeliveryTime: time,
         UserSelectproduct: productSubTotal,
         UserIp: state,
+
         UserCurrentDateAndTime: UserDateAndTime,
+        orderStatus: "Pending",
       };
 
       // navigator.geolocation.getCurrentPosition(function (position) {

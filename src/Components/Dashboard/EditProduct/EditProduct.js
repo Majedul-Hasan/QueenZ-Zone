@@ -250,6 +250,7 @@ export default function EditProduct() {
     <div className="p-2">
       <Snackbar
         open={open}
+        severity="success"
         onClose={handleClose}
         TransitionComponent={transition}
         message="I love snacks"

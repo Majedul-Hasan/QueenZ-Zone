@@ -2,20 +2,45 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
+import { default as MuiAlert } from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import TimeAgo from "javascript-time-ago";
 import React, { useEffect, useState } from "react";
 import "./Order.css";
 
 // English.
-import { Button } from "@mui/material";
 import en from "javascript-time-ago/locale/en";
 const now = new Date();
 
 TimeAgo.addDefaultLocale(en);
 
-export default function OrderList({ or }) {
+export default function OrderList({
+  or,
+  orderdetailsOption,
+  setOrderDetailsOption,
+}) {
   //console.log("this is single order page : ", or);
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const timeAgo = new TimeAgo("en-US");
 
@@ -40,14 +65,46 @@ export default function OrderList({ or }) {
     }, 2000);
   }, []);
 
+  // order status change
+  const [orderStatusChange, setOrderStatusChange] = useState(or.orderStatus);
+
+  const [OrderStatusAllValue, setOrderStatusAllValue] = useState([
+    "Pending",
+    "On The Way",
+    "Complete",
+  ]);
+
+  const [orderDeleteInput, setOrderDeleteInput] = useState("");
+
+  const [error, setError] = useState({
+    state: false,
+  });
+
   return (
-    <div className="">
-      {" "}
+    <div className="mb-4">
+      <Stack spacing={2} sx={{ width: "100%" }}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Deleted
+          </Alert>
+        </Snackbar>
+      </Stack>
+
       <div>
         <div
           className="m-1 p-2 hoverEffect"
           style={{
-            border: "2px solid hwb(46deg 0% 0%)",
+            border: `2px solid ${
+              or.orderStatus === "On The Way"
+                ? "rgb(51, 0, 207)"
+                : or.orderStatus === "Complete"
+                ? "green"
+                : "#fec400"
+            }`,
             borderRadius: "5px ",
           }}
         >
@@ -180,7 +237,25 @@ export default function OrderList({ or }) {
                 </div>
               </div>
               <div className="col">
-                <div> Pending</div>
+                <div
+                  style={{
+                    backgroundColor: ` ${
+                      or.orderStatus === "On The Way"
+                        ? "rgb(51, 0, 207)"
+                        : or.orderStatus === "Complete"
+                        ? "green"
+                        : "#fec400"
+                    }`,
+                    padding: "3px",
+                    fontSize: "13px",
+                    textAlign: "center",
+                    color: "white",
+                    fontWeight: "700",
+                    borderRadius: "5px",
+                  }}
+                >
+                  {or.orderStatus}
+                </div>
               </div>
             </div>
           </div>
@@ -308,12 +383,12 @@ export default function OrderList({ or }) {
                   </div>
                   <div className="row">
                     <div className="col" style={{ fontSize: "13px" }}>
-                      {or.UserIp ? or.UserIp.data.ip : "null"}
+                      {or.UserIp ? or.UserIp.ip : "null"}
                     </div>
-                    <div className="col">{or.UserIp.data.country}</div>
-                    <div className="col">{or.UserIp.data.region}</div>
+                    <div className="col">{or.UserIp && or.UserIp.country}</div>
+                    <div className="col">{or.UserIp && or.UserIp.region}</div>
                     <div className="col" style={{ color: "red" }}>
-                      {or.UserIp ? or.UserIp.data.latitude : "null"}
+                      {or.UserIp ? or.UserIp.latitude : "null"}
                     </div>
                   </div>
                   <div className="row">
@@ -325,7 +400,7 @@ export default function OrderList({ or }) {
                   </div>
                   <div className="row">
                     <div className="col">
-                      {or.UserIp ? or.UserIp.data.version : "null"}
+                      {or.UserIp ? or.UserIp.version : "null"}
                     </div>
                     <div className="col">{editDate[0]}</div>
                     <div className="col">
@@ -340,7 +415,7 @@ export default function OrderList({ or }) {
                     </div>
 
                     <div className="col" style={{ color: "red" }}>
-                      {or.UserIp ? or.UserIp.data.longitude : "null"}
+                      {or.UserIp ? or.UserIp.longitude : "null"}
                     </div>
                   </div>
                 </div>
@@ -450,16 +525,26 @@ export default function OrderList({ or }) {
                               </div>
                               <div className="px-3">
                                 <select
-                                  style={{ fontSize: "15px" }}
+                                  style={{
+                                    fontSize: "15px",
+                                    border: "none",
+                                    backgroundColor: "#fec400",
+                                  }}
+                                  onChange={(e) =>
+                                    setOrderStatusChange(e.target.value)
+                                  }
                                   class="form-select"
                                   aria-label="Default select example"
                                 >
-                                  <option selected>
-                                    Open this select menu
-                                  </option>
-                                  <option value="1">One</option>
-                                  <option value="2">Two</option>
-                                  <option value="3">Three</option>
+                                  {OrderStatusAllValue.map((st) =>
+                                    st === orderStatusChange ? (
+                                      <option selected value={st}>
+                                        {st}
+                                      </option>
+                                    ) : (
+                                      <option value={st}>{st}</option>
+                                    )
+                                  )}
                                 </select>
                               </div>
                               <div>
@@ -469,8 +554,30 @@ export default function OrderList({ or }) {
                                     color: "black",
                                   }}
                                   variant="contained"
+                                  onClick={() =>
+                                    fetch(
+                                      "http://localhost:5000/queenZoneEditedOrderStatus",
+                                      {
+                                        method: "POST", // or 'PUT'
+                                        headers: {
+                                          "Content-Type": "application/json",
+                                        },
+                                        body: JSON.stringify({
+                                          orderId: or._id,
+                                          orderStatus: orderStatusChange,
+                                        }),
+                                      }
+                                    )
+                                      .then((response) => response.json())
+                                      .then((data) => {
+                                        console.log("Success:", data);
+                                      })
+                                      .catch((error) => {
+                                        console.error("Error:", error);
+                                      })
+                                  }
                                 >
-                                  Contained
+                                  Change
                                 </Button>
                               </div>
                             </div>
@@ -480,12 +587,30 @@ export default function OrderList({ or }) {
                           </div>
 
                           <div className="col-5">
+                            <div>
+                              <input
+                                onChange={(e) =>
+                                  setOrderDeleteInput(e.target.value)
+                                }
+                                value={orderDeleteInput}
+                                style={{
+                                  fontSize: "15px",
+                                  backgroundColor: "#fec400",
+                                  border: "1px solid red",
+                                  color: "red",
+                                }}
+                                type="text"
+                                class="form-control"
+                                id="exampleFormControlInput1"
+                                placeholder="Order Number..."
+                              />
+                            </div>
                             <div
-                              class="d-flex justify-content-around"
+                              class="d-flex justify-content-between mt-1"
                               style={{ alignItems: "center" }}
                             >
                               <div>
-                                <span>
+                                <span onClick={() => handleClick()}>
                                   <b style={{ color: "red" }}>
                                     Cancel The Order
                                   </b>
@@ -493,14 +618,47 @@ export default function OrderList({ or }) {
                               </div>
                               <div>
                                 <Button
+                                  onClick={() =>
+                                    orderDeleteInput !== "" &&
+                                    orderDeleteInput === or._id
+                                      ? fetch(
+                                          "http://localhost:5000/queenZoneDeleteOrder",
+                                          {
+                                            method: "POST", // or 'PUT'
+                                            headers: {
+                                              "Content-Type":
+                                                "application/json",
+                                            },
+                                            body: JSON.stringify({
+                                              orderId: or._id,
+                                            }),
+                                          }
+                                        )
+                                          .then((response) => response.json())
+                                          .then((data) => {
+                                            handleClick();
+                                            console.log("Success:", data);
+                                          })
+                                          .catch((error) => {
+                                            console.error("Error:", error);
+                                          })
+                                      : setError({ state: true })
+                                  }
                                   className="px-5"
                                   variant="contained"
                                   color="error"
                                 >
-                                  Cancel
+                                  Cancel Order
                                 </Button>
                               </div>
                             </div>
+                            {error.state && (
+                              <div className="mt-3">
+                                <Alert severity="warning">
+                                  Please, Enter valid <b>Order Number</b>
+                                </Alert>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
