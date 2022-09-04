@@ -10,13 +10,15 @@ import Select from "@mui/material/Select";
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import axios from "axios";
-import { React, useContext, useEffect, useState } from "react";
+import { React, useContext, useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
 import useGeoLocation from "react-ipgeolocation";
 import { useHistory } from "react-router-dom";
+import io from "socket.io-client";
 import { UserInfoContext } from "../../App";
+import globeSocketIo from "../../globeVar ";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -71,6 +73,9 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 export default function Order() {
   let history = useHistory();
+  // socket io
+  const socket = useRef();
+  socket.current = io(globeSocketIo);
 
   const location = useGeoLocation();
 
@@ -113,7 +118,7 @@ export default function Order() {
     setTime(event.target.value);
   };
 
-  const [productSubTotal, setProductSubTotal] = useState();
+  const [productSubTotal, setProductSubTotal] = useState(null);
 
   useEffect(() => {
     setProductSubTotal({
@@ -151,10 +156,18 @@ export default function Order() {
     error: false,
   });
 
+  const callDeashboardReload = () => {
+    socket.current.emit("new-order", "send order");
+
+    history.push("/UserOrderPage");
+  };
+
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
     if (data.phoneNumber.length < 9) {
       setError({ msg: "Please input valid Phone Number ", error: true });
+    } else if (productSubTotal === null) {
+      history.push("/ShoppingCard");
     } else {
       const Finaldata = {
         UserName: data.Name,
@@ -194,9 +207,8 @@ export default function Order() {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-
+          callDeashboardReload();
           sessionStorage.removeItem("addToShoppingCard");
-          history.push("/UserOrderPage");
         })
         .catch((error) => {
           console.error("Error:", error);

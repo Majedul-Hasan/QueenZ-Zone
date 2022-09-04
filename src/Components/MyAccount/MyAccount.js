@@ -1,21 +1,22 @@
-import { faG } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useLocation } from "react-router-dom";
+import io from "socket.io-client";
 import { UserInfoContext } from "../../App";
+import globeSocketIo from "../../globeVar ";
 import {
   createUserWithEmailAndPassword,
   getAuth,
-  GoogleAuthProvider,
   signInWithEmailAndPassword,
-  signInWithPopup,
 } from "../FirebaseAuth/FirebaseAuth";
 import LogInUserInfoPage from "./LogInUserInfoPage";
 
 export default function MyAccount() {
   let history = useHistory();
   let location = useLocation();
+  const socket = useRef();
+
+  socket.current = io(globeSocketIo);
 
   //
   //  back location not working
@@ -82,11 +83,19 @@ export default function MyAccount() {
       .then((data) => {
         console.log("this is find data from app js :", data[0]);
         setLoginUsserInfo(data[0]);
+
+        // post data
+        socket.current.emit("new-online-user", {
+          activeUserInfo: "old",
+          activeUserNumber: localStorage.getItem("localVisitorNumber"),
+          oldUserInfo: JSON.parse(localStorage.getItem("UserInfo")),
+        });
+        console.log("this is socket 6");
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, [loggingUserInfo]);
+  }, [loggingUserInfo, socket]);
 
   // back location
   const backLocation = () => {
@@ -149,6 +158,16 @@ export default function MyAccount() {
       .then((response) => response.json())
       .then((data) => {
         setLoginUsserInfo(data.insertedId);
+
+        // remove old user in array
+
+        // post data
+        socket.current.emit("new-online-user", {
+          activeUserInfo: "old",
+          activeUserNumber: localStorage.getItem("localVisitorNumber"),
+          oldUserInfo: JSON.parse(localStorage.getItem("UserInfo")),
+        });
+        console.log("this is socket 7");
       })
       .catch((error) => {});
   };
@@ -200,6 +219,43 @@ export default function MyAccount() {
     }
   };
 
+  // call socket for new user
+  const callNewUserSocketIo = () => {
+    // post data
+    socket.current.emit("new-online-user", {
+      activeUserInfo: "old",
+      activeUserNumber: localStorage.getItem("localVisitorNumber"),
+      oldUserInfo: JSON.parse(localStorage.getItem("UserInfo")),
+    });
+    console.log("this is socket 8");
+  };
+
+  // fetch One user
+  const fetchOneUserInfo = (props) => {
+    console.log("this is sign in user : ", props.email);
+
+    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneFindOneUser", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: props.email }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        console.log("this is sign in user : ", data[0]);
+        localStorage.setItem("UserInfo", JSON.stringify(data[0]));
+
+        callNewUserSocketIo();
+
+        setLoginUsserInfo(data[0]._id);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   // sign in all things
   const [signInEmail, setSignInEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
@@ -225,8 +281,8 @@ export default function MyAccount() {
           // Signed in
           const user = userCredential.user;
           // ...
-          localStorage.setItem("UserInfo", JSON.stringify(user));
-          fetchUserInfo(user);
+
+          fetchOneUserInfo(user.providerData[0]);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -246,42 +302,42 @@ export default function MyAccount() {
     setSignInOrRegister(props);
   };
   // Log In with Google
-  const LogInwithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    const auth = getAuth();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
+  // const LogInwithGoogle = () => {
+  //   const provider = new GoogleAuthProvider();
+  //   const auth = getAuth();
+  //   signInWithPopup(auth, provider)
+  //     .then((result) => {
+  //       // This gives you a Google Access Token. You can use it to access the Google API.
+  //       const credential = GoogleAuthProvider.credentialFromResult(result);
+  //       const token = credential.accessToken;
+  //       const user = result.user;
 
-        console.log("this is google");
+  //       console.log("this is google");
 
-        const shortdata = {
-          displayName: user.displayName,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-          photoURL: user.photoURL,
-          uid: user.uid,
-          time: realTime,
-        };
+  //       const shortdata = {
+  //         displayName: user.displayName,
+  //         email: user.email,
+  //         phoneNumber: user.phoneNumber,
+  //         photoURL: user.photoURL,
+  //         uid: user.uid,
+  //         time: realTime,
+  //       };
 
-        // setLoginUsserInfo(shortdata);
-        // fetchUserInfo(shortdata);
-        localStorage.setItem("UserInfo", JSON.stringify(shortdata));
-        isUserAlreadyCreate(shortdata);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+  //       // setLoginUsserInfo(shortdata);
+  //       // fetchUserInfo(shortdata);
+  //       localStorage.setItem("UserInfo", JSON.stringify(shortdata));
+  //       isUserAlreadyCreate(shortdata);
+  //     })
+  //     .catch((error) => {
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
 
-        const email = error.email;
+  //       const email = error.email;
 
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(error);
-      });
-  };
+  //       const credential = GoogleAuthProvider.credentialFromError(error);
+  //       console.log(error);
+  //     });
+  // };
 
   return (
     <div>
@@ -743,7 +799,10 @@ export default function MyAccount() {
             ></button>
           </div>
 
-          <div class="d-flex justify-content-center mt-3">
+          {/* <div
+            class="d-flex justify-content-center mt-3"
+            style={{ display: "none" }}
+          >
             <span
               pan
               style={{
@@ -753,12 +812,13 @@ export default function MyAccount() {
                 opacity: "0.5",
               }}
             >
-              -----Or Join With-----
+              -----Or Join With -----
             </span>
-          </div>
-          <div
+          </div> */}
+          {/* <div
             class="d-flex mt-4 justify-content-center "
-            onClick={() => LogInwithGoogle()}
+            style={{ display: "none" }}
+            // onClick={() => LogInwithGoogle()}
           >
             <div className="mb-5 pb-5">
               <div
@@ -780,7 +840,7 @@ export default function MyAccount() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div
           style={{

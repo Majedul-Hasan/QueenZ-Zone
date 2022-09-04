@@ -1,9 +1,10 @@
 import { SnackbarProvider } from "notistack";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import WhatsAppWidget from "react-whatsapp-widget";
 import "react-whatsapp-widget/dist/index.css";
+import io from "socket.io-client";
 import HeaderSearchBar from "../src/Components/Home/HeaderSearchBar";
 import Layout from "../src/Components/Home/Layout";
 import "./App.css";
@@ -19,11 +20,15 @@ import OrderPage from "./Components/OrderPage/OrderPage";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import ShoppingCardPage from "./Components/ShoppinfCard/ShoppingCardPage";
 import SingleProdductPage from "./Components/SingleProductPage/SingleProdductPage";
+import globeSocketIo from "./globeVar ";
 
 // user info create context
 export const UserInfoContext = createContext();
 
 function App() {
+  const socket = useRef();
+  socket.current = io(globeSocketIo);
+
   const [loggingUserInfo, setLoginUsserInfo] = useState({});
 
   const [vertical, setvertical] = useState("top");
@@ -73,6 +78,151 @@ function App() {
     // }
   }, [seasonStroageProductlist]);
 
+  //for local storage send data backend
+  useEffect(() => {
+    if (!localStorage.getItem("UserInfo") === true) {
+      // user info data not found
+      if (!localStorage.getItem("localVisitorNumber") === true) {
+        // local visitor data not found
+        localStorage.setItem(
+          "localVisitorNumber",
+          Math.floor(100000000 + Math.random() * 900000000)
+        );
+
+        // post data
+        socket.current.emit("new-online-user", {
+          activeUserInfo: "new",
+          activeUserNumber: localStorage.getItem("localVisitorNumber"),
+          oldUserInfo: null,
+        });
+
+        console.log("this is socket 1");
+      } else {
+        // local user data found
+
+        // post data
+        socket.current.emit("new-online-user", {
+          activeUserInfo: "new",
+          activeUserNumber: localStorage.getItem("localVisitorNumber"),
+          oldUserInfo: null,
+        });
+        console.log("this is socket 2");
+      }
+    } else {
+      // user data found
+      // local user data found
+
+      if (!localStorage.getItem("localVisitorNumber") === true) {
+        localStorage.setItem(
+          "localVisitorNumber",
+          Math.floor(100000000 + Math.random() * 900000000)
+        );
+
+        // post data
+        socket.current.emit("new-online-user", {
+          activeUserInfo: "old",
+          activeUserNumber: localStorage.getItem("localVisitorNumber"),
+          oldUserInfo: JSON.parse(localStorage.getItem("UserInfo")),
+        });
+        console.log("this is socket 3");
+      } else {
+        // post data
+        socket.current.emit("new-online-user", {
+          activeUserInfo: "old",
+          activeUserNumber: localStorage.getItem("localVisitorNumber"),
+          oldUserInfo: JSON.parse(localStorage.getItem("UserInfo")),
+        });
+        console.log("this is socket 4");
+      }
+    }
+  }, [socket]);
+
+  //user message info
+  const [userMessageInfo, setUserMessageInfo] = useState();
+
+  // callUseEffectForUpdateMessage
+  const [useEffectForUpdateMessage, setCallUseEffectForUpdateMessage] =
+    useState(false);
+
+  // userSenderInfo
+  const [UserSenderInfo, setUserSenderInfo] = useState("");
+
+  // update message
+  useEffect(() => {
+    // get data
+    socket.current.on("get-message", (userSenderInfo) => {
+      console.log("this is update socket sender info  : ", userSenderInfo);
+      setUserSenderInfo(userSenderInfo);
+      setCallUseEffectForUpdateMessage(true);
+    });
+  }, [socket]);
+
+  // for inbox
+  useEffect(() => {
+    setTimeout(() => {
+      let userInfoForLogin = JSON.parse(localStorage.getItem("UserInfo"));
+      let userInfoForVisitorNumber = JSON.parse(
+        localStorage.getItem("localVisitorNumber")
+      );
+
+      // console.log("this is app ja : ", userInfoForLogin);
+      // console.log("this is app ja : ", userInfoForVisitorNumber);
+
+      console.log(
+        "this is update message : ",
+        userInfoForLogin !== null
+          ? userInfoForLogin.email
+          : userInfoForVisitorNumber
+      );
+
+      setUserMessageInfo(
+        userInfoForLogin !== null
+          ? userInfoForLogin.email
+          : userInfoForVisitorNumber
+      );
+
+      const userInfo =
+        userInfoForLogin !== null || undefined
+          ? userInfoForLogin.email
+          : userInfoForVisitorNumber;
+      //  console.log("this is update vhai vitore dukse ", UserSenderInfo);
+      if (UserSenderInfo == userInfo) {
+        updateMessageFunction(userInfo);
+      }
+
+      setCallUseEffectForUpdateMessage(false);
+    });
+  }, [useEffectForUpdateMessage]);
+
+  // all message
+  const [message, setMessage] = useState([]);
+
+  // get auto message
+  useEffect(() => {
+    setTimeout(() => {
+      let userInfoForLogin = JSON.parse(localStorage.getItem("UserInfo"));
+      let userInfoForVisitorNumber = JSON.parse(
+        localStorage.getItem("localVisitorNumber")
+      );
+
+      const userInfo =
+        userInfoForLogin !== null ? userInfoForLogin : userInfoForVisitorNumber;
+      updateMessageFunction(userInfo);
+    });
+  }, []);
+
+  const updateMessageFunction = (props) => {
+    fetch(
+      `https://glacial-shore-36532.herokuapp.com/getInboxMessage?roomName=${props}`
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        console.log("this is update :", json);
+
+        setMessage(json);
+      });
+  };
+
   // drilling image for animation
   const setAniImg = (props) => {
     console.log("this is app js for animation product picture : ", props);
@@ -81,7 +231,7 @@ function App() {
   };
 
   const seasonStroageProductFunction = (props) => {
-    console.log("this is season stroage product : ", props);
+    console.log("this is season storage product : ", props);
   };
 
   return (
@@ -239,7 +389,11 @@ function App() {
 
               <Route path="/MyMessage">
                 <HeaderSearchBar></HeaderSearchBar>
-                <MyMessage></MyMessage>
+                <MyMessage
+                  userMessageInfo={userMessageInfo}
+                  message={message}
+                  updateMessageFunction={updateMessageFunction}
+                ></MyMessage>
                 <NaviBar></NaviBar>
                 <div>
                   <div>

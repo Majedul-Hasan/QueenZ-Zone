@@ -222,13 +222,16 @@ export default function EditProduct() {
         };
 
         // post data
-        fetch("http://localhost:5000/queenZoneEditedProduct", {
-          method: "POST", // or 'PUT'
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ allEditList }),
-        })
+        fetch(
+          "https://glacial-shore-36532.herokuapp.com/queenZoneEditedProduct",
+          {
+            method: "POST", // or 'PUT'
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ allEditList }),
+          }
+        )
           .then((response) => response.json())
           .then((data) => {
             console.log("Success:", data);

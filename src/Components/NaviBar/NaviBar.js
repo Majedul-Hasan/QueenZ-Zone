@@ -10,7 +10,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
-import { default as React, useContext, useEffect, useState } from "react";
+import {
+  default as React,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { UserInfoContext } from "../../App";
 import "./navBarAni.css";
@@ -31,6 +37,8 @@ export default function NaviBar({
   setProductShowAnimation,
   setAniImg,
 }) {
+  const socket = useRef();
+
   let location = useLocation();
 
   console.log("this is location :", location.pathname);
@@ -135,6 +143,26 @@ export default function NaviBar({
     getData();
   }, []);
 
+  // useEffect(() => {
+  //   if (!localStorage.getItem("UserInfo") === false) {
+  //     socket.current = io("http://localhost:8800");
+
+  //     // post data
+  //     socket.current.emit("new-online-user", {
+  //       activeUserStatus: "old",
+  //       activeUserInfo: localStorage.getItem("UserInfo"),
+  //     });
+  //   } else {
+  //     socket.current = io("http://localhost:8800");
+
+  //     // post data
+  //     socket.current.emit("new-online-user", {
+  //       activeUserStatus: "new",
+  //       activeUserInfo: null,
+  //     });
+  //   }
+  // }, []);
+
   return (
     <div>
       <div className="fixed-bottom ">
@@ -169,10 +197,7 @@ export default function NaviBar({
                   icon={faHeart}
                 />
               </div>
-              <div
-                style={{ display: "none" }}
-                onClick={() => optionName("MyMessage")}
-              >
+              <div onClick={() => optionName("MyMessage")}>
                 <div ClassName="" style={{ position: "relative" }}>
                   <FontAwesomeIcon
                     style={{
@@ -246,6 +271,9 @@ export default function NaviBar({
                   />
                 ) : (
                   <FontAwesomeIcon
+                    onClick={() =>
+                      console.log("this is account page : ", loggingUserInfo)
+                    }
                     style={{
                       color: `${
                         location.pathname === "/MyAccount" ? "black" : "white"

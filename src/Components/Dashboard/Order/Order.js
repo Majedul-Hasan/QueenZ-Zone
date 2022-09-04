@@ -1,15 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import io from "socket.io-client";
+import globeSocketIo from "../../../globeVar ";
 import OrderList from "./OrderList";
 
 export default function Order() {
+  // socket io
+  const socket = useRef();
+  socket.current = io(globeSocketIo);
+
+  const [reload, setReload] = useState(false);
+
+  useEffect(() => {
+    socket.current.on("get-order", (user) => {
+      setReload(true);
+    });
+  }, [socket]);
+
   // for order details option
   const [orderdetailsOption, setOrderDetailsOption] = useState("All Order");
 
   const [order, setOrder] = useState([]);
 
   const [allOrder, setAllOrder] = useState([]);
-
-  const [reload, setReload] = useState(1);
 
   const [_AllOrder, _setAllOrder] = useState([]);
   const [_pending, _setPending] = useState([]);
@@ -18,9 +30,9 @@ export default function Order() {
 
   const [refreshTimeCount, setRefreshTimeCount] = useState(0);
 
-  window.setTimeout(function () {
-    setReload(reload + 1);
-  }, 1000);
+  // window.setTimeout(function () {
+  //   setReload(reload + 1);
+  // }, 1000);
 
   // // button page refresh time
   // useEffect(() => {
@@ -62,6 +74,8 @@ export default function Order() {
         );
         _setOrderComplete(allOrderComplFilter);
       });
+
+    setReload(false);
   }, [reload]);
 
   // window.setTimeout(function () {
@@ -139,7 +153,10 @@ export default function Order() {
             >
               <div class="d-flex justify-content-start">
                 <div
-                  onClick={() => setOrderDetailsOption("All Order")}
+                  onClick={() => {
+                    setOrderDetailsOption("All Order");
+                    setReload(true);
+                  }}
                   style={{
                     border: "1px solid black",
                     padding: "5px 10px",
@@ -158,7 +175,10 @@ export default function Order() {
                   <span>All Order : {_AllOrder.length}</span>
                 </div>
                 <div
-                  onClick={() => setOrderDetailsOption("Pending")}
+                  onClick={() => {
+                    setOrderDetailsOption("Pending");
+                    setReload(true);
+                  }}
                   style={{
                     border: "1px solid hwb(46deg 0% 0%)",
                     padding: "5px 10px",
@@ -181,7 +201,10 @@ export default function Order() {
                   <span>Order Pending : {_pending.length}</span>
                 </div>
                 <div
-                  onClick={() => setOrderDetailsOption("On The Way")}
+                  onClick={() => {
+                    setOrderDetailsOption("On The Way");
+                    setReload(true);
+                  }}
                   style={{
                     border: "1px solid #3300cf",
                     padding: "5px 10px",
@@ -202,7 +225,10 @@ export default function Order() {
                   <span>Order On The Way : {_OnTheWay.length}</span>
                 </div>
                 <div
-                  onClick={() => setOrderDetailsOption("Complete")}
+                  onClick={() => {
+                    setOrderDetailsOption("Complete");
+                    setReload(true);
+                  }}
                   style={{
                     border: "1px solid green",
                     padding: "5px 10px",
@@ -273,6 +299,7 @@ export default function Order() {
                 orderdetailsOption={orderdetailsOption}
                 setOrderDetailsOption={setOrderDetailsOption}
                 or={or}
+                setReload={setReload}
               ></OrderList>
             ))}
         </div>

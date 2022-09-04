@@ -2,8 +2,10 @@ import { default as React, useContext } from "react";
 import AddCategory from "../AddCategory/AddCategory";
 import AllAboutProduct from "../AddProduct/AllAboutProduct";
 import EditProduct from "../EditProduct/EditProduct";
+import Inbox from "../Inbox/Inbox";
 import { FunctionBarSelectionContext } from "../MainDashboard/MainDashboard";
 import Order from "../Order/Order";
+import Stock from "../Stock/Stock";
 import ViewsDashboard from "../ViewsDashboard/ViewsDashboard";
 
 export default function Functionbar() {
@@ -44,6 +46,8 @@ export default function Functionbar() {
       {FunctionBarSelectionName === "Views" && (
         <ViewsDashboard></ViewsDashboard>
       )}
+      {FunctionBarSelectionName === "Stock" && <Stock></Stock>}
+      {FunctionBarSelectionName === "Inbox" && <Inbox></Inbox>}
     </div>
   );
 }

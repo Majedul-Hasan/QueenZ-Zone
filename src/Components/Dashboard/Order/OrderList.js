@@ -19,6 +19,7 @@ TimeAgo.addDefaultLocale(en);
 
 export default function OrderList({
   or,
+  setReload,
   orderdetailsOption,
   setOrderDetailsOption,
 }) {
@@ -556,7 +557,7 @@ export default function OrderList({
                                   variant="contained"
                                   onClick={() =>
                                     fetch(
-                                      "http://localhost:5000/queenZoneEditedOrderStatus",
+                                      "https://glacial-shore-36532.herokuapp.com/queenZoneEditedOrderStatus",
                                       {
                                         method: "POST", // or 'PUT'
                                         headers: {
@@ -570,6 +571,7 @@ export default function OrderList({
                                     )
                                       .then((response) => response.json())
                                       .then((data) => {
+                                        setReload(true);
                                         console.log("Success:", data);
                                       })
                                       .catch((error) => {
@@ -622,7 +624,7 @@ export default function OrderList({
                                     orderDeleteInput !== "" &&
                                     orderDeleteInput === or._id
                                       ? fetch(
-                                          "http://localhost:5000/queenZoneDeleteOrder",
+                                          "https://glacial-shore-36532.herokuapp.com/queenZoneDeleteOrder",
                                           {
                                             method: "POST", // or 'PUT'
                                             headers: {

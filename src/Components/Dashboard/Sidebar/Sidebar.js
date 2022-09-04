@@ -1,6 +1,7 @@
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import ChatIcon from "@mui/icons-material/Chat";
 import ClassIcon from "@mui/icons-material/Class";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -169,7 +170,33 @@ export default function Sidebar() {
                 </div>
               </div>
             </div>
-
+            <div
+              className=""
+              onClick={() => optionSelect("Inbox")}
+              style={{
+                padding: `${optionSelectState === "Inbox" ? "4px" : "4px"}`,
+              }}
+            >
+              <div
+                class="d-flex justify-content-start p-2 "
+                style={{
+                  height: "35px",
+                  cursor: "pointer",
+                  backgroundColor: ` ${
+                    optionSelectState === "Inbox"
+                      ? " rgb(255 240 128 / 60%)"
+                      : "rgb(254, 196, 0)"
+                  }  `,
+                }}
+              >
+                <div>
+                  <ChatIcon></ChatIcon>
+                </div>
+                <div className="fw-bold" style={{ marginLeft: "10px" }}>
+                  Inbox
+                </div>
+              </div>
+            </div>
             <div
               className=""
               onClick={() => optionSelect("Stock")}

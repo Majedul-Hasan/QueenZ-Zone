@@ -1,10 +1,15 @@
-import { React, useContext, useState } from "react";
+import { React, useContext, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useLocation } from "react-router-dom";
+import io from "socket.io-client";
 import { UserInfoContext } from "../../App";
+import globeSocketIo from "../../globeVar ";
+
 export default function LogInUserInfoPage() {
   let history = useHistory();
   let location = useLocation();
+  const socket = useRef();
+  socket.current = io(globeSocketIo);
 
   //  back location
   let { from } = location.state || { from: { pathname: "/" } };
@@ -25,6 +30,16 @@ export default function LogInUserInfoPage() {
   const signOutUser = () => {
     setLoginUsserInfo("");
     localStorage.removeItem("UserInfo");
+
+    // local user data found
+
+    // post data
+    socket.current.emit("new-online-user", {
+      activeUserInfo: "new",
+      activeUserNumber: localStorage.getItem("localVisitorNumber"),
+      oldUserInfo: null,
+    });
+    console.log("this is socket 5");
   };
 
   // react from hook
