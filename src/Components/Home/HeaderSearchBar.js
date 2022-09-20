@@ -6,11 +6,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import queenz_zone_logo from "../../Asset/queenz_zone_logo.png";
 
 export default function HeaderSearchBar() {
   let history = useHistory();
+  let location = useLocation();
 
   const optionName = (props) => {
     console.log();

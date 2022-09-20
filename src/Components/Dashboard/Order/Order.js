@@ -1,20 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
-import io from "socket.io-client";
-import globeSocketIo from "../../../globeVar ";
+import React, { useEffect, useState } from "react";
 import OrderList from "./OrderList";
 
 export default function Order() {
   // socket io
-  const socket = useRef();
-  socket.current = io(globeSocketIo);
+  // const socket = useRef();
+  // socket.current = io(globeSocketIo);
 
   const [reload, setReload] = useState(false);
 
-  useEffect(() => {
-    socket.current.on("get-order", (user) => {
-      setReload(true);
-    });
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.current.on("get-order", (user) => {
+  //     setReload(true);
+  //   });
+  // }, [socket]);
 
   // for order details option
   const [orderdetailsOption, setOrderDetailsOption] = useState("All Order");

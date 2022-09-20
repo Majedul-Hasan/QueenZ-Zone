@@ -10,15 +10,13 @@ import Select from "@mui/material/Select";
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import axios from "axios";
-import { React, useContext, useEffect, useRef, useState } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
 import useGeoLocation from "react-ipgeolocation";
 import { useHistory } from "react-router-dom";
-import io from "socket.io-client";
 import { UserInfoContext } from "../../App";
-import globeSocketIo from "../../globeVar ";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -74,8 +72,8 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 export default function Order() {
   let history = useHistory();
   // socket io
-  const socket = useRef();
-  socket.current = io(globeSocketIo);
+  // const socket = useRef();
+  // socket.current = io(globeSocketIo);
 
   const location = useGeoLocation();
 
@@ -157,7 +155,7 @@ export default function Order() {
   });
 
   const callDeashboardReload = () => {
-    socket.current.emit("new-order", "send order");
+    // socket.current.emit("new-order", "send order");
 
     history.push("/UserOrderPage");
   };

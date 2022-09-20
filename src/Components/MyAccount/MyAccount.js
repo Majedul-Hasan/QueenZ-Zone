@@ -11,7 +11,7 @@ import {
 } from "../FirebaseAuth/FirebaseAuth";
 import LogInUserInfoPage from "./LogInUserInfoPage";
 
-export default function MyAccount() {
+export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
   let history = useHistory();
   let location = useLocation();
   const socket = useRef();
@@ -91,6 +91,7 @@ export default function MyAccount() {
           oldUserInfo: JSON.parse(localStorage.getItem("UserInfo")),
         });
         console.log("this is socket 6");
+        setcallUseEffectForCurrentUserInfo(true);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -158,6 +159,7 @@ export default function MyAccount() {
       .then((response) => response.json())
       .then((data) => {
         setLoginUsserInfo(data.insertedId);
+        setcallUseEffectForCurrentUserInfo(true);
 
         // remove old user in array
 
@@ -203,6 +205,7 @@ export default function MyAccount() {
           };
           localStorage.setItem("UserInfo", JSON.stringify(shortdata));
           fetchUserInfo(shortdata);
+          setcallUseEffectForCurrentUserInfo(true);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -228,6 +231,7 @@ export default function MyAccount() {
       oldUserInfo: JSON.parse(localStorage.getItem("UserInfo")),
     });
     console.log("this is socket 8");
+    setcallUseEffectForCurrentUserInfo(true);
   };
 
   // fetch One user
@@ -847,7 +851,11 @@ export default function MyAccount() {
             display: `${loggingUserInfo.email ? "block" : "none"}   `,
           }}
         >
-          <LogInUserInfoPage></LogInUserInfoPage>
+          <LogInUserInfoPage
+            setcallUseEffectForCurrentUserInfo={
+              setcallUseEffectForCurrentUserInfo
+            }
+          ></LogInUserInfoPage>
         </div>
       </div>
     </div>

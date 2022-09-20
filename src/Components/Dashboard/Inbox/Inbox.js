@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import io from "socket.io-client";
+import React, { useState } from "react";
 import styled from "styled-components";
-import globeSocketIo from "../../../globeVar ";
 
 export default function Inbox() {
-  const socket = useRef();
-  socket.current = io(globeSocketIo);
+  // const socket = useRef();
+  // socket.current = io(globeSocketIo);
   const [activeUser, setActiveUser] = useState([]);
 
   // socket.current = io("http://localhost:8800");
@@ -16,15 +14,15 @@ export default function Inbox() {
   //   setActiveUser(user);
   // });
 
-  useEffect(() => {
-    console.log("this is useEffect");
+  // useEffect(() => {
+  //   console.log("this is useEffect");
 
-    // get data
-    socket.current.on("get-online-user", (user) => {
-      console.log("this is active user ", user);
-      setActiveUser(user);
-    });
-  }, [socket]);
+  //   // get data
+  //   socket.current.on("get-online-user", (user) => {
+  //     console.log("this is active user ", user);
+  //     setActiveUser(user);
+  //   });
+  // }, [socket]);
 
   return (
     <InboxBack className="p-2">

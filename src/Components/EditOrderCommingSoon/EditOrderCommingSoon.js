@@ -1,8 +1,6 @@
 import { Button } from "@mui/material";
-import { default as React, useEffect, useRef, useState } from "react";
+import { default as React, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import io from "socket.io-client";
-import globeSocketIo from "../../globeVar ";
 
 export default function EditOrderCommingSoon() {
   let history = useHistory();
@@ -10,8 +8,8 @@ export default function EditOrderCommingSoon() {
   // order
   const [orderList, setOrderList] = useState([]);
   let { ONumber } = useParams();
-  const socket = useRef();
-  socket.current = io(globeSocketIo);
+  // const socket = useRef();
+  // socket.current = io(globeSocketIo);
 
   console.log(ONumber);
 
@@ -38,7 +36,7 @@ export default function EditOrderCommingSoon() {
         console.log(json);
       });
 
-    socket.current.emit("new-order", "DELETE ORDER");
+    // socket.current.emit("new-order", "DELETE ORDER");
     history.push("/UserOrderPage");
   };
 

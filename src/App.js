@@ -78,6 +78,11 @@ function App() {
     // }
   }, [seasonStroageProductlist]);
 
+  const [curentUserInfo, setCurrentUserInfo] = useState([]);
+
+  const [callUseEffectForCurrentUserInfo, setcallUseEffectForCurrentUserInfo] =
+    useState(false);
+
   //for local storage send data backend
   useEffect(() => {
     if (!localStorage.getItem("UserInfo") === true) {
@@ -124,6 +129,7 @@ function App() {
           activeUserNumber: localStorage.getItem("localVisitorNumber"),
           oldUserInfo: JSON.parse(localStorage.getItem("UserInfo")),
         });
+
         console.log("this is socket 3");
       } else {
         // post data
@@ -135,7 +141,18 @@ function App() {
         console.log("this is socket 4");
       }
     }
-  }, [socket]);
+
+    // ^^ for user info
+
+    setCurrentUserInfo({
+      activeUserInfo:
+        JSON.parse(localStorage.getItem("UserInfo")) === null ? "new" : "old",
+      activeUserNumber: localStorage.getItem("localVisitorNumber"),
+      oldUserInfo: JSON.parse(localStorage.getItem("UserInfo")),
+    });
+
+    setcallUseEffectForCurrentUserInfo(false);
+  }, [socket, callUseEffectForCurrentUserInfo]);
 
   //user message info
   const [userMessageInfo, setUserMessageInfo] = useState();
@@ -148,14 +165,14 @@ function App() {
   const [UserSenderInfo, setUserSenderInfo] = useState("");
 
   // update message
-  useEffect(() => {
-    // get data
-    socket.current.on("get-message", (userSenderInfo) => {
-      console.log("this is update socket sender info  : ", userSenderInfo);
-      setUserSenderInfo(userSenderInfo);
-      setCallUseEffectForUpdateMessage(true);
-    });
-  }, [socket]);
+  // useEffect(() => {
+  //   // get data
+  //   socket.current.on("get-message", (userSenderInfo) => {
+  //     console.log("this is update socket sender info  : ", userSenderInfo);
+  //     setUserSenderInfo(userSenderInfo);
+  //     setCallUseEffectForUpdateMessage(true);
+  //   });
+  // }, [socket]);
 
   // for inbox
   useEffect(() => {
@@ -186,42 +203,42 @@ function App() {
           ? userInfoForLogin.email
           : userInfoForVisitorNumber;
       //  console.log("this is update vhai vitore dukse ", UserSenderInfo);
-      if (UserSenderInfo == userInfo) {
-        updateMessageFunction(userInfo);
-      }
+      // if (UserSenderInfo == userInfo) {
+      //   updateMessageFunction(userInfo);
+      // }
 
       setCallUseEffectForUpdateMessage(false);
     });
   }, [useEffectForUpdateMessage]);
 
-  // all message
-  const [message, setMessage] = useState([]);
+  // // all message
+  // const [message, setMessage] = useState([]);
 
-  // get auto message
-  useEffect(() => {
-    setTimeout(() => {
-      let userInfoForLogin = JSON.parse(localStorage.getItem("UserInfo"));
-      let userInfoForVisitorNumber = JSON.parse(
-        localStorage.getItem("localVisitorNumber")
-      );
+  // // get auto message
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     let userInfoForLogin = JSON.parse(localStorage.getItem("UserInfo"));
+  //     let userInfoForVisitorNumber = JSON.parse(
+  //       localStorage.getItem("localVisitorNumber")
+  //     );
 
-      const userInfo =
-        userInfoForLogin !== null ? userInfoForLogin : userInfoForVisitorNumber;
-      updateMessageFunction(userInfo);
-    });
-  }, []);
+  //     const userInfo =
+  //       userInfoForLogin !== null ? userInfoForLogin : userInfoForVisitorNumber;
+  //     updateMessageFunction(userInfo);
+  //   });
+  // }, []);
 
-  const updateMessageFunction = (props) => {
-    fetch(
-      `https://glacial-shore-36532.herokuapp.com/getInboxMessage?roomName=${props}`
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        console.log("this is update :", json);
+  // const updateMessageFunction = (props) => {
+  //   fetch(
+  //     `https://glacial-shore-36532.herokuapp.com/getInboxMessage?roomName=${props}`
+  //   )
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //       console.log("this is update :", json);
 
-        setMessage(json);
-      });
-  };
+  //       setMessage(json);
+  //     });
+  // };
 
   // drilling image for animation
   const setAniImg = (props) => {
@@ -233,6 +250,9 @@ function App() {
   const seasonStroageProductFunction = (props) => {
     console.log("this is season storage product : ", props);
   };
+
+  // ^ this is user message
+  const [message, setMessage] = useState([]);
 
   return (
     <div className="App">
@@ -252,6 +272,8 @@ function App() {
                   setAniImg={setAniImg}
                 ></Layout>
                 <NaviBar
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
                   setAniImg={setAniImg}
                   productShowAnimation={productShowAnimation}
                   setProductShowAnimation={setProductShowAnimation}
@@ -275,7 +297,10 @@ function App() {
               <PrivateRoute path="/Favorite">
                 <HeaderSearchBar></HeaderSearchBar>
                 <FavoritePage></FavoritePage>
-                <NaviBar></NaviBar>
+                <NaviBar
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
+                ></NaviBar>
                 <div>
                   <div>
                     <WhatsAppWidget
@@ -296,6 +321,8 @@ function App() {
                 <HeaderSearchBar></HeaderSearchBar>
                 <Layout setAniImg={setAniImg}></Layout>
                 <NaviBar
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
                   setAniImg={setAniImg}
                   productShowAnimation={productShowAnimation}
                   setProductShowAnimation={setProductShowAnimation}
@@ -319,7 +346,10 @@ function App() {
               <Route exact path="/Category">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Layout></Layout>
-                <NaviBar></NaviBar>
+                <NaviBar
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
+                ></NaviBar>
                 <div>
                   <div>
                     <WhatsAppWidget
@@ -341,6 +371,8 @@ function App() {
                 <SingleProdductPage setAniImg={setAniImg}></SingleProdductPage>
 
                 <NaviBar
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
                   setAniImg={setAniImg}
                   productShowAnimation={productShowAnimation}
                   setProductShowAnimation={setProductShowAnimation}
@@ -366,6 +398,8 @@ function App() {
                 {/* <EditOrder></EditOrder> */}
                 <EditOrderCommingSoon></EditOrderCommingSoon>
                 <NaviBar
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
                   setAniImg={setAniImg}
                   productShowAnimation={productShowAnimation}
                   setProductShowAnimation={setProductShowAnimation}
@@ -390,32 +424,22 @@ function App() {
               <Route path="/MyMessage">
                 <HeaderSearchBar></HeaderSearchBar>
                 <MyMessage
-                  userMessageInfo={userMessageInfo}
+                  curentUserInfo={curentUserInfo}
                   message={message}
-                  updateMessageFunction={updateMessageFunction}
                 ></MyMessage>
-                <NaviBar></NaviBar>
-                <div>
-                  <div>
-                    <WhatsAppWidget
-                      textReplyTime="Online Shopping"
-                      companyName="Queenz Zone"
-                      class="_1bpcM"
-                      phoneNumber="966590519267"
-                    />
-                  </div>
-
-                  <MessengerCustomerChat
-                    pageId="109450594159775"
-                    appId="897437511658333"
-                  />
-                </div>
+                <NaviBar
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
+                ></NaviBar>
               </Route>
               <Route path="/ShoppingCard">
                 <HeaderSearchBar></HeaderSearchBar>
                 <ShoppingCardPage></ShoppingCardPage>
 
-                <NaviBar></NaviBar>
+                <NaviBar
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
+                ></NaviBar>
                 <div>
                   <div>
                     <WhatsAppWidget
@@ -435,8 +459,15 @@ function App() {
 
               <Route path="/MyAccount">
                 <HeaderSearchBar></HeaderSearchBar>
-                <MyAccount></MyAccount>
-                <NaviBar></NaviBar>
+                <MyAccount
+                  setcallUseEffectForCurrentUserInfo={
+                    setcallUseEffectForCurrentUserInfo
+                  }
+                ></MyAccount>
+                <NaviBar
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
+                ></NaviBar>
                 <div>
                   <div>
                     <WhatsAppWidget
@@ -456,7 +487,10 @@ function App() {
               <PrivateRoute path="/Order">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Order></Order>
-                <NaviBar></NaviBar>
+                <NaviBar
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
+                ></NaviBar>
                 <div>
                   <div>
                     <WhatsAppWidget
@@ -476,7 +510,10 @@ function App() {
               <PrivateRoute path="/UserOrderPage">
                 <HeaderSearchBar></HeaderSearchBar>
                 <OrderPage></OrderPage>
-                <NaviBar></NaviBar>
+                <NaviBar
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
+                ></NaviBar>
                 <div>
                   <div>
                     <WhatsAppWidget
@@ -497,6 +534,8 @@ function App() {
                 <HeaderSearchBar></HeaderSearchBar>
                 <CatagoryProduct setAniImg={setAniImg}></CatagoryProduct>
                 <NaviBar
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
                   setAniImg={setAniImg}
                   productShowAnimation={productShowAnimation}
                   setProductShowAnimation={setProductShowAnimation}
@@ -524,7 +563,10 @@ function App() {
               <Route path="*">
                 <HeaderSearchBar></HeaderSearchBar>
 
-                <NaviBar></NaviBar>
+                <NaviBar
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
+                ></NaviBar>
                 <div>
                   <div>
                     <WhatsAppWidget

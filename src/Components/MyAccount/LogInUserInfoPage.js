@@ -5,7 +5,9 @@ import io from "socket.io-client";
 import { UserInfoContext } from "../../App";
 import globeSocketIo from "../../globeVar ";
 
-export default function LogInUserInfoPage() {
+export default function LogInUserInfoPage({
+  setcallUseEffectForCurrentUserInfo,
+}) {
   let history = useHistory();
   let location = useLocation();
   const socket = useRef();
@@ -40,6 +42,10 @@ export default function LogInUserInfoPage() {
       oldUserInfo: null,
     });
     console.log("this is socket 5");
+
+    setcallUseEffectForCurrentUserInfo(
+      Math.floor(100000000 + Math.random() * 900000000)
+    );
   };
 
   // react from hook

@@ -118,6 +118,7 @@ export default function ReSingleProductDesign({
                     borderRadius: "5px 5px 0px 0px ",
                   }}
                   src={img}
+                  alt="product"
                 />
               ))}
             </Carousel>

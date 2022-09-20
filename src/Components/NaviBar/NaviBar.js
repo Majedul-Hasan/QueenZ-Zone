@@ -3,22 +3,20 @@ import {
   faClipboardList,
   faHeart,
   faHouse,
-  faMessage,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styledCus from "styled-components";
+
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
-import {
-  default as React,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { default as React, useContext, useEffect, useState } from "react";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
+
+import "react-whatsapp-widget/dist/index.css";
 import { UserInfoContext } from "../../App";
+import MessageOption from "./MessageOption";
 import "./navBarAni.css";
 import ShoppingCardIcon from "./ShoppingCardIcon";
 
@@ -28,7 +26,6 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     right: -3,
     top: 13,
     border: `2px solid ${theme.palette.background.paper}`,
-    padding: "0 4px",
   },
 }));
 
@@ -36,8 +33,11 @@ export default function NaviBar({
   productShowAnimation,
   setProductShowAnimation,
   setAniImg,
+  curentUserInfo,
+  callNavShowAnimation,
+  setMessage,
 }) {
-  const socket = useRef();
+  // const socket = useRef();
 
   let location = useLocation();
 
@@ -67,6 +67,7 @@ export default function NaviBar({
 
   const [animationimage, setAnimationimage] = useState();
 
+  // ^ hide for some issue
   useEffect(() => {
     if (productShowAnimation != undefined) {
       console.log("this is nav bar : ", productShowAnimation);
@@ -80,6 +81,8 @@ export default function NaviBar({
       }, 1000);
     }
   }, [productShowAnimation]);
+
+  // ! hide end
 
   // use context
   const [loggingUserInfo, setLoginUsserInfo] = useContext(UserInfoContext);
@@ -164,7 +167,7 @@ export default function NaviBar({
   // }, []);
 
   return (
-    <div>
+    <NavBack>
       <div className="fixed-bottom ">
         <div className="mx-auto" style={{ width: "100%" }}>
           <div
@@ -175,7 +178,7 @@ export default function NaviBar({
               fontSize: "24px",
             }}
           >
-            <div className=" p-2 d-flex justify-content-around">
+            <div className=" p-2 d-flex justify-content-around align-items-center ">
               <div onClick={() => optionName("Home")}>
                 <FontAwesomeIcon
                   style={{
@@ -197,37 +200,20 @@ export default function NaviBar({
                   icon={faHeart}
                 />
               </div>
-              <div onClick={() => optionName("MyMessage")}>
-                <div ClassName="" style={{ position: "relative" }}>
-                  <FontAwesomeIcon
-                    style={{
-                      color: `${
-                        location.pathname === "/MyMessage" ? "black" : "white"
-                      }`,
-                    }}
-                    icon={faMessage}
-                  />
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "-8px",
-                      fontSize: "14px",
-                      borderRadius: "100%",
-                      backgroundColor: "#fec400",
-                      padding: "2px",
-                      right: "-4px",
-                      fontFamily: "Poppins",
-                      fontWeight: "600",
-                    }}
-                  >
-                    <span>5</span>
-                  </div>
-                </div>
+
+              <div
+                onClick={() => optionName("MyMessage")}
+                style={{ padding: " 0px", margin: "0px", marginTop: "-4px" }}
+              >
+                <MessageOption
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
+                ></MessageOption>
               </div>
 
               <div
                 onClick={() => optionName("ShoppingCard")}
-                style={{ padding: " 0px", margin: "0px", marginTop: "-4px" }}
+                style={{ padding: " 0px", margin: "0px", marginTop: "-2px" }}
               >
                 <ShoppingCardIcon
                   setAniImg={setAniImg}
@@ -287,6 +273,13 @@ export default function NaviBar({
           </div>
         </div>
       </div>
-    </div>
+    </NavBack>
   );
 }
+
+const NavBack = styledCus.div`
+  .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+    padding: 0px;
+  }
+
+`;

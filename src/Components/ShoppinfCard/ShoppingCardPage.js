@@ -45,7 +45,7 @@ export default function ShoppingCardPage() {
     }
   }, [updateProductQty]);
 
-  // remove iteam
+  // remove item
   const removeItem = (props) => {
     setTimeout(() => {
       console.log("hlwwwwwwwwwww", props);
