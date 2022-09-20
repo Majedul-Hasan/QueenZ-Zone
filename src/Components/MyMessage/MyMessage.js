@@ -260,7 +260,7 @@ export default function MyMessage({ curentUserInfo, message }) {
   };
 
   return (
-    <InboxRoomBack className=" mb-5 pb-2 pt-1 px-1">
+    <InboxRoomBack className=" mb-5 pb-5 pt-1 px-1">
       {" "}
       <div
         style={{
@@ -573,7 +573,6 @@ const InboxRoomBack = styled.div`
     margin-bottom: 40px;
   }
   .messageDiv {
-    height: 675px;
     overflow-y: scroll;
   }
 
@@ -597,6 +596,10 @@ const InboxRoomBack = styled.div`
   /* Handle on hover */
   .messageDiv::-webkit-scrollbar-thumb:hover {
     background: #fec400;
+  }
+  .inputDiv {
+    bottom: 55px;
+    position: fixed;
   }
 
   .OneMessageDiv_admin {

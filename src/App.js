@@ -13,6 +13,7 @@ import MainDashboard from "./Components/Dashboard/MainDashboard/MainDashboard";
 import EditOrderCommingSoon from "./Components/EditOrderCommingSoon/EditOrderCommingSoon";
 import FavoritePage from "./Components/Favorite/FavoritePage";
 import MyAccount from "./Components/MyAccount/MyAccount";
+import MessageRouteHeader from "./Components/MyMessage/MessageRouteHeader";
 import MyMessage from "./Components/MyMessage/MyMessage";
 import NaviBar from "./Components/NaviBar/NaviBar";
 import { default as Order } from "./Components/Order/Order";
@@ -422,7 +423,7 @@ function App() {
               </Route>
 
               <Route path="/MyMessage">
-                <HeaderSearchBar></HeaderSearchBar>
+                <MessageRouteHeader></MessageRouteHeader>
                 <MyMessage
                   curentUserInfo={curentUserInfo}
                   message={message}
