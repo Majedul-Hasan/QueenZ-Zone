@@ -13,7 +13,6 @@ import MainDashboard from "./Components/Dashboard/MainDashboard/MainDashboard";
 import EditOrderCommingSoon from "./Components/EditOrderCommingSoon/EditOrderCommingSoon";
 import FavoritePage from "./Components/Favorite/FavoritePage";
 import MyAccount from "./Components/MyAccount/MyAccount";
-import MessageRouteHeader from "./Components/MyMessage/MessageRouteHeader";
 import MyMessage from "./Components/MyMessage/MyMessage";
 import NaviBar from "./Components/NaviBar/NaviBar";
 import { default as Order } from "./Components/Order/Order";
@@ -253,7 +252,32 @@ function App() {
   };
 
   // ^ this is user message
-  const [message, setMessage] = useState([]);
+  const [message, setMessage] = useState(false);
+
+  // ^^  all user rating
+  const [allRating, setAllRating] = useState([]);
+
+  useEffect(() => {
+    fetch(
+      `https://glacial-shore-36532.herokuapp.com/queenZoneUserFindAllRating`
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        console.log("this is all rating : ", json);
+
+        setAllRating(json);
+      });
+  }, []);
+
+  const [userScroll, setUserScroll] = useState(true);
+  const [unSeenMsgUserScroll, setUnSeenMsgUserScroll] = useState({
+    msg: "",
+    state: false,
+  });
+
+  // useEffect(() => {
+  //   console.log("this is useEffect for unseen msg -> ", unSeenMsgUserScroll);
+  // }, [unSeenMsgUserScroll]);
 
   return (
     <div className="App">
@@ -271,8 +295,11 @@ function App() {
                 <Layout
                   seasonStroageProductFunction={seasonStroageProductFunction}
                   setAniImg={setAniImg}
+                  allRating={allRating}
                 ></Layout>
                 <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                   setAniImg={setAniImg}
@@ -299,6 +326,8 @@ function App() {
                 <HeaderSearchBar></HeaderSearchBar>
                 <FavoritePage></FavoritePage>
                 <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                 ></NaviBar>
@@ -320,8 +349,10 @@ function App() {
               </PrivateRoute>
               <Route exact path="/Home">
                 <HeaderSearchBar></HeaderSearchBar>
-                <Layout setAniImg={setAniImg}></Layout>
+                <Layout allRating={allRating} setAniImg={setAniImg}></Layout>
                 <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                   setAniImg={setAniImg}
@@ -346,8 +377,10 @@ function App() {
               </Route>
               <Route exact path="/Category">
                 <HeaderSearchBar></HeaderSearchBar>
-                <Layout></Layout>
+                <Layout allRating={allRating}></Layout>
                 <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                 ></NaviBar>
@@ -369,9 +402,14 @@ function App() {
               </Route>
               <Route exact path="/Category/:Category/:PNAME/:PID">
                 <HeaderSearchBar></HeaderSearchBar>
-                <SingleProdductPage setAniImg={setAniImg}></SingleProdductPage>
+                <SingleProdductPage
+                  allRating={allRating}
+                  setAniImg={setAniImg}
+                ></SingleProdductPage>
 
                 <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                   setAniImg={setAniImg}
@@ -399,6 +437,8 @@ function App() {
                 {/* <EditOrder></EditOrder> */}
                 <EditOrderCommingSoon></EditOrderCommingSoon>
                 <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                   setAniImg={setAniImg}
@@ -423,12 +463,17 @@ function App() {
               </Route>
 
               <Route path="/MyMessage">
-                <MessageRouteHeader></MessageRouteHeader>
+                <HeaderSearchBar></HeaderSearchBar>
                 <MyMessage
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  unSeenMsgUserScroll={unSeenMsgUserScroll}
+                  setUserScroll={setUserScroll}
                   curentUserInfo={curentUserInfo}
                   message={message}
                 ></MyMessage>
                 <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                 ></NaviBar>
@@ -438,6 +483,8 @@ function App() {
                 <ShoppingCardPage></ShoppingCardPage>
 
                 <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                 ></NaviBar>
@@ -466,6 +513,8 @@ function App() {
                   }
                 ></MyAccount>
                 <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                 ></NaviBar>
@@ -489,6 +538,8 @@ function App() {
                 <HeaderSearchBar></HeaderSearchBar>
                 <Order></Order>
                 <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                 ></NaviBar>
@@ -510,8 +561,10 @@ function App() {
               </PrivateRoute>
               <PrivateRoute path="/UserOrderPage">
                 <HeaderSearchBar></HeaderSearchBar>
-                <OrderPage></OrderPage>
+                <OrderPage curentUserInfo={curentUserInfo}></OrderPage>
                 <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                 ></NaviBar>
@@ -533,8 +586,13 @@ function App() {
               </PrivateRoute>
               <Route path="/Category/:Cname">
                 <HeaderSearchBar></HeaderSearchBar>
-                <CatagoryProduct setAniImg={setAniImg}></CatagoryProduct>
+                <CatagoryProduct
+                  allRating={allRating}
+                  setAniImg={setAniImg}
+                ></CatagoryProduct>
                 <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                   setAniImg={setAniImg}
@@ -565,6 +623,8 @@ function App() {
                 <HeaderSearchBar></HeaderSearchBar>
 
                 <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                 ></NaviBar>

@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useLocation } from "react-router-dom";
@@ -260,6 +261,9 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
       });
   };
 
+  // ^ loading
+  const [loading, setLoading] = useState(false);
+
   // sign in all things
   const [signInEmail, setSignInEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
@@ -279,6 +283,7 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
 
       setShowError(localErrorMsg);
     } else {
+      setLoading(true);
       const auth = getAuth();
       signInWithEmailAndPassword(auth, signInEmail, signInPassword)
         .then((userCredential) => {
@@ -287,6 +292,7 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
           // ...
 
           fetchOneUserInfo(user.providerData[0]);
+          setLoading(false);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -297,6 +303,7 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
           };
 
           setShowError(localErrorMsg);
+          setLoading(false);
         });
     }
   };
@@ -346,7 +353,7 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
   return (
     <div>
       {" "}
-      <div>
+      <div className="container">
         <div
           style={{
             display: `${loggingUserInfo.email ? "none" : "block"}   `,
@@ -389,61 +396,67 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
                   borderRadius: "5px",
                 }}
               >
-                <div className="p-2">
-                  <label
-                    for="Email"
-                    className=" mt-2 form-label"
-                    style={{
-                      fontSize: "16",
-                      fontFamily: "Poppins",
-                      fontWeight: "400",
-                      margin: "",
-                    }}
-                  >
-                    Email
-                  </label>
-                  <div class="input-group mb-3">
-                    <input
-                      onChange={(e) => onSignInEmail(e.target.value)}
-                      type="email"
-                      class="form-control"
-                      id="Email"
-                      placeholder="email..."
-                      aria-describedby="basic-addon3"
-                      style={{
-                        fontSize: "16",
-                        fontFamily: "Poppins",
-                        fontWeight: "400",
-                      }}
-                    />
-                  </div>
-                  <label
-                    for="Password"
-                    class="form-label"
-                    style={{
-                      fontSize: "16",
-                      fontFamily: "Poppins",
-                      fontWeight: "400",
-                      margin: "",
-                    }}
-                  >
-                    Password
-                  </label>
-                  <div class="input-group mb-3">
-                    <input
-                      onChange={(e) => onSignInPassword(e.target.value)}
-                      type="password"
-                      placeholder="password..."
-                      className=" form-control"
-                      id="Password"
-                      aria-describedby="basic-addon3"
+                <div className=" row p-2">
+                  <div className="col-sm-12 col-md-6 col-lg-6">
+                    {" "}
+                    <label
+                      for="Email"
+                      className="  form-label"
                       style={{
                         fontSize: "16",
                         fontFamily: "Poppins",
                         fontWeight: "400",
                         margin: "",
                       }}
-                    />
+                    >
+                      Email
+                    </label>
+                    <div class="input-group mb-3">
+                      <input
+                        onChange={(e) => onSignInEmail(e.target.value)}
+                        type="email"
+                        class="form-control"
+                        id="Email"
+                        placeholder="email..."
+                        aria-describedby="basic-addon3"
+                        style={{
+                          fontSize: "16",
+                          fontFamily: "Poppins",
+                          fontWeight: "400",
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-sm-12 col-md-6 col-lg-6">
+                    {" "}
+                    <label
+                      for="Password"
+                      class="form-label"
+                      style={{
+                        fontSize: "16",
+                        fontFamily: "Poppins",
+                        fontWeight: "400",
+                        margin: "",
+                      }}
+                    >
+                      Password
+                    </label>
+                    <div class="input-group mb-3">
+                      <input
+                        onChange={(e) => onSignInPassword(e.target.value)}
+                        type="password"
+                        placeholder="password..."
+                        className=" form-control"
+                        id="Password"
+                        aria-describedby="basic-addon3"
+                        style={{
+                          fontSize: "16",
+                          fontFamily: "Poppins",
+                          fontWeight: "400",
+                          margin: "",
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -458,7 +471,9 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
                 }}
               >
                 <div
-                  onClick={() => onSignIn()}
+                  onClick={() => {
+                    !loading && onSignIn();
+                  }}
                   className="btn btn-warning d-flex justify-content-center"
                   style={{
                     fontSize: "16px",
@@ -468,15 +483,25 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
                     color: "white",
                   }}
                 >
-                  SIGN IN
+                  {!loading ? (
+                    "SIGN IN"
+                  ) : (
+                    <CircularProgress
+                      style={{
+                        width: "20px ",
+                        height: "20px",
+                      }}
+                    />
+                  )}
                 </div>
               </div>
-              <div class="d-flex justify-content-center">
+              <div class="d-flex justify-content-center mb-5 pb-5">
                 <span
                   style={{
                     fontSize: "14px",
                     fontFamily: "Poppins",
                     fontWeight: "400",
+                    cursor: "pointer",
                   }}
                 >
                   If you don't have an account please{" "}
@@ -486,7 +511,7 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
                       color: "blue",
                     }}
                   >
-                    SIGN UP
+                    {` `} SIGN UP
                   </span>
                 </span>
               </div>
@@ -495,7 +520,7 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div
-              className=""
+              className="mb-5 pb-5 "
               style={{
                 display: ` ${
                   signInOrRegister === "Sign in" ? "none" : "block"
@@ -524,6 +549,7 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
                     SIGN UP
                   </span>
                 </div>
+
                 <div
                   className=" m-3 "
                   style={{
@@ -532,214 +558,236 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
                     borderRadius: "5px",
                   }}
                 >
-                  <div className="p-2">
-                    <label
-                      for="First Name"
-                      className=" mt-2 form-label"
-                      style={{
-                        fontSize: "16",
-                        fontFamily: "Poppins",
-                        fontWeight: "400",
-                        margin: "",
-                      }}
-                    >
-                      First Name
-                    </label>
-                    <div class="input-group ">
-                      <input
-                        {...register("FirstName", {
-                          required: true,
-                        })}
-                        type="text"
-                        class="form-control"
-                        id="First Name"
-                        placeholder="firsh name..."
-                        aria-describedby="basic-addon3"
+                  <div className="row p-2">
+                    <div className="col-md-6 col-sm-12 col-lg-6">
+                      {" "}
+                      <label
+                        for="First Name"
+                        className=" mt-2 form-label"
                         style={{
                           fontSize: "16",
                           fontFamily: "Poppins",
                           fontWeight: "400",
+                          margin: "",
                         }}
-                      />
+                      >
+                        First Name
+                      </label>
+                      <div class="input-group ">
+                        <input
+                          {...register("FirstName", {
+                            required: true,
+                          })}
+                          type="text"
+                          class="form-control"
+                          id="First Name"
+                          placeholder="firsh name..."
+                          aria-describedby="basic-addon3"
+                          style={{
+                            fontSize: "16",
+                            fontFamily: "Poppins",
+                            fontWeight: "400",
+                          }}
+                        />
+                      </div>
                     </div>
-                    <label
-                      for="Last Name"
-                      className=" mt-2 form-label"
-                      style={{
-                        fontSize: "16",
-                        fontFamily: "Poppins",
-                        fontWeight: "400",
-                        margin: "",
-                      }}
-                    >
-                      Last Name
-                    </label>
-                    <div class="input-group ">
-                      <input
-                        {...register("LastName", {
-                          required: true,
-                        })}
-                        type="text"
-                        class="form-control"
-                        id="Last Name"
-                        placeholder="last name..."
-                        aria-describedby="basic-addon3"
+                    <div className="col-md-6 col-sm-12 col-lg-6">
+                      {" "}
+                      <label
+                        for="Last Name"
+                        className=" mt-2 form-label"
                         style={{
                           fontSize: "16",
                           fontFamily: "Poppins",
                           fontWeight: "400",
+                          margin: "",
                         }}
-                      />
+                      >
+                        Last Name
+                      </label>
+                      <div class="input-group ">
+                        <input
+                          {...register("LastName", {
+                            required: true,
+                          })}
+                          type="text"
+                          class="form-control"
+                          id="Last Name"
+                          placeholder="last name..."
+                          aria-describedby="basic-addon3"
+                          style={{
+                            fontSize: "16",
+                            fontFamily: "Poppins",
+                            fontWeight: "400",
+                          }}
+                        />
+                      </div>
                     </div>
-                    <label
-                      for="Phone Number"
-                      className=" mt-2 form-label"
-                      style={{
-                        fontSize: "16",
-                        fontFamily: "Poppins",
-                        fontWeight: "400",
-                        margin: "",
-                      }}
-                    >
-                      Phone Number
-                    </label>
-                    <div class="input-group ">
-                      <input
-                        {...register("phoneNumber", {
-                          required: true,
-                        })}
-                        type="number"
-                        class="form-control"
-                        id="PhoneNumber"
-                        placeholder="phone number..."
-                        aria-describedby="basic-addon3"
+                    <div className="col-md-6 col-sm-12 col-lg-6">
+                      {" "}
+                      <label
+                        for="Phone Number"
+                        className=" mt-2 form-label"
                         style={{
                           fontSize: "16",
                           fontFamily: "Poppins",
                           fontWeight: "400",
+                          margin: "",
                         }}
-                      />
+                      >
+                        Phone Number
+                      </label>
+                      <div class="input-group ">
+                        <input
+                          {...register("phoneNumber", {
+                            required: true,
+                          })}
+                          type="phone number"
+                          class="form-control"
+                          id="PhoneNumber"
+                          placeholder="phone number..."
+                          aria-describedby="basic-addon3"
+                          style={{
+                            fontSize: "16",
+                            fontFamily: "Poppins",
+                            fontWeight: "400",
+                          }}
+                        />
+                      </div>
                     </div>
-                    <label
-                      for="PhoneNumber"
-                      className=" mt-2 form-label"
-                      style={{
-                        fontSize: "16",
-                        fontFamily: "Poppins",
-                        fontWeight: "400",
-                        margin: "",
-                      }}
-                    >
-                      Address
-                    </label>
-                    <div class="input-group ">
-                      <input
-                        {...register("address", {
-                          required: true,
-                        })}
-                        type="text"
-                        class="form-control"
-                        id="PhoneNumber"
-                        placeholder="your address..."
-                        aria-describedby="basic-addon3"
+                    <div className="col-md-6 col-sm-12 col-lg-6">
+                      {" "}
+                      <label
+                        for="PhoneNumber"
+                        className=" mt-2 form-label"
                         style={{
                           fontSize: "16",
                           fontFamily: "Poppins",
                           fontWeight: "400",
+                          margin: "",
                         }}
-                      />
+                      >
+                        Address
+                      </label>
+                      <div class="input-group ">
+                        <input
+                          {...register("address", {
+                            required: true,
+                          })}
+                          type="text"
+                          class="form-control"
+                          id="PhoneNumber"
+                          placeholder="your address..."
+                          aria-describedby="basic-addon3"
+                          style={{
+                            fontSize: "16",
+                            fontFamily: "Poppins",
+                            fontWeight: "400",
+                          }}
+                        />
+                      </div>
                     </div>
-                    <label
-                      for="Passwordd"
-                      className=" mt-2 form-label"
-                      style={{
-                        fontSize: "16",
-                        fontFamily: "Poppins",
-                        fontWeight: "400",
-                        margin: "",
-                      }}
-                    >
-                      Password
-                    </label>
-                    <div class="input-group ">
-                      <input
-                        {...register("Password", {
-                          required: true,
-                          minLength: 8,
-                        })}
-                        type="password"
-                        class="form-control"
-                        id="Passwordd"
-                        placeholder="password..."
-                        aria-describedby="basic-addon3"
+                    <div className="col-md-6 col-sm-12 col-lg-6">
+                      {" "}
+                      <label
+                        for="Passwordd"
+                        className=" mt-2 form-label"
                         style={{
                           fontSize: "16",
                           fontFamily: "Poppins",
                           fontWeight: "400",
+                          margin: "",
                         }}
-                      />
+                      >
+                        Password
+                      </label>
+                      <div class="input-group ">
+                        <input
+                          {...register("Password", {
+                            required: true,
+                            minLength: 8,
+                          })}
+                          type="password"
+                          class="form-control"
+                          id="Passwordd"
+                          placeholder="password..."
+                          aria-describedby="basic-addon3"
+                          style={{
+                            fontSize: "16",
+                            fontFamily: "Poppins",
+                            fontWeight: "400",
+                          }}
+                        />
+                      </div>
                     </div>
-                    <label
-                      for="Confirm Password"
-                      className=" mt-2 form-label"
-                      style={{
-                        fontSize: "16",
-                        fontFamily: "Poppins",
-                        fontWeight: "400",
-                        margin: "",
-                      }}
-                    >
-                      Confirm Password
-                    </label>
-                    <div class="input-group">
-                      <input
-                        type="password"
-                        {...register("ConfirmPassword", {
-                          required: true,
-                          minLength: 8,
-                        })}
-                        class="form-control"
-                        id="Confirm Password"
-                        placeholder="password..."
-                        aria-describedby="basic-addon3"
+                    <div className="col-md-6 col-sm-12 col-lg-6">
+                      {" "}
+                      <label
+                        for="Confirm Password"
+                        className=" mt-2 form-label"
                         style={{
                           fontSize: "16",
                           fontFamily: "Poppins",
                           fontWeight: "400",
+                          margin: "",
                         }}
-                      />
+                      >
+                        Confirm Password
+                      </label>
+                      <div class="input-group">
+                        <input
+                          type="password"
+                          {...register("ConfirmPassword", {
+                            required: true,
+                            minLength: 8,
+                          })}
+                          class="form-control"
+                          id="Confirm Password"
+                          placeholder="password..."
+                          aria-describedby="basic-addon3"
+                          style={{
+                            fontSize: "16",
+                            fontFamily: "Poppins",
+                            fontWeight: "400",
+                          }}
+                        />
+                      </div>
                     </div>
-                    <label
-                      for="Emaill"
-                      className=" mt-2 form-label"
-                      style={{
-                        fontSize: "16",
-                        fontFamily: "Poppins",
-                        fontWeight: "400",
-                        margin: "",
-                      }}
-                    >
-                      Email Address
-                    </label>
-                    <div class="input-group mb-3">
-                      <input
-                        type="email"
-                        {...register("email", {
-                          required: true,
-                        })}
-                        class="form-control"
-                        id="Emaill"
-                        placeholder="email..."
-                        aria-describedby="basic-addon3"
+                    <div className="col-md-6 col-sm-12 col-lg-6">
+                      {" "}
+                      <label
+                        for="Emaill"
+                        className=" mt-2 form-label"
                         style={{
                           fontSize: "16",
                           fontFamily: "Poppins",
                           fontWeight: "400",
+                          margin: "",
                         }}
-                      />
+                      >
+                        Email Address
+                      </label>
+                      <div class="input-group mb-3">
+                        <input
+                          type="email"
+                          {...register("email", {
+                            required: true,
+                          })}
+                          class="form-control"
+                          id="Emaill"
+                          placeholder="email..."
+                          aria-describedby="basic-addon3"
+                          style={{
+                            fontSize: "16",
+                            fontFamily: "Poppins",
+                            fontWeight: "400",
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
+
                 <div
                   className="p-2 m-3  "
                   style={{
@@ -775,6 +823,7 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
                       onClick={() => registerBtn("Sign in")}
                       style={{
                         color: "blue",
+                        cursor: "pointer",
                       }}
                     >
                       SIGN IN
@@ -786,7 +835,7 @@ export default function MyAccount({ setcallUseEffectForCurrentUserInfo }) {
           </form>
 
           <div
-            class="alert alert-danger alert-dismissible fade show m-3"
+            class="alert alert-danger alert-dismissible fade show m-3 mb-5"
             role="alert"
             style={{
               display: `${showError.error === true ? "block" : "none"}   `,

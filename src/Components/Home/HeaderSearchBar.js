@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import queenz_zone_logo from "../../Asset/queenz_zone_logo.png";
+import queenz_zone_logo from "../../Asset/real_queenzZoneLogoNoBG.png";
 
 export default function HeaderSearchBar() {
   let history = useHistory();
@@ -26,7 +26,8 @@ export default function HeaderSearchBar() {
       >
         <div style={{ marginRight: "0px" }}>
           <img
-            style={{ width: "60px" }}
+            onClick={() => history.push("/Home")}
+            style={{ width: "52px" }}
             src={queenz_zone_logo}
             className="img-fluid"
             alt="ded"

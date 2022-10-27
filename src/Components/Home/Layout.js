@@ -3,7 +3,11 @@ import HomePageLoadingAni from "../HomePageLoadingAni/HomePageLoadingAni";
 import AllProductCatagaryShow from "./AllProductCatagaryShow";
 import CarouselHome from "./CarouselHome";
 
-export default function Layout({ setAniImg, seasonStroageProductFunction }) {
+export default function Layout({
+  setAniImg,
+  seasonStroageProductFunction,
+  allRating,
+}) {
   // category
 
   const [category, sstcategory] = useState([]);
@@ -42,6 +46,7 @@ export default function Layout({ setAniImg, seasonStroageProductFunction }) {
       {!category.length === false ? (
         category.map((ca) => (
           <AllProductCatagaryShow
+            allRating={allRating}
             ca={ca}
             seasonStroageProductFunction={seasonStroageProductFunction}
             setAniImg={setAniImg}

@@ -16,7 +16,12 @@ const StyledBadgeForMessage = styled(Badge)(({ theme }) => ({
   },
 }));
 
-export default function MessageOption({ setMessage, curentUserInfo }) {
+export default function MessageOption({
+  setMessage,
+  curentUserInfo,
+  userScroll,
+  setUnSeenMsgUserScroll,
+}) {
   let location = useLocation();
   const [unseenMessages, setUnseenMessages] = useState([]);
 
@@ -28,17 +33,20 @@ export default function MessageOption({ setMessage, curentUserInfo }) {
       setUnseenMessages([]);
 
       // set seen all message
-      fetch(
-        `https://glacial-shore-36532.herokuapp.com/seenUpdateInboxMessage?roomName=${
-          curentUserInfo.activeUserInfo === "old"
-            ? curentUserInfo.oldUserInfo.email
-            : curentUserInfo.activeUserNumber
-        }`
-      )
-        .then((response) => response.json())
-        .then((json) => {
-          console.log("this is unseen update message : ", json);
-        });
+
+      if (userScroll === true) {
+        fetch(
+          `https://glacial-shore-36532.herokuapp.com/seenUpdateInboxMessage?roomName=${
+            curentUserInfo.activeUserInfo === "old"
+              ? curentUserInfo.oldUserInfo.email
+              : curentUserInfo.activeUserNumber
+          }`
+        )
+          .then((response) => response.json())
+          .then((json) => {
+            console.log("this is unseen update message : ", json);
+          });
+      }
 
       fetch(
         `https://glacial-shore-36532.herokuapp.com/getInboxMessage?roomName=${
@@ -50,6 +58,48 @@ export default function MessageOption({ setMessage, curentUserInfo }) {
         .then((response) => response.json())
         .then((json) => {
           setMessage(json);
+
+          const unseenMessage = json.filter(
+            (msg) => msg.message.userSeen === "unseen"
+          );
+
+          let lastMsg = [];
+
+          lastMsg = !unseenMessage.length === false && unseenMessage.slice(-1);
+
+          if (!lastMsg === false) {
+            if (lastMsg[0].message.message !== "") {
+              console.log(
+                "this is unseen message filter : Msg",
+                lastMsg[0].message.message
+              );
+
+              setUnSeenMsgUserScroll({
+                msg: lastMsg[0].message.message,
+                state: "msg",
+              });
+            } else if (lastMsg[0].message.product !== null) {
+              console.log(
+                "this is unseen message filter : Product",
+                lastMsg[0].message
+              );
+
+              setUnSeenMsgUserScroll({
+                msg: "suggest a product",
+                state: "product",
+              });
+            } else {
+              setUnSeenMsgUserScroll({
+                msg: "send image",
+                state: "img",
+              });
+
+              console.log(
+                "this is unseen message filter : Image",
+                lastMsg[0].message
+              );
+            }
+          }
 
           setUpdateCount(updateCount + 1);
         });
@@ -63,12 +113,14 @@ export default function MessageOption({ setMessage, curentUserInfo }) {
       )
         .then((response) => response.json())
         .then((json) => {
+          setUnSeenMsgUserScroll();
+
           const unseenMessage = json.filter(
             (msg) => msg.message.userSeen === "unseen"
           );
           setUnseenMessages(unseenMessage);
 
-          console.log("this is unseen message : ", unseenMessage);
+          // console.log("this is unseen message : ", unseenMessage.slice(-1));
 
           setUpdateCount(updateCount + 1);
         });

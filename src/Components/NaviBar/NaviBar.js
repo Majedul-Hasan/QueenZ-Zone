@@ -36,6 +36,9 @@ export default function NaviBar({
   curentUserInfo,
   callNavShowAnimation,
   setMessage,
+  userScroll,
+
+  setUnSeenMsgUserScroll,
 }) {
   // const socket = useRef();
 
@@ -206,6 +209,8 @@ export default function NaviBar({
                 style={{ padding: " 0px", margin: "0px", marginTop: "-4px" }}
               >
                 <MessageOption
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
                   setMessage={setMessage}
                   curentUserInfo={curentUserInfo}
                 ></MessageOption>

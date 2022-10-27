@@ -15,14 +15,15 @@ body{
   
   @keyframes carAnimation {
     0% {left: 0px;
-        font-size: 0px;
+        font-size: 5px;
     }
-    25% {left: 220px;
-        font-size: 20px}
-    90% {left: 0px;
-        font-size: 20px}
-    100% {left: 300px;
-        font-size: 0px}
+
+    85% {left: 150px;
+        font-size: 20px;
+        opacity: .5;}
+       
+    100% {left: 0px;
+        font-size: 5px}
   }
 
   @keyframes deleveryFeeCountAni {

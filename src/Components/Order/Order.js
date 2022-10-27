@@ -217,19 +217,13 @@ export default function Order() {
   };
 
   return (
-    <div
-      class=" mb-5 pb-5"
-      style={{
-        overflow: "scroll",
-      }}
-    >
+    <div class=" mb-5 pb-5 container" style={{}}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div
           class="p-2 m-2 mb-5 pb-5"
           style={{
             borderRadius: "10px",
             border: "2px solid #fec400",
-            overflow: "scroll",
           }}
         >
           <div class="">
@@ -244,42 +238,191 @@ export default function Order() {
             </div>
           </div>
 
-          <div>
-            <TextField
-              className="mt-4"
-              style={{ width: "100%" }}
-              required
-              {...register("Name")}
-              id="outlined-required"
-              label="Name"
-              defaultValue={loggingUserInfo.displayName}
-            />
-            <TextField
-              className="mt-3"
-              disabled
-              {...register("Email")}
-              style={{ width: "100%" }}
-              id="outlined-disabled"
-              label="Email"
-              defaultValue={loggingUserInfo.email}
-            />
-            <TextField
-              className="mt-3"
-              style={{ width: "100%" }}
-              required
-              {...register("phoneNumber")}
-              id="outlined-required"
-              label="Phone"
-              defaultValue={loggingUserInfo.phoneNumber}
-            />
-            <TextField
-              className="mt-3"
-              style={{ width: "100%" }}
-              id="outlined-required"
-              {...register("phoneNumber2", { min: 10, max: 14 })}
-              {...register("phoneNumber2")}
-              label="Phone 2 (optional)"
-            />
+          <div className="row">
+            <div className="col-md-6">
+              {" "}
+              <TextField
+                className="mt-4"
+                style={{ width: "100%" }}
+                required
+                {...register("Name")}
+                id="outlined-required"
+                label="Name"
+                defaultValue={loggingUserInfo.displayName}
+              />
+            </div>
+            <div className="col-md-6">
+              {" "}
+              <TextField
+                className="mt-3"
+                disabled
+                {...register("Email")}
+                style={{ width: "100%" }}
+                id="outlined-disabled"
+                label="Email"
+                defaultValue={loggingUserInfo.email}
+              />
+            </div>
+            <div className="col-md-6">
+              {" "}
+              <TextField
+                className="mt-3"
+                style={{ width: "100%" }}
+                required
+                {...register("phoneNumber")}
+                id="outlined-required"
+                label="Phone"
+                defaultValue={loggingUserInfo.phoneNumber}
+              />
+            </div>
+            <div className="col-md-6">
+              {" "}
+              <TextField
+                className="mt-3"
+                style={{ width: "100%" }}
+                id="outlined-required"
+                {...register("phoneNumber2", { min: 10, max: 14 })}
+                {...register("phoneNumber2")}
+                label="Phone 2 (optional)"
+              />
+            </div>
+            <div className="col-md-6">
+              {" "}
+              <TextField
+                className="mt-3"
+                style={{ width: "100%" }}
+                required
+                {...register("address")}
+                id="outlined-required"
+                label="Address"
+                defaultValue={loggingUserInfo.address}
+              />
+            </div>
+            <div className="col-md-6">
+              <TextField
+                className="mt-3"
+                style={{ width: "100%" }}
+                {...register("HouseNumber")}
+                id="outlined-required"
+                label="House number (optional)"
+              />
+            </div>
+            <div className="col-md-6">
+              {" "}
+              <div className="mt-2 ">
+                <div className="mb-2">
+                  <span>Expected Delivery Date</span>
+                </div>
+
+                <div>
+                  <DatePicker
+                    required
+                    {...register("ExpectedDeliveryDate")}
+                    className="w-100 p-2 border rounded"
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6" style={{ display: "none" }}>
+              <div className="mt-2 ">
+                <div className="mt-2 ">
+                  <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">
+                        Time
+                      </InputLabel>
+                      <Select
+                        {...register("ExpectedDeliveryTime")}
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={time}
+                        label="Time"
+                        onChange={handleChange}
+                      >
+                        <MenuItem value={"12:00 PM"}>12:00 PM</MenuItem>
+                        <MenuItem value={"12:30 PM"}>12:30 PM</MenuItem>
+                        <MenuItem value={"1:00 PM"}>1:00 PM</MenuItem>
+                        <MenuItem value={"1:30 PM"}>1:30 PM</MenuItem>
+                        <MenuItem value={"2:00 PM"}>2:00 PM</MenuItem>
+                        <MenuItem value={"2:30 PM"}>2:30 PM</MenuItem>
+                        <MenuItem value={"3:00 PM"}>3:00 PM</MenuItem>
+                        <MenuItem value={"3:30 PM"}>3:30 PM</MenuItem>
+                        <MenuItem value={"4:00 PM"}>4:00 PM</MenuItem>
+                        <MenuItem value={"4:30 PM"}>4:30 PM</MenuItem>
+                        <MenuItem value={"5:00 PM"}>5:00 PM</MenuItem>
+                        <MenuItem value={"5:30 PM"}>5:30 PM</MenuItem>
+
+                        <MenuItem value={"6:00 PM"}>6:00 PM</MenuItem>
+                        <MenuItem value={"6:30 PM"}>6:30 PM</MenuItem>
+                        <MenuItem value={"7:00 PM"}>7:00 PM</MenuItem>
+                        <MenuItem value={"7:30 PM"}>7:30 PM</MenuItem>
+                        <MenuItem value={"8:00 PM"}>8:00 PM</MenuItem>
+                        <MenuItem value={"8:30 PM"}>8:30 PM</MenuItem>
+                        <MenuItem value={"9:00 PM"}>9:00 PM</MenuItem>
+                        <MenuItem value={"9:30  PM"}>9:30 PM</MenuItem>
+                        <MenuItem value={"10:00 PM"}>10:00 PM</MenuItem>
+                        <MenuItem value={"10:30 PM"}>10:30 PM</MenuItem>
+                        <MenuItem value={"11:00PM"}>11:00 PM</MenuItem>
+                        <MenuItem value={"11:30 PM"}>11:30 PM</MenuItem>
+                        <MenuItem value={"12:00 AM"}>12:00 AM</MenuItem>
+
+                        <MenuItem value={"12:30 AM"}>12:30 AM</MenuItem>
+                        <MenuItem value={"1:00 AM"}>1:00 AM</MenuItem>
+                        <MenuItem value={"1:30 AM"}>1:30 AM</MenuItem>
+                        <MenuItem value={"2:00 AM"}>2:00 AM</MenuItem>
+                        <MenuItem value={"2:30 AM"}>2:30 AM</MenuItem>
+                        <MenuItem value={"3:00 AM"}>3:00 AM</MenuItem>
+                        <MenuItem value={"3:30 AM"}>3:30 AM</MenuItem>
+                        <MenuItem value={"4:00 AM"}>4:00 AM</MenuItem>
+                        <MenuItem value={"4:30 AM"}>4:30 AM</MenuItem>
+                        <MenuItem value={"5:00 AM"}>5:00 AM</MenuItem>
+                        <MenuItem value={"5:30 AM"}>5:30 AM</MenuItem>
+
+                        <MenuItem value={"6:00 AM"}>6:00 AM</MenuItem>
+                        <MenuItem value={"6:30 AM"}>6:30 AM</MenuItem>
+                        <MenuItem value={"7:00 AM"}>7:00 AM</MenuItem>
+                        <MenuItem value={"7:30 AM"}>7:30 AM</MenuItem>
+                        <MenuItem value={"8:00 AM"}>8:00 AM</MenuItem>
+                        <MenuItem value={"8:30 AM"}>8:30 AM</MenuItem>
+                        <MenuItem value={"9:00 AM"}>9:00 AM</MenuItem>
+                        <MenuItem value={"9:30 AM"}>9:30 AM</MenuItem>
+                        <MenuItem value={"10:00 AM"}>10:00 AM</MenuItem>
+                        <MenuItem value={"10:30 AM"}>10:30 AM</MenuItem>
+                        <MenuItem value={"11:00 AM"}>11:00 AM</MenuItem>
+                        <MenuItem value={"11:30 AM"}>11:30 AM</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6 mt-2">
+              <div>
+                <span>Expected Delivery time</span>
+              </div>
+
+              <input
+                style={{
+                  fontSize: "18px",
+                  padding: "8px 13px",
+                  width: "100%",
+                  borderRadius: "5px",
+                  border: "0.3px solid #d7d7d7",
+                }}
+                required
+                {...register("ExpectedDeliveryTime")}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={time}
+                label="Time"
+                onChange={handleChange}
+                type="time"
+                id="appt"
+                name="appt"
+              />
+            </div>
 
             <div
               className="mt-2 p-2 border rounded"
@@ -312,110 +455,8 @@ export default function Order() {
                 </div>
               </div>
             </div>
-
-            <TextField
-              className="mt-3"
-              style={{ width: "100%" }}
-              required
-              {...register("address")}
-              id="outlined-required"
-              label="Address"
-              defaultValue={loggingUserInfo.address}
-            />
-            <TextField
-              className="mt-3"
-              style={{ width: "100%" }}
-              {...register("HouseNumber")}
-              id="outlined-required"
-              label="House number (optional)"
-            />
-            <div className="mt-2 ">
-              <div className="mb-2">
-                <span>Expected Delivery Date</span>
-              </div>
-
-              <div>
-                <DatePicker
-                  required
-                  {...register("ExpectedDeliveryDate")}
-                  className="w-100 p-2 border rounded"
-                  selected={startDate}
-                  onChange={(date) => setStartDate(date)}
-                />
-              </div>
-            </div>
-            <div className="mt-2 ">
-              <span>Expected Delivery time</span>
-              <div className="mt-2 ">
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Time</InputLabel>
-                    <Select
-                      required
-                      {...register("ExpectedDeliveryTime")}
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={time}
-                      label="Time"
-                      onChange={handleChange}
-                    >
-                      <MenuItem value={"12:00 PM"}>12:00 PM</MenuItem>
-                      <MenuItem value={"12:30 PM"}>12:30 PM</MenuItem>
-                      <MenuItem value={"1:00 PM"}>1:00 PM</MenuItem>
-                      <MenuItem value={"1:30 PM"}>1:30 PM</MenuItem>
-                      <MenuItem value={"2:00 PM"}>2:00 PM</MenuItem>
-                      <MenuItem value={"2:30 PM"}>2:30 PM</MenuItem>
-                      <MenuItem value={"3:00 PM"}>3:00 PM</MenuItem>
-                      <MenuItem value={"3:30 PM"}>3:30 PM</MenuItem>
-                      <MenuItem value={"4:00 PM"}>4:00 PM</MenuItem>
-                      <MenuItem value={"4:30 PM"}>4:30 PM</MenuItem>
-                      <MenuItem value={"5:00 PM"}>5:00 PM</MenuItem>
-                      <MenuItem value={"5:30 PM"}>5:30 PM</MenuItem>
-
-                      <MenuItem value={"6:00 PM"}>6:00 PM</MenuItem>
-                      <MenuItem value={"6:30 PM"}>6:30 PM</MenuItem>
-                      <MenuItem value={"7:00 PM"}>7:00 PM</MenuItem>
-                      <MenuItem value={"7:30 PM"}>7:30 PM</MenuItem>
-                      <MenuItem value={"8:00 PM"}>8:00 PM</MenuItem>
-                      <MenuItem value={"8:30 PM"}>8:30 PM</MenuItem>
-                      <MenuItem value={"9:00 PM"}>9:00 PM</MenuItem>
-                      <MenuItem value={"9:30  PM"}>9:30 PM</MenuItem>
-                      <MenuItem value={"10:00 PM"}>10:00 PM</MenuItem>
-                      <MenuItem value={"10:30 PM"}>10:30 PM</MenuItem>
-                      <MenuItem value={"11:00PM"}>11:00 PM</MenuItem>
-                      <MenuItem value={"11:30 PM"}>11:30 PM</MenuItem>
-                      <MenuItem value={"12:00 AM"}>12:00 AM</MenuItem>
-
-                      <MenuItem value={"12:30 AM"}>12:30 AM</MenuItem>
-                      <MenuItem value={"1:00 AM"}>1:00 AM</MenuItem>
-                      <MenuItem value={"1:30 AM"}>1:30 AM</MenuItem>
-                      <MenuItem value={"2:00 AM"}>2:00 AM</MenuItem>
-                      <MenuItem value={"2:30 AM"}>2:30 AM</MenuItem>
-                      <MenuItem value={"3:00 AM"}>3:00 AM</MenuItem>
-                      <MenuItem value={"3:30 AM"}>3:30 AM</MenuItem>
-                      <MenuItem value={"4:00 AM"}>4:00 AM</MenuItem>
-                      <MenuItem value={"4:30 AM"}>4:30 AM</MenuItem>
-                      <MenuItem value={"5:00 AM"}>5:00 AM</MenuItem>
-                      <MenuItem value={"5:30 AM"}>5:30 AM</MenuItem>
-
-                      <MenuItem value={"6:00 AM"}>6:00 AM</MenuItem>
-                      <MenuItem value={"6:30 AM"}>6:30 AM</MenuItem>
-                      <MenuItem value={"7:00 AM"}>7:00 AM</MenuItem>
-                      <MenuItem value={"7:30 AM"}>7:30 AM</MenuItem>
-                      <MenuItem value={"8:00 AM"}>8:00 AM</MenuItem>
-                      <MenuItem value={"8:30 AM"}>8:30 AM</MenuItem>
-                      <MenuItem value={"9:00 AM"}>9:00 AM</MenuItem>
-                      <MenuItem value={"9:30 AM"}>9:30 AM</MenuItem>
-                      <MenuItem value={"10:00 AM"}>10:00 AM</MenuItem>
-                      <MenuItem value={"10:30 AM"}>10:30 AM</MenuItem>
-                      <MenuItem value={"11:00 AM"}>11:00 AM</MenuItem>
-                      <MenuItem value={"11:30 AM"}>11:30 AM</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </div>
-            </div>
           </div>
+
           <div class="d-flex justify-content-center mt-3">
             <Button
               type="submit"

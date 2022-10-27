@@ -11,6 +11,7 @@ export default function ShowProductCategory({
   ca,
   setAniImg,
   seasonStroageProductFunction,
+  allRating,
 }) {
   const [productData, setproductdata] = useState([]);
 
@@ -1683,6 +1684,7 @@ export default function ShowProductCategory({
               : productData.map((dt) => (
                   <div>
                     <ReSingleProductDesign
+                      allRating={allRating}
                       seasonStroageProductFunction={
                         seasonStroageProductFunction
                       }

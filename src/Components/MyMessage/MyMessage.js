@@ -1,6 +1,6 @@
 import CancelIcon from "@mui/icons-material/Cancel";
+import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import ImageIcon from "@mui/icons-material/Image";
-import MouseIcon from "@mui/icons-material/Mouse";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -15,7 +15,13 @@ import en from "javascript-time-ago/locale/en";
 
 TimeAgo.addDefaultLocale(en);
 
-export default function MyMessage({ curentUserInfo, message }) {
+export default function MyMessage({
+  curentUserInfo,
+  message,
+  setUserScroll,
+  unSeenMsgUserScroll,
+  setUnSeenMsgUserScroll,
+}) {
   //const socket = useRef();
   let location = useLocation();
   let history = useHistory();
@@ -24,6 +30,15 @@ export default function MyMessage({ curentUserInfo, message }) {
 
   const messageEndRef = useRef(null);
   const [scroll, setScroll] = useState(true);
+
+  const BtnScroll = () => {
+    setUnSeenMsgUserScroll({
+      msg: "",
+      state: false,
+    });
+
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
     if (scroll) {
@@ -104,13 +119,14 @@ export default function MyMessage({ curentUserInfo, message }) {
 
   // post message
   const sendMessageBtn = () => {
-    // ^ for image
+    // ^ for message
     if (sendMessage !== "") {
+      setLoading(true);
       sendMsg({ img: null, product: null });
     } else {
-      setLoading(true);
-      //^ for message
+      //^ for  image
       if (inputFile.createObjectURL !== "") {
+        setLoading(true);
         const data = new FormData();
         data.append("file", inputFile.fullImgDetails);
         data.append("upload_preset", "QueenzZone");
@@ -259,24 +275,101 @@ export default function MyMessage({ curentUserInfo, message }) {
     }
   };
 
-  return (
-    <InboxRoomBack className=" mb-5 pb-5 pt-1 px-1">
-      {" "}
-      <div
-        style={{
-          position: "fixed",
+  const refMsgDiv = useRef(null);
 
-          bottom: "202px",
-          right: "26px",
-          padding: "10px",
-          backgroundColor: `${scroll ? "green" : "red"}`,
-          border: "50%",
-          borderRadius: "50%",
-          color: "white",
-        }}
-      >
-        <MouseIcon onClick={() => setScroll(!scroll)}>scroll</MouseIcon>
-      </div>
+  // console.log("this is scroll position : ", window.pageYOffset);
+
+  // setInterval(() => {
+  //   if (window.pageYOffset > 200) {
+  //     setScroll(!scroll);
+  //   }
+  // }, 1000);
+
+  setInterval(() => {
+    // 589
+
+    // console.log("this is scroll position : ", window.pageYOffset);
+
+    let scrollValue = refMsgDiv.current.clientHeight - 754;
+    // console.log("this is scroll position : ", window.pageYOffset, scrollValue);
+
+    if (window.pageYOffset < scrollValue - 100) {
+      setScroll(false);
+      setUserScroll(false);
+    } else {
+      setScroll(true);
+      setUserScroll(true);
+    }
+
+    // filter unseen msg
+
+    // console.log(
+    //   "this is scroll position height : ",
+    //   refMsgDiv.current.clientHeight - 736
+    // );
+  }, 1000);
+
+  // console.log("this is scroll position 2 : ", ref.current.clientWidth);
+
+  return (
+    <InboxRoomBack ref={refMsgDiv} className=" mb-5 pb-5 pt-1 px-1 container">
+      {" "}
+      {!scroll && (
+        <div className="d-flex justify-content-center">
+          {unSeenMsgUserScroll && unSeenMsgUserScroll.state !== false ? (
+            <div
+              onClick={() => {
+                BtnScroll();
+                setUnSeenMsgUserScroll({
+                  msg: "",
+                  state: false,
+                });
+              }}
+              style={{
+                position: "fixed",
+
+                bottom: "110px",
+
+                margin: "auto",
+                padding: "5px",
+                backgroundColor: `#fec400`,
+
+                borderRadius: "20px",
+                cursor: "pointer",
+                color: "white",
+              }}
+            >
+              <span>{unSeenMsgUserScroll.msg}</span>
+            </div>
+          ) : (
+            <div
+              style={{
+                position: "fixed",
+
+                bottom: "110px",
+
+                margin: "auto",
+                padding: "10px",
+                // backgroundColor: `${scroll ? "green" : "red"}`,
+                border: "50%",
+                borderRadius: "50%",
+                color: "#fec400",
+              }}
+            >
+              <ExpandCircleDownIcon
+                style={{ fontSize: "30px" }}
+                onClick={() => {
+                  BtnScroll();
+                  setUnSeenMsgUserScroll({
+                    msg: "",
+                    state: false,
+                  });
+                }}
+              ></ExpandCircleDownIcon>
+            </div>
+          )}
+        </div>
+      )}
       <div>
         <WhatsAppWidget
           textReplyTime="Online Shopping"
@@ -285,283 +378,329 @@ export default function MyMessage({ curentUserInfo, message }) {
           phoneNumber="966590519267"
         />
       </div>
-      <div className="messageDiv pb-1 ">
-        {!message.length === false &&
-          message.map((msg) => (
-            <div>
-              {
-                // ^ for admin  and user message
-                msg.message.message !== "" &&
-                  msg.message.product === null &&
-                  msg.message.image === null && (
-                    <div
-                      className={`${
-                        msg.message.sender === "admin"
-                          ? "OneMessageDiv_admin"
-                          : "OneMessageDiv_user"
-                      } `}
-                    >
-                      <div
-                        className={`${
-                          msg.message.sender === "admin"
-                            ? "OneMessageDiv_admin_main"
-                            : "OneMessageDiv_user_main"
-                        } `}
-                      >
+      <div
+        className={
+          window.innerWidth > 761 && "row d-flex justify-content-center"
+        }
+      >
+        <div
+          className="col-sm-12 col-md-6 col-lg-6"
+          style={{ padding: "0px", margin: "0px" }}
+        >
+          {message === false && (
+            <div className="d-flex justify-content-center mt-5 bt-5">
+              {" "}
+              <div className="">
+                {" "}
+                <CircularProgress
+                  style={{
+                    width: "20px ",
+                    height: "20px",
+                  }}
+                />
+              </div>
+            </div>
+          )}
+          <div className="messageDiv pb-1 ">
+            {!message.length === false &&
+              message.map((msg) => (
+                <div>
+                  {
+                    // ^ for admin  and user message
+                    msg.message.message !== "" &&
+                      msg.message.product === null &&
+                      msg.message.image === null && (
                         <div
                           className={`${
                             msg.message.sender === "admin"
-                              ? "OneMessageDiv_admin_main_time_ago"
-                              : "OneMessageDiv_user_main_time_ago"
+                              ? "OneMessageDiv_admin"
+                              : "OneMessageDiv_user"
                           } `}
-                          style={{ fontSize: "12px" }}
                         >
-                          {" "}
-                          {timeAgo.format(new Date(msg.message.time))}
-                        </div>
-                        <div>
-                          <span>{msg.message.message}</span>
-                        </div>
-                      </div>
-                    </div>
-                  )
-              }
-
-              {
-                // ^ for admin  and user image
-                msg.message.message === "" &&
-                  msg.message.product === null &&
-                  msg.message.image !== null && (
-                    <div
-                      className={`${
-                        msg.message.sender === "admin"
-                          ? "OneImageDiv_admin"
-                          : "OneImageDiv_user"
-                      } `}
-                    >
-                      <div
-                        className={`${
-                          msg.message.sender === "admin"
-                            ? "OneImageDiv_admin_main"
-                            : "OneImageDiv_user_main"
-                        } `}
-                      >
-                        <div
-                          className={`${
-                            msg.message.sender === "admin"
-                              ? "OneImageDiv_admin_main_time_ago mt-1"
-                              : "OneImageDiv_user_main_time_ago mt-1"
-                          } `}
-                          style={{ fontSize: "12px" }}
-                        >
-                          {" "}
-                          {timeAgo.format(new Date(msg.message.time))}
-                        </div>
-                        <div>
-                          <div>
-                            <img
-                              style={{ width: "100%" }}
-                              src={msg.message.image}
-                              alt=""
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-              }
-
-              {
-                // ^ for admin send product
-                msg.message.message === "" &&
-                  msg.message.product !== null &&
-                  msg.message.image === null && (
-                    <div
-                      onClick={() =>
-                        history.push(
-                          `/Category/${msg.message.product.props.ProductCategory}/${msg.message.product.props.ProductName}/${msg.message.product.props._id}`
-                        )
-                      }
-                      className={`${
-                        msg.message.sender === "admin"
-                          ? "OneProductDiv_admin"
-                          : "OneProductDiv_user"
-                      } `}
-                    >
-                      <div
-                        className={`${
-                          msg.message.sender === "admin"
-                            ? "OneProductDiv_admin_main"
-                            : "OneProductDiv_user_main"
-                        } `}
-                      >
-                        <div
-                          className={`${
-                            msg.message.sender === "admin"
-                              ? "OneProductDiv_admin_main_time_ago"
-                              : "OneProductDiv_user_main_time_ago"
-                          } `}
-                          style={{ fontSize: "12px" }}
-                        >
-                          {" "}
-                          {timeAgo.format(new Date(msg.message.time))}
-                        </div>
-                        <div>
-                          <img
-                            src={
-                              !msg.message.product.img[0][0][0] === "h"
-                                ? msg.message.product.img[0][0][0]
-                                : msg.message.product.img[0][0]
-                            }
-                            alt=""
-                            style={{ width: "100%", borderRadius: "5px" }}
-                          />
-
-                          <div>
-                            <span>
-                              <b>{msg.message.product.props.ProductName}</b>
-                            </span>
-                          </div>
-                          <div>
-                            <span>
-                              Category : {` `}
-                              {msg.message.product.props.ProductCategory}
-                            </span>
-                          </div>
-                          <div className="pt-1 d-flex">
-                            <div>
-                              <span>
-                                {msg.message.product.props.ProductOffer !==
-                                "null"
-                                  ? "Offer"
-                                  : "Price"}{" "}
-                                {` `}:{" "}
-                                <b>{msg.message.product.props.ProductPrice}</b>{" "}
-                              </span>
+                          <div
+                            className={`${
+                              msg.message.sender === "admin"
+                                ? "OneMessageDiv_admin_main"
+                                : "OneMessageDiv_user_main"
+                            } `}
+                          >
+                            <div
+                              className={`${
+                                msg.message.sender === "admin"
+                                  ? "OneMessageDiv_admin_main_time_ago"
+                                  : "OneMessageDiv_user_main_time_ago"
+                              } `}
+                              style={{ fontSize: "12px" }}
+                            >
+                              {" "}
+                              {timeAgo.format(new Date(msg.message.time))}
                             </div>
-                            {msg.message.product.props.ProductOffer !==
-                              "null" && (
-                              <div className="px-2">
-                                <span style={{ fontSize: "12px" }}>
-                                  Price :{" "}
-                                  <s style={{ color: "red" }}>
-                                    {" "}
-                                    <b style={{ color: "white" }}>
-                                      {msg.message.product.props.ProductOffer}
-                                    </b>{" "}
-                                  </s>
+                            <div>
+                              <span>{msg.message.message}</span>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                  }
+
+                  {
+                    // ^ for admin  and user image
+                    msg.message.message === "" &&
+                      msg.message.product === null &&
+                      msg.message.image !== null && (
+                        <div
+                          className={`${
+                            msg.message.sender === "admin"
+                              ? "OneImageDiv_admin"
+                              : "OneImageDiv_user"
+                          } `}
+                        >
+                          <div
+                            className={`${
+                              msg.message.sender === "admin"
+                                ? "OneImageDiv_admin_main"
+                                : "OneImageDiv_user_main"
+                            } `}
+                          >
+                            <div
+                              className={`${
+                                msg.message.sender === "admin"
+                                  ? "OneImageDiv_admin_main_time_ago mt-1"
+                                  : "OneImageDiv_user_main_time_ago mt-1"
+                              } `}
+                              style={{ fontSize: "12px" }}
+                            >
+                              {" "}
+                              {timeAgo.format(new Date(msg.message.time))}
+                            </div>
+                            <div>
+                              <div>
+                                <img
+                                  style={{ width: "100%" }}
+                                  src={msg.message.image}
+                                  alt=""
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                  }
+
+                  {
+                    // ^ for admin send product
+                    msg.message.message === "" &&
+                      msg.message.product !== null &&
+                      msg.message.image === null && (
+                        <div
+                          onClick={() =>
+                            history.push(
+                              `/Category/${msg.message.product.props.ProductCategory}/${msg.message.product.props.ProductName}/${msg.message.product.props._id}`
+                            )
+                          }
+                          className={`${
+                            msg.message.sender === "admin"
+                              ? "OneProductDiv_admin"
+                              : "OneProductDiv_user"
+                          } `}
+                        >
+                          <div
+                            className={`${
+                              msg.message.sender === "admin"
+                                ? "OneProductDiv_admin_main"
+                                : "OneProductDiv_user_main"
+                            } `}
+                          >
+                            <div
+                              className={`${
+                                msg.message.sender === "admin"
+                                  ? "OneProductDiv_admin_main_time_ago"
+                                  : "OneProductDiv_user_main_time_ago"
+                              } `}
+                              style={{ fontSize: "12px" }}
+                            >
+                              {" "}
+                              {timeAgo.format(new Date(msg.message.time))}
+                            </div>
+                            <div>
+                              <img
+                                src={
+                                  !msg.message.product.img[0][0][0] === "h"
+                                    ? msg.message.product.img[0][0][0]
+                                    : msg.message.product.img[0][0]
+                                }
+                                alt=""
+                                style={{ width: "100%", borderRadius: "5px" }}
+                              />
+
+                              <div>
+                                <span>
+                                  <b>{msg.message.product.props.ProductName}</b>
                                 </span>
                               </div>
-                            )}
+                              <div>
+                                <span>
+                                  Category : {` `}
+                                  {msg.message.product.props.ProductCategory}
+                                </span>
+                              </div>
+                              <div className="pt-1 d-flex">
+                                <div>
+                                  <span>
+                                    {msg.message.product.props.ProductOffer !==
+                                    "null"
+                                      ? "Offer"
+                                      : "Price"}{" "}
+                                    {` `}:{" "}
+                                    <b>
+                                      {msg.message.product.props.ProductPrice}
+                                    </b>{" "}
+                                  </span>
+                                </div>
+                                {msg.message.product.props.ProductOffer !==
+                                  "null" && (
+                                  <div className="px-2">
+                                    <span style={{ fontSize: "12px" }}>
+                                      Price :{" "}
+                                      <s style={{ color: "red" }}>
+                                        {" "}
+                                        <b style={{ color: "black" }}>
+                                          {
+                                            msg.message.product.props
+                                              .ProductOffer
+                                          }
+                                        </b>{" "}
+                                      </s>
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  )
-              }
-              <div ref={messageEndRef}></div>
-            </div>
-          ))}
-      </div>
-      <div className="w-100 inputDiv d-flex align-items-center  justify-content-between">
-        <div
-          className=""
-          style={{ width: "11%", padding: "0px", margin: "0px" }}
-        >
-          <div style={{ width: "40px" }}>
-            {inputFile.createObjectURL !== "" ? (
-              <div style={{ position: "relative" }}>
-                <img
-                  style={{ width: "100%" }}
-                  src={inputFile.createObjectURL}
-                  alt={inputFile}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "-15px",
-                    right: "-10px",
-                    color: "red",
-                    cursor: "pointer",
-                  }}
-                >
-                  <CancelIcon
-                    onClick={() =>
-                      setInputFile({ createObjectURL: "", fullImgDetails: "" })
-                    }
-                  ></CancelIcon>
+                      )
+                  }
+
+                  <div ref={messageEndRef}></div>
                 </div>
-              </div>
-            ) : (
-              <InputFiles
-                onChange={(files) => {
-                  console.log("this is input file :", files);
-                  setInputFile({
-                    createObjectURL: URL.createObjectURL(files[0]),
-                    fullImgDetails: files[0],
-                  });
-                }}
-              >
-                <button
-                  style={{
-                    backgroundColor: "white",
-                    border: "1px solid #eaeaea",
-                    padding: "8px",
-                    borderRadius: "10px",
-                  }}
-                >
-                  <ImageIcon></ImageIcon>
-                </button>
-              </InputFiles>
-            )}
+              ))}
           </div>
         </div>
 
         <div
-          className=""
-          style={{ width: "67%", padding: "0px", margin: "0px" }}
+          style={{ backgroundColor: "#fec400", borderRadius: "50px" }}
+          className=" row container inputDiv d-flex align-items-center  justify-content-between"
         >
-          {inputFile.createObjectURL === "" ? (
-            <input
-              onKeyUp={handleKeypress}
-              style={{ width: "100%" }}
-              class="form-control"
-              onChange={(e) => setSendMessage(e.target.value)}
-              value={sendMessage}
-              type="text"
-              placeholder="msg..."
-            ></input>
-          ) : (
-            <span>
-              Image Name : {inputFile.fullImgDetails.name.slice(0, 10)}...
-            </span>
-          )}
-        </div>
-        <div
-          className=""
-          style={{ width: "18%", padding: "0px", margin: "0px" }}
-        >
-          {loading ? (
-            <div className="loadingAni">
-              {" "}
-              <CircularProgress
-                style={{
-                  width: "20px ",
-                  height: "20px",
-                }}
-              />
+          <div
+            className="col-1 inputFileMainDiv"
+            style={{ padding: "0px", margin: "0px" }}
+          >
+            <div style={{ width: "40px" }}>
+              {inputFile.createObjectURL !== "" ? (
+                <div style={{ position: "relative" }}>
+                  <img
+                    style={{ width: "100%" }}
+                    src={inputFile.createObjectURL}
+                    alt={inputFile}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "-15px",
+                      right: "-10px",
+                      color: "red",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <CancelIcon
+                      onClick={() =>
+                        setInputFile({
+                          createObjectURL: "",
+                          fullImgDetails: "",
+                        })
+                      }
+                    ></CancelIcon>
+                  </div>
+                </div>
+              ) : (
+                <InputFiles
+                  onChange={(files) => {
+                    console.log("this is input file :", files);
+                    setInputFile({
+                      createObjectURL: URL.createObjectURL(files[0]),
+                      fullImgDetails: files[0],
+                    });
+                  }}
+                >
+                  <button
+                    style={{
+                      backgroundColor: "#FEC400",
+
+                      border: "none",
+                      padding: "8px",
+                      borderRadius: "10px",
+                    }}
+                  >
+                    <ImageIcon style={{ color: "white" }}></ImageIcon>
+                  </button>
+                </InputFiles>
+              )}
             </div>
-          ) : (
-            <Button
-              onClick={() => {
-                sendMessageBtn();
-              }}
-              variant="contained"
-              disableElevation
-            >
-              <SendIcon></SendIcon>
-            </Button>
-          )}
+          </div>
+
+          <div className="col-9" style={{ padding: "0px", margin: "0px" }}>
+            {inputFile.createObjectURL === "" ? (
+              <input
+                onKeyUp={handleKeypress}
+                style={{
+                  width: "100%",
+                  backgroundColor: "transparent",
+                  border: "none",
+                }}
+                class="form-control messageInputStyle"
+                onChange={(e) => setSendMessage(e.target.value)}
+                value={sendMessage}
+                type="text"
+                placeholder="msg..."
+              ></input>
+            ) : (
+              <span>
+                Image Name : {inputFile.fullImgDetails.name.slice(0, 10)}...
+              </span>
+            )}
+          </div>
+
+          <div
+            className="col-1 d-flex loadingAniDiv "
+            style={{
+              padding: "0px",
+              margin: "0px",
+              // justifyContent: `${loading ? " " : "flex-end"}`,
+            }}
+          >
+            {loading ? (
+              <div className="loadingAni">
+                {" "}
+                <CircularProgress
+                  style={{
+                    width: "20px ",
+                    height: "20px",
+                  }}
+                />
+              </div>
+            ) : (
+              <Button
+                style={{ backgroundColor: "#FEC400" }}
+                onClick={() => {
+                  sendMessageBtn();
+                }}
+                variant="contained"
+                disableElevation
+              >
+                <SendIcon></SendIcon>
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </InboxRoomBack>
@@ -583,7 +722,7 @@ const InboxRoomBack = styled.div`
 
   /* Track */
   .messageDiv::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px #fec400;
+    box-shadow: none;
     border-radius: 10px;
   }
 
@@ -606,10 +745,9 @@ const InboxRoomBack = styled.div`
     display: flex;
     align-self: flex-end;
     width: 100%;
-    color: white;
   }
   .OneMessageDiv_admin_main {
-    background-color: #6495ed;
+    background-color: #efefef;
     display: inline-block;
     padding: 10px;
     border-radius: 20px 20px 20px 5px;
@@ -623,10 +761,11 @@ const InboxRoomBack = styled.div`
     align-self: flex-end;
     width: 100%;
     justify-content: flex-end;
+    color: white;
   }
 
   .OneMessageDiv_user_main {
-    background-color: #efefef;
+    background-color: #6495ed;
     display: inline-block;
     padding: 10px;
     border-radius: 20px 20px 5px 20px;
@@ -638,13 +777,21 @@ const InboxRoomBack = styled.div`
   }
   .OneMessageDiv_admin_main_time_ago,
   .OneImageDiv_admin_main_time_ago {
-    color: white;
+    color: gray;
   }
   .OneMessageDiv_user_main_time_ago,
   .OneImageDiv_user_main_time_ago {
-    color: gray;
+    color: #f7f7f7cc;
   }
 
+  .messageInputStyle {
+  }
+  .messageInputStyle::placeholder {
+    color: white;
+  }
+  .messageInputStyle:focus {
+    box-shadow: none;
+  }
   // image
   .OneImageDiv_user {
     display: flex !important;
@@ -654,7 +801,7 @@ const InboxRoomBack = styled.div`
     justify-content: flex-end;
   }
   .OneImageDiv_user_main {
-    background-color: #efefef;
+    background-color: #6495ed;
     display: inline-block;
     padding: 10px;
     border-radius: 20px 20px 5px 20px;
@@ -669,10 +816,10 @@ const InboxRoomBack = styled.div`
     display: flex;
     align-self: flex-end;
     width: 80%;
-    color: white;
+    color: black;
   }
   .OneImageDiv_admin_main {
-    background-color: #6495ed;
+    background-color: #efefef;
     display: inline-block;
     padding: 10px;
     border-radius: 20px 20px 20px 5px;
@@ -687,10 +834,9 @@ const InboxRoomBack = styled.div`
     display: flex;
     align-self: flex-end;
     width: 80%;
-    color: white;
   }
   .OneProductDiv_admin_main {
-    background-color: #6495ed;
+    background-color: #efefef;
     display: inline-block;
     padding: 10px;
     border-radius: 20px 20px 20px 5px;
@@ -700,12 +846,39 @@ const InboxRoomBack = styled.div`
     flex-direction: column-reverse;
   }
   .OneProductDiv_admin_main_time_ago {
-    color: white;
+    color: gray;
   }
 
   .loadingAni {
     display: flex;
-    align-items: center;
-    justify-content: space-around;
+  }
+  .loadingAniDiv {
+    display: flex;
+
+    justify-content: center;
+  }
+
+  @media screen and (min-width: 500px) {
+    .inputDiv {
+      width: 50%;
+      background-color: #fec40059;
+      border-radius: 10px;
+    }
+    .inputFileMainDiv {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .loadingAniDiv {
+      justify-content: flex-start;
+    }
+    ._1bpcM {
+      margin-bottom: 22px;
+      width: 50px;
+      height: 50px;
+    }
+    .OneProductDiv_admin {
+      width: 30%;
+    }
   }
 `;

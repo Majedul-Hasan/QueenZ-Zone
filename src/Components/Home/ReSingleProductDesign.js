@@ -11,7 +11,9 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Stack from "@mui/material/Stack";
 import Carousel from "nuka-carousel";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import ReactStars from "react-rating-stars-component";
+import styled from "styled-components";
 
 export default function ReSingleProductDesign({
   setOldSecdata,
@@ -20,6 +22,7 @@ export default function ReSingleProductDesign({
   ProductAdded,
   setAniImg,
   PushSingleProductpage,
+  allRating,
   seasonStroageProductFunction,
 }) {
   const [imgs, setImgs] = useState(dt.ProductImage);
@@ -60,8 +63,39 @@ export default function ReSingleProductDesign({
   //   seasonStroageProductFunction(props);
   // };
 
+  // ^^ product review
+
+  // product review
+  const [thisProductReview, setThisProductReview] = useState([]);
+
+  // product review count
+  const [productReviewCount, setProductReviewCount] = useState();
+
+  useEffect(() => {
+    const thisProductRev22 = allRating.filter(
+      (allRev) => allRev.rating.productId === dt._id
+    );
+
+    let count = 0;
+
+    const reviewCount = thisProductRev22.map(
+      (re) => (count = re.rating.rating + count)
+    );
+
+    // console.log(
+    //   count / thisProductRev22.length,
+    //   " : this is product Rating for reSingleProduct : ",
+    //   thisProductRev22
+    // );
+
+    !thisProductRev22.length === false &&
+      setProductReviewCount(count / thisProductRev22.length);
+
+    setThisProductReview(thisProductRev22);
+  }, [allRating]);
+
   return (
-    <div>
+    <ReSingleProback>
       <div>
         <div className="">
           <div
@@ -226,6 +260,31 @@ export default function ReSingleProductDesign({
                   </div>
                 </s>
               </div>
+              {!thisProductReview.length === false && (
+                <div
+                  className="d-flex flex-row-reverse align-items-center"
+                  onClick={() => PushSingleProductpage(dt)}
+                >
+                  <div>
+                    <ReactStars
+                      count={5}
+                      isHalf={true}
+                      size={15}
+                      value={productReviewCount}
+                      edit={false}
+                      activeColor="#ffd700"
+                    />
+                  </div>
+                  <div
+                    className="px-1"
+                    style={{ color: "gray", fontSize: "11px" }}
+                  >
+                    <span>
+                      ({thisProductReview ? thisProductReview.length : 0})
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div
@@ -261,7 +320,7 @@ export default function ReSingleProductDesign({
                 <Stack
                   spacing={2}
                   direction="row"
-                  style={{ padding: "0px", margin: "0px" }}
+                  style={{ padding: "0px", margin: "0px", minWidth: "0px" }}
                 >
                   <Button variant="text">
                     <ShoppingCartOutlined />
@@ -272,6 +331,16 @@ export default function ReSingleProductDesign({
           </div>
         </div>
       </div>
-    </div>
+    </ReSingleProback>
   );
 }
+
+const ReSingleProback = styled.div`
+  .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+    padding: 0px;
+    min-width: 0px;
+  }
+  .css-1peyhh5-MuiButtonBase-root-MuiCheckbox-root {
+    padding: 0px;
+  }
+`;
