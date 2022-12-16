@@ -1,10 +1,43 @@
 import React from "react";
-import banner from "../../Asset/MaskGroup2.png";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 export default function CarouselHome() {
   return (
     <div>
-      <div
+      <Carousel
+        showStatus={false}
+        showIndicators={false}
+        showThumbs={false}
+        infiniteLoop={true}
+        autoPlay={true}
+        interval={2000}
+      >
+        <div>
+          <img
+            src="https://f.nooncdn.com/mpcms/EN0002/assets/67388360-ae7b-4403-86a7-104b96bf5635.png"
+            alt="product"
+          />
+        </div>
+        <div>
+          <img
+            src={
+              "https://f.nooncdn.com/mpcms/EN0002/assets/67388360-ae7b-4403-86a7-104b96bf5635.png"
+            }
+            alt="product"
+          />
+        </div>
+        <div>
+          <img
+            src={
+              "https://f.nooncdn.com/mpcms/EN0002/assets/67388360-ae7b-4403-86a7-104b96bf5635.png"
+            }
+            alt="product"
+          />
+        </div>
+      </Carousel>
+
+      {/* <div
         id="carouselExampleControls"
         class="carousel slide"
         data-bs-ride="carousel"
@@ -38,7 +71,7 @@ export default function CarouselHome() {
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

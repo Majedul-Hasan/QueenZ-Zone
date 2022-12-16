@@ -13,7 +13,7 @@ export default function OldPlusNewReview({ or, loggingUserInfo, order }) {
 
   useEffect(() => {
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/queenZoneUserRatingFind?email=${loggingUserInfo.email}&productKey=${or._id}&orderKey=${order}`
+      `https://queenzzoneserver-production.up.railway.app/queenZoneUserRatingFind?email=${loggingUserInfo.email}&productKey=${or._id}&orderKey=${order}`
     )
       .then((response) => response.json())
       .then((json) => {

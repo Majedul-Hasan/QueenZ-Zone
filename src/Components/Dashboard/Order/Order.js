@@ -39,7 +39,9 @@ export default function Order() {
 
   // find this user order
   useEffect(() => {
-    fetch(`https://glacial-shore-36532.herokuapp.com/queenZoneAllOrder/`)
+    fetch(
+      `https://queenzzoneserver-production.up.railway.app/queenZoneAllOrder/`
+    )
       .then((response) => response.json())
       .then((json) => {
         console.log("this is order : ", order);

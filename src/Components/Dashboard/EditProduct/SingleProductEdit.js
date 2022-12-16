@@ -17,7 +17,7 @@ export default function SingleProductEdit({ pd, editProductBtn }) {
     console.log("this is id ", props._id);
 
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/queenZoneProductDelete/${props._id}`
+      `https://queenzzoneserver-production.up.railway.app/queenZoneProductDelete/${props._id}`
     )
       .then((response) => response.json())
       .then((json) => console.log(json));

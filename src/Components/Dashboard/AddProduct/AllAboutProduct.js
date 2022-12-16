@@ -125,7 +125,7 @@ export default function AllAboutProduct() {
         console.log("vhai submit hoise");
 
         fetch(
-          "https://glacial-shore-36532.herokuapp.com/queenZoneUserProductUpload",
+          "https://queenzzoneserver-production.up.railway.app/queenZoneUserProductUpload",
           {
             method: "POST", // or 'PUT'
             headers: {
@@ -163,7 +163,7 @@ export default function AllAboutProduct() {
       ];
 
       fetch(
-        "https://glacial-shore-36532.herokuapp.com/queenZoneUserProductUpload",
+        "https://queenzzoneserver-production.up.railway.app/queenZoneUserProductUpload",
         {
           method: "POST", // or 'PUT'
           headers: {
@@ -263,7 +263,9 @@ export default function AllAboutProduct() {
   const [category, sstcategory] = useState([]);
 
   useEffect(() => {
-    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneCategoryRead")
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneCategoryRead"
+    )
       .then((response) => response.json())
       .then((json) => {
         sstcategory(json);

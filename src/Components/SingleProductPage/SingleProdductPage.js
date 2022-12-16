@@ -21,7 +21,7 @@ import "./AnimationSingleproductPage.css";
 
 const style = {};
 
-export default function SingleProdductPage({ setAniImg }) {
+export default function SingleProdductPage({ setAniImg, curentUserInfo }) {
   let { Category, PNAME, PID } = useParams();
 
   const stickyRef = useStickyBox({ offsetTop: 20, offsetBottom: 20 });
@@ -51,7 +51,7 @@ export default function SingleProdductPage({ setAniImg }) {
 
   useEffect(() => {
     if (visitorInfo !== false) {
-      fetch("https://glacial-shore-36532.herokuapp.com/visitorInfo", {
+      fetch("https://queenzzoneserver-production.up.railway.app/visitorInfo", {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
@@ -68,6 +68,8 @@ export default function SingleProdductPage({ setAniImg }) {
     }
   }, [callUseEffectForVisitorInfo === 2]);
 
+  const [productOne, setProductOne] = useState();
+
   /// post user info
   //creating function to load ip address from the API
   const getData = async (props) => {
@@ -83,8 +85,25 @@ export default function SingleProdductPage({ setAniImg }) {
       postal: res.data.postal ? res.data.postal : "null",
       state: res.data.state ? res.data.state : "null",
       time: new Date(),
-      product: props,
+      product: props.product,
+      localVisitorNumber: JSON.parse(
+        localStorage.getItem("localVisitorNumber")
+      ),
+      deviceType: props.DeviceType ? "Mobile" : "PC",
+      deviceOsType: props.DeviceOs,
+      iOS: props.iOS,
+      curentUserInfo: {
+        activeUserInfo:
+          JSON.parse(localStorage.getItem("UserInfo")) === null ? "new" : "old",
+        activeUserNumber: localStorage.getItem("localVisitorNumber"),
+        oldUserInfo: JSON.parse(localStorage.getItem("UserInfo")),
+      },
     };
+
+    // console.log(
+    //   "this is user info for single product page : ",
+    //   JSON.parse(localStorage.getItem("localVisitorNumber"))
+    // );
 
     setVisitorInfo(vData);
     setCallUseEffectForVisitorInfo(2);
@@ -94,19 +113,58 @@ export default function SingleProdductPage({ setAniImg }) {
   useEffect(() => {
     // Update the document title using the browser API
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/queenZoneSingleProduct/${PID}`
+      `https://queenzzoneserver-production.up.railway.app/queenZoneSingleProduct/${PID}`
     )
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
         setProduct(json);
         setDt(json);
-        getData(json);
+        isMobiles(json);
+        setProductOne(json);
         setFristImage(json[0].ProductImage[0][0].image);
 
         ratingFetch(json);
       });
   }, []);
+
+  const isMobiles = (props) => {
+    var match = window.matchMedia || window.msMatchMedia;
+    if (match) {
+      var mq = match("(pointer:coarse)");
+      return GFG_Fun({
+        DeviceType: mq.matches === true ? true : false,
+        product: props,
+      });
+    }
+    return GFG_Fun({ DeviceType: false, product: props });
+  };
+
+  function GFG_Fun(props) {
+    var res = "Device is not Android Phone";
+    var Android = /(android)/i.test(navigator.userAgent);
+
+    if (Android) {
+      res = "Device is Android Phone";
+    }
+
+    return gfg_Run55({
+      DeviceType: props.DeviceType,
+      DeviceOs: res,
+      product: props.product,
+    });
+  }
+
+  function gfg_Run55(props) {
+    var iOS =
+      !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+    return getData({
+      DeviceType: props.DeviceType,
+      DeviceOs: props.DeviceOs,
+      iOS: iOS,
+      product: props.product,
+    });
+  }
 
   // useEffect for season Stroage old product
   useEffect(() => {
@@ -167,7 +225,7 @@ export default function SingleProdductPage({ setAniImg }) {
   // ^ product des
   useEffect(() => {
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/queenZoneInboxNotesFind?roomName=rony13647@gmail.com`
+      `https://queenzzoneserver-production.up.railway.app/queenZoneInboxNotesFind?roomName=rony13647@gmail.com`
     )
       .then((response) => response.json())
       .then((json) => {
@@ -191,7 +249,7 @@ export default function SingleProdductPage({ setAniImg }) {
 
   const ratingFetch = (props) => {
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/queenZoneUserRatingFindOneProduct?productKey=${props[0]._id}`
+      `https://queenzzoneserver-production.up.railway.app/queenZoneUserRatingFindOneProduct?productKey=${props[0]._id}`
     )
       .then((response) => response.json())
       .then((json) => {

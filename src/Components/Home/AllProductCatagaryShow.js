@@ -6,12 +6,14 @@ export default function AllProductCatagaryShow({
   ca,
   setAniImg,
   seasonStroageProductFunction,
+  productData,
 }) {
   console.log("this is category layout  : ", ca);
 
   return (
     <div>
       <ShowProductCategory
+        productDataRoot={productData}
         allRating={allRating}
         ca={ca}
         seasonStroageProductFunction={seasonStroageProductFunction}

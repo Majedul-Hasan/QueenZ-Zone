@@ -230,7 +230,7 @@ function App() {
 
   // const updateMessageFunction = (props) => {
   //   fetch(
-  //     `https://glacial-shore-36532.herokuapp.com/getInboxMessage?roomName=${props}`
+  //     `https://queenzzoneserver-production.up.railway.app/getInboxMessage?roomName=${props}`
   //   )
   //     .then((response) => response.json())
   //     .then((json) => {
@@ -259,7 +259,7 @@ function App() {
 
   useEffect(() => {
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/queenZoneUserFindAllRating`
+      `https://queenzzoneserver-production.up.railway.app/queenZoneUserFindAllRating`
     )
       .then((response) => response.json())
       .then((json) => {
@@ -279,6 +279,37 @@ function App() {
   //   console.log("this is useEffect for unseen msg -> ", unSeenMsgUserScroll);
   // }, [unSeenMsgUserScroll]);
 
+  const [productData, setproductdata] = useState([]);
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    console.log("this is all product fetch call -> ");
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneFindAllProduct"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setproductdata(json);
+        callCate();
+        console.log("this is all product fetch -> ", json);
+      });
+  }, []);
+
+  const [category, sstcategory] = useState([]);
+
+  const callCate = () => {
+    // Update the document title using the browser API
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneCategoryLayoutRead"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        sstcategory(json[0].layout);
+
+        seasonStroageProductFunction(json[0].layout);
+      });
+  };
+
   return (
     <div className="App">
       {/* home page layout */}
@@ -293,6 +324,8 @@ function App() {
               <Route exact path="/">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Layout
+                  category={category}
+                  productData={productData}
                   seasonStroageProductFunction={seasonStroageProductFunction}
                   setAniImg={setAniImg}
                   allRating={allRating}
@@ -322,7 +355,7 @@ function App() {
                   />
                 </div>
               </Route>
-              <PrivateRoute path="/Favorite">
+              <Route path="/Favorite">
                 <HeaderSearchBar></HeaderSearchBar>
                 <FavoritePage></FavoritePage>
                 <NaviBar
@@ -346,10 +379,16 @@ function App() {
                     appId="897437511658333"
                   />
                 </div>
-              </PrivateRoute>
+              </Route>
               <Route exact path="/Home">
                 <HeaderSearchBar></HeaderSearchBar>
-                <Layout allRating={allRating} setAniImg={setAniImg}></Layout>
+                <Layout
+                  category={category}
+                  productData={productData}
+                  seasonStroageProductFunction={seasonStroageProductFunction}
+                  setAniImg={setAniImg}
+                  allRating={allRating}
+                ></Layout>
                 <NaviBar
                   setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
                   userScroll={userScroll}
@@ -404,6 +443,7 @@ function App() {
                 <HeaderSearchBar></HeaderSearchBar>
                 <SingleProdductPage
                   allRating={allRating}
+                  curentUserInfo={curentUserInfo}
                   setAniImg={setAniImg}
                 ></SingleProdductPage>
 

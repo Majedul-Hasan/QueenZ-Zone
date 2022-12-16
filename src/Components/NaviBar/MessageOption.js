@@ -36,7 +36,7 @@ export default function MessageOption({
 
       if (userScroll === true) {
         fetch(
-          `https://glacial-shore-36532.herokuapp.com/seenUpdateInboxMessage?roomName=${
+          `https://queenzzoneserver-production.up.railway.app/seenUpdateInboxMessage?roomName=${
             curentUserInfo.activeUserInfo === "old"
               ? curentUserInfo.oldUserInfo.email
               : curentUserInfo.activeUserNumber
@@ -49,7 +49,7 @@ export default function MessageOption({
       }
 
       fetch(
-        `https://glacial-shore-36532.herokuapp.com/getInboxMessage?roomName=${
+        `https://queenzzoneserver-production.up.railway.app/getInboxMessage?roomName=${
           curentUserInfo.activeUserInfo === "old"
             ? curentUserInfo.oldUserInfo.email
             : curentUserInfo.activeUserNumber
@@ -105,7 +105,7 @@ export default function MessageOption({
         });
     } else {
       fetch(
-        `https://glacial-shore-36532.herokuapp.com/getInboxMessage?roomName=${
+        `https://queenzzoneserver-production.up.railway.app/getInboxMessage?roomName=${
           curentUserInfo.activeUserInfo === "old"
             ? curentUserInfo.oldUserInfo.email
             : curentUserInfo.activeUserNumber

@@ -105,7 +105,7 @@ export default function NaviBar({
 
   useEffect(() => {
     if (visitorInfo !== false) {
-      fetch("https://glacial-shore-36532.herokuapp.com/visitorInfo", {
+      fetch("https://queenzzoneserver-production.up.railway.app/visitorInfo", {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +124,7 @@ export default function NaviBar({
 
   /// post user info
   //creating function to load ip address from the API
-  const getData = async () => {
+  const getData = async (props) => {
     const res = await axios.get("https://geolocation-db.com/json/");
     //import axios from "axios";
     const vData = {
@@ -138,6 +138,18 @@ export default function NaviBar({
       state: res.data.state ? res.data.state : "null",
       time: new Date(),
       product: "",
+      localVisitorNumber: JSON.parse(
+        localStorage.getItem("localVisitorNumber")
+      ),
+      deviceType: props.DeviceType ? "Mobile" : "PC",
+      deviceOsType: props.DeviceOs,
+      iOS: props.iOS,
+      curentUserInfo: {
+        activeUserInfo:
+          JSON.parse(localStorage.getItem("UserInfo")) === null ? "new" : "old",
+        activeUserNumber: localStorage.getItem("localVisitorNumber"),
+        oldUserInfo: JSON.parse(localStorage.getItem("UserInfo")),
+      },
     };
 
     setVisitorInfo(vData);
@@ -146,8 +158,42 @@ export default function NaviBar({
 
   useEffect(() => {
     //passing getData method to the lifecycle method
-    getData();
+
+    isMobiles();
   }, []);
+
+  const isMobiles = () => {
+    var match = window.matchMedia || window.msMatchMedia;
+    if (match) {
+      var mq = match("(pointer:coarse)");
+      return GFG_Fun(mq.matches === true ? true : false);
+    }
+    return GFG_Fun(false);
+  };
+
+  function GFG_Fun(props) {
+    var res = "Device is not Android Phone";
+    var Android = /(android)/i.test(navigator.userAgent);
+
+    if (Android) {
+      res = "Device is Android Phone";
+    }
+
+    return gfg_Run55({
+      DeviceType: props,
+      DeviceOs: res,
+    });
+  }
+
+  function gfg_Run55(props) {
+    var iOS =
+      !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+    return getData({
+      DeviceType: props.DeviceType,
+      DeviceOs: props.DeviceOs,
+      iOS: iOS,
+    });
+  }
 
   // useEffect(() => {
   //   if (!localStorage.getItem("UserInfo") === false) {
@@ -171,7 +217,7 @@ export default function NaviBar({
 
   return (
     <NavBack>
-      <div className="fixed-bottom ">
+      <div className="fixed-bottom navBackAll ">
         <div className="mx-auto" style={{ width: "100%" }}>
           <div
             className="w-100"
@@ -286,5 +332,12 @@ const NavBack = styledCus.div`
   .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
     padding: 0px;
   }
+
+  // @media screen and (min-width: 550px) {
+  //   .navBackAll {
+  //     display: none !important;
+  //     background-color: red;
+  //   }
+  // }
 
 `;

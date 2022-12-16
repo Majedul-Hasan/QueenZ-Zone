@@ -5,10 +5,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ShoppingCartOutlined } from "@mui/icons-material";
-import Favorite from "@mui/icons-material/Favorite";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import { default as FavoriteIcon } from "@mui/icons-material/Favorite";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
+import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Carousel from "nuka-carousel";
 import React, { useEffect, useState } from "react";
@@ -16,6 +15,7 @@ import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
 
 export default function ReSingleProductDesign({
+  favoProduct,
   setOldSecdata,
   oldSecData,
   dt,
@@ -28,7 +28,7 @@ export default function ReSingleProductDesign({
   const [imgs, setImgs] = useState(dt.ProductImage);
 
   // metarial ui icon click color
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
+  let label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   // setState for First image
   const [firstImgs, setFristImgs] = useState(dt.ProductImage[0][0].image);
@@ -93,6 +93,68 @@ export default function ReSingleProductDesign({
 
     setThisProductReview(thisProductRev22);
   }, [allRating]);
+
+  // addToFavoriteSection
+  const addToFavoriteSection = (dt) => {
+    // const localData = localStorage.getItem("favoriteList");
+
+    // // const filterData = localData.find((fdata) => fdata === dt);
+
+    // //    localData.map((dts) => console.log(dts));
+
+    // if (localStorage.getItem("favoriteList") === null) {
+    //   localStorage.setItem("favoriteList", JSON.stringify(dt));
+    // } else {
+    //   localStorage.setItem("favoriteList", [
+    //     localStorage.getItem("favoriteList"),
+    //     JSON.stringify(dt),
+    //   ]);
+    // }
+
+    const localData = JSON.parse(localStorage.getItem("favoriteList"));
+
+    const findData =
+      localData === null
+        ? false
+        : localData.filter((mainData) => mainData === dt);
+
+    console.log(findData, " this is local storage  data => ", localData, dt);
+
+    if (!findData.length !== false) {
+      if (localData === null) {
+        localStorage.setItem("favoriteList", JSON.stringify([dt]));
+      } else {
+        localStorage.setItem(
+          "favoriteList",
+          JSON.stringify([...localData, dt])
+        );
+      }
+    } else {
+      // remove data
+
+      const removeIteam = localData.filter((rIteam) => rIteam !== dt);
+
+      localStorage.setItem("favoriteList", JSON.stringify(removeIteam));
+    }
+  };
+
+  // filter for root local data
+  useEffect(() => {
+    if (favoProduct === null) {
+      setLove(false);
+    } else if (!favoProduct.length === true) {
+      setLove(false);
+    } else {
+      let findData = favoProduct.filter((fData) => fData === dt._id);
+
+      console.log(
+        findData,
+        " this is root local strobe product => ",
+        favoProduct
+      );
+      !findData.length === false ? setLove(true) : setLove(false);
+    }
+  }, [favoProduct]);
 
   return (
     <ReSingleProback>
@@ -295,13 +357,35 @@ export default function ReSingleProductDesign({
               }}
             >
               <div>
-                <Checkbox
+                {/* <Checkbox
                   {...label}
                   color="error"
                   icon={<FavoriteBorder />}
                   checkedIcon={<Favorite />}
-                />
+                /> */}
+
+                {love === true ? (
+                  <IconButton aria-label="cart">
+                    <FavoriteIcon
+                      style={{ color: "red" }}
+                      onClick={() => {
+                        addToFavoriteSection(dt._id);
+                        setLove(!love);
+                      }}
+                    />
+                  </IconButton>
+                ) : (
+                  <IconButton aria-label="cart">
+                    <FavoriteIcon
+                      onClick={() => {
+                        addToFavoriteSection(dt._id);
+                        setLove(!love);
+                      }}
+                    />
+                  </IconButton>
+                )}
               </div>
+
               <div onClick={() => PushSingleProductpage(dt)}>
                 <FontAwesomeIcon icon={faEye} />
               </div>
@@ -342,5 +426,11 @@ const ReSingleProback = styled.div`
   }
   .css-1peyhh5-MuiButtonBase-root-MuiCheckbox-root {
     padding: 0px;
+  }
+  .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+    padding: 0px !important;
+  }
+  .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+    padding: 0px !important;
   }
 `;

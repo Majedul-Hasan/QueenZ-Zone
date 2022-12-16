@@ -64,13 +64,16 @@ export default function LogInUserInfoPage({
     console.log(newData, loggingUserInfo._id);
 
     // fetch data update
-    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneUserInfoUpdate", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ newData }),
-    })
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneUserInfoUpdate",
+      {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ newData }),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);

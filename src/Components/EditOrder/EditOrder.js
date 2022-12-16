@@ -12,7 +12,7 @@ export default function EditOrder() {
   // // useEfect for read order info
   useEffect(() => {
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/queenZoneEditOrderFind/${ONumber}`
+      `https://queenzzoneserver-production.up.railway.app/queenZoneEditOrderFind/${ONumber}`
     )
       .then((response) => response.json())
       .then((json) => {

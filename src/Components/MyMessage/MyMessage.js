@@ -71,8 +71,16 @@ export default function MyMessage({
   console.log("this is message allll ", message);
 
   const sendMsg = ({ img, product }) => {
+    function msg() {
+      setTimeout(function () {
+        window.ReactNativeWebView.postMessage("Hello!");
+      }, 2000);
+    }
+
+    msg();
+
     fetch(
-      "https://glacial-shore-36532.herokuapp.com/queenZoneInboxSendMessage",
+      "https://queenzzoneserver-production.up.railway.app/queenZoneInboxSendMessage",
       {
         method: "POST", // or 'PUT'
         headers: {
@@ -182,7 +190,7 @@ export default function MyMessage({
   // create room check
   // useEffect(() => {
   //   fetch(
-  //     `https://glacial-shore-36532.herokuapp.com/getInboxRoom?roomName=${
+  //     `https://queenzzoneserver-production.up.railway.app/getInboxRoom?roomName=${
   //       curentUserInfo.activeUserInfo === "old"
   //         ? curentUserInfo.oldUserInfo.email
   //         : curentUserInfo.activeUserNumber
@@ -200,7 +208,7 @@ export default function MyMessage({
 
   const checkRoom = (props) => {
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/getInboxRoom?roomName=${props}`
+      `https://queenzzoneserver-production.up.railway.app/getInboxRoom?roomName=${props}`
     )
       .then((response) => response.json())
       .then((json) => {
@@ -258,7 +266,7 @@ export default function MyMessage({
   // create an room
   const createAnRoom = (props) => {
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/createAnInboxRoom?roomName=${props}`
+      `https://queenzzoneserver-production.up.railway.app/createAnInboxRoom?roomName=${props}`
     )
       .then((response) => response.json())
       .then((json) => {
@@ -275,7 +283,9 @@ export default function MyMessage({
     }
   };
 
-  const refMsgDiv = useRef(null);
+  const refMsgDiv = useRef(800);
+
+  console.log("this is scroll position : ", refMsgDiv.current.clientHeight);
 
   // console.log("this is scroll position : ", window.pageYOffset);
 
@@ -285,13 +295,14 @@ export default function MyMessage({
   //   }
   // }, 1000);
 
-  setInterval(() => {
-    // 589
+  const [updateCount, setUpdateCount] = useState(1);
 
-    // console.log("this is scroll position : ", window.pageYOffset);
-
-    let scrollValue = refMsgDiv.current.clientHeight - 754;
+  const callMessage = (props) => {
+    let scrollValue =
+      refMsgDiv === null ? 0 : refMsgDiv.current.clientHeight - 754;
     // console.log("this is scroll position : ", window.pageYOffset, scrollValue);
+
+    console.log("this is call message ------------------------------------->");
 
     if (window.pageYOffset < scrollValue - 100) {
       setScroll(false);
@@ -301,13 +312,41 @@ export default function MyMessage({
       setUserScroll(true);
     }
 
-    // filter unseen msg
+    setUpdateCount(updateCount + 1);
+  };
 
-    // console.log(
-    //   "this is scroll position height : ",
-    //   refMsgDiv.current.clientHeight - 736
-    // );
-  }, 1000);
+  useEffect(() => {
+    setTimeout(function () {
+      callMessage();
+    }, 1000);
+  }, [updateCount]);
+
+  // setInterval(() => {
+  //   // 589
+
+  //   // console.log("this is scroll position : ", window.pageYOffset);
+
+  //   let scrollValue =
+  //     refMsgDiv === null ? 0 : refMsgDiv.current.clientHeight - 754;
+  //   // console.log("this is scroll position : ", window.pageYOffset, scrollValue);
+
+  //   console.log("this is call message ------------------------------------->");
+
+  //   if (window.pageYOffset < scrollValue - 100) {
+  //     setScroll(false);
+  //     setUserScroll(false);
+  //   } else {
+  //     setScroll(true);
+  //     setUserScroll(true);
+  //   }
+
+  //   // filter unseen msg
+
+  //   // console.log(
+  //   //   "this is scroll position height : ",
+  //   //   refMsgDiv.current.clientHeight - 736
+  //   // );
+  // }, 1000);
 
   // console.log("this is scroll position 2 : ", ref.current.clientWidth);
 
@@ -589,7 +628,7 @@ export default function MyMessage({
 
         <div
           style={{ backgroundColor: "#fec400", borderRadius: "50px" }}
-          className=" row container inputDiv d-flex align-items-center  justify-content-between"
+          className="container w-10 row inputDiv d-flex align-items-center  justify-content-between"
         >
           <div
             className="col-1 inputFileMainDiv"
@@ -690,7 +729,7 @@ export default function MyMessage({
               </div>
             ) : (
               <Button
-                style={{ backgroundColor: "#FEC400" }}
+                style={{ background: "none" }}
                 onClick={() => {
                   sendMessageBtn();
                 }}
@@ -737,8 +776,16 @@ const InboxRoomBack = styled.div`
     background: #fec400;
   }
   .inputDiv {
-    bottom: 55px;
+    //   bottom: 55px;
     position: fixed;
+    width: 100%;
+    /* height: 58px; */
+    /* padding: 10px; */
+    /* border: 3px solid #147d43; */
+    background-color: #d4fce6;
+    /* top: 85%; */
+    bottom: 52px;
+    left: 12px;
   }
 
   .OneMessageDiv_admin {
@@ -863,6 +910,8 @@ const InboxRoomBack = styled.div`
       width: 50%;
       background-color: #fec40059;
       border-radius: 10px;
+
+      left: 27%;
     }
     .inputFileMainDiv {
       display: flex;

@@ -63,13 +63,16 @@ export default function ReviewProduct({
         reviewImage: false,
       };
 
-      fetch("https://glacial-shore-36532.herokuapp.com/queenZoneUserRating", {
-        method: "POST", // or 'PUT'
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(finalRating),
-      })
+      fetch(
+        "https://queenzzoneserver-production.up.railway.app/queenZoneUserRating",
+        {
+          method: "POST", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(finalRating),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
@@ -114,13 +117,16 @@ export default function ReviewProduct({
       reviewImage: props.url,
     };
 
-    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneUserRating", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(finalRating),
-    })
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneUserRating",
+      {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(finalRating),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);

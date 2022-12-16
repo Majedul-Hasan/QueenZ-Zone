@@ -15,7 +15,7 @@ export default function ViewsDashboard() {
   const [calFuntion, setCalFuntion] = useState(false);
 
   useEffect(() => {
-    fetch("https://glacial-shore-36532.herokuapp.com/getVisitorInfo")
+    fetch("https://queenzzoneserver-production.up.railway.app/getVisitorInfo")
       .then((response) => response.json())
       .then((json) => {
         setViewsData(json);

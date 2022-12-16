@@ -26,7 +26,7 @@ export default function OrderPage() {
   // // useEfect for read order info
   useEffect(() => {
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/queenZoneOrderFind/${loggingUserInfo.email}`
+      `https://queenzzoneserver-production.up.railway.app/queenZoneOrderFind/${loggingUserInfo.email}`
     )
       .then((response) => response.json())
       .then((json) => {

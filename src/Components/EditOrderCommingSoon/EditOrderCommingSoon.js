@@ -16,7 +16,7 @@ export default function EditOrderCommingSoon() {
   // // useEfect for read order info
   useEffect(() => {
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/queenZoneEditOrderFind/${ONumber}`
+      `https://queenzzoneserver-production.up.railway.app/queenZoneEditOrderFind/${ONumber}`
     )
       .then((response) => response.json())
       .then((json) => {
@@ -29,7 +29,7 @@ export default function EditOrderCommingSoon() {
     // // useEfect for read order info
 
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/queenZoneOrderDelete/${porps}`
+      `https://queenzzoneserver-production.up.railway.app/queenZoneOrderDelete/${porps}`
     )
       .then((response) => response.json())
       .then((json) => {

@@ -193,7 +193,7 @@ export default function Order() {
       // });
 
       fetch(
-        "https://glacial-shore-36532.herokuapp.com/queenZoneUserPostOrder",
+        "https://queenzzoneserver-production.up.railway.app/queenZoneUserPostOrder",
         {
           method: "POST", // or 'PUT'
           headers: {

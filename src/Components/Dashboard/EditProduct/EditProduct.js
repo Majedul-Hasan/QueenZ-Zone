@@ -152,12 +152,16 @@ export default function EditProduct() {
 
   // fetch all product
   useEffect(() => {
-    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneFindAllProduct")
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneFindAllProduct"
+    )
       .then((response) => response.json())
       .then((json) => {
         setProduct(json);
       });
-    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneCategoryRead")
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneCategoryRead"
+    )
       .then((response) => response.json())
       .then((json) => {
         setPCategory(json);
@@ -223,7 +227,7 @@ export default function EditProduct() {
 
         // post data
         fetch(
-          "https://glacial-shore-36532.herokuapp.com/queenZoneEditedProduct",
+          "https://queenzzoneserver-production.up.railway.app/queenZoneEditedProduct",
           {
             method: "POST", // or 'PUT'
             headers: {

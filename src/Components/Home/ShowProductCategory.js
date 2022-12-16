@@ -12,38 +12,31 @@ export default function ShowProductCategory({
   setAniImg,
   seasonStroageProductFunction,
   allRating,
+  productDataRoot,
 }) {
   const [productData, setproductdata] = useState([]);
 
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    // Update the document title using the browser API
-    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneFindAllProduct")
-      .then((response) => response.json())
-      .then((json) => {
-        const filterProduct = json.filter(
-          (Prp) => Prp.ProductCategory === ca[0]
-        );
+    const filterProduct = productDataRoot.filter(
+      (Prp) => Prp.ProductCategory === ca[0]
+    );
 
-        // if (filterProduct.length >= 1) {
-        //   setproductdata(filterProduct);
-        //   console.log(" milse : ", ca.postCa);
-        // } else {
-        //   setproductdata("no value");
-        //   console.log(" naii : ", ca.postCa);
-        // }
+    // if (filterProduct.length >= 1) {
+    //   setproductdata(filterProduct);
+    //   console.log(" milse : ", ca.postCa);
+    // } else {
+    //   setproductdata("no value");
+    //   console.log(" naii : ", ca.postCa);
+    // }
 
-        if (!filterProduct.length === false) {
-          setproductdata(filterProduct);
-        } else {
-          setproductdata(false);
-        }
-
-        console.log("huiuuuuuuuuuuuuuuuuuuuuuuuu", filterProduct);
-        console.log(json);
-      });
-  }, []);
+    if (!filterProduct.length === false) {
+      setproductdata(filterProduct);
+    } else {
+      setproductdata(false);
+    }
+  }, [productDataRoot]);
 
   console.log("this caaaaaaaaaaaaa : ", productData);
 
@@ -246,6 +239,12 @@ export default function ShowProductCategory({
     "1",
   ]);
 
+  const [favoProduct, setFavoProduct] = useState([]);
+
+  useEffect(() => {
+    setFavoProduct(JSON.parse(localStorage.getItem("favoriteList")));
+  }, []);
+
   return (
     <div>
       {!productData.length === true ? (
@@ -291,44 +290,6 @@ export default function ShowProductCategory({
               </span>
             </div>
           </div>
-
-          {/* <div className="" style={{ backgroundColor: "#fff7bf" }}>
-        <div className="d-flex justify-content-around">
-          <div className="p-1">
-            <img
-              src={
-                "https://i.ibb.co/Y2rTPPP/pexels-skylar-kang-6044266-Cropped.jpg"
-              }
-              style={{
-                width: "300px",
-                objectFit: "cover",
-              }}
-              className="img-fluid "
-              alt="..."
-            ></img>
-          </div>
-
-          <div className="p-1">
-            <img
-              src={
-                "https://i.ibb.co/DYS2fpS/pexels-leah-kelley-691046-Cropped.jpg"
-              }
-              style={{ width: "300px", objectFit: "cover" }}
-              className="img-fluid "
-              alt="..."
-            ></img>
-          </div>
-
-          <div className="p-1">
-            <img
-              src="https://i.ibb.co/DYS2fpS/pexels-leah-kelley-691046-Cropped.jpg"
-              style={{ width: "300px" }}
-              className="img-fluid "
-              alt="..."
-            ></img>
-          </div>
-        </div>
-      </div> */}
 
           <div
             className="p-2 productHomepage"
@@ -1519,46 +1480,83 @@ export default function ShowProductCategory({
             </div>
           </div>
 
-          {/* <div className="" style={{ backgroundColor: "#fff7bf" }}>
-          <div className="d-flex justify-content-around">
-            <div className="p-1">
-              <img
-                src={
-                  "https://i.ibb.co/Y2rTPPP/pexels-skylar-kang-6044266-Cropped.jpg"
-                }
-                style={{
-                  width: "300px",
-                  objectFit: "cover",
-                }}
-                className="img-fluid "
-                alt="..."
-              ></img>
+          {/* <div className="container" style={{}}>
+            <div className="row w-100">
+              <div className="col-4 col-md-3 col-lg-2">
+                <img
+                  src={
+                    "https://i.ibb.co/Y2rTPPP/pexels-skylar-kang-6044266-Cropped.jpg"
+                  }
+                  style={{
+                    width: "100%",
+                    borderRadius: "5px",
+                    objectFit: "cover",
+                  }}
+                  className="img-fluid "
+                  alt="..."
+                ></img>
+              </div>
+              <div className="col-4 col-md-3 col-lg-2">
+                <img
+                  src={
+                    "https://i.ibb.co/Y2rTPPP/pexels-skylar-kang-6044266-Cropped.jpg"
+                  }
+                  style={{
+                    width: "100%",
+                    borderRadius: "5px",
+                    objectFit: "cover",
+                  }}
+                  className="img-fluid "
+                  alt="..."
+                ></img>
+              </div>
+              <div className="col-4 col-md-3 col-lg-2">
+                <img
+                  src={
+                    "https://i.ibb.co/Y2rTPPP/pexels-skylar-kang-6044266-Cropped.jpg"
+                  }
+                  style={{
+                    width: "100%",
+                    borderRadius: "5px",
+                    objectFit: "cover",
+                  }}
+                  className="img-fluid "
+                  alt="..."
+                ></img>
+              </div>
+              <div className="col-4 col-md-3 col-lg-2">
+                <img
+                  src={
+                    "https://i.ibb.co/Y2rTPPP/pexels-skylar-kang-6044266-Cropped.jpg"
+                  }
+                  style={{
+                    width: "100%",
+                    borderRadius: "5px",
+                    objectFit: "cover",
+                  }}
+                  className="img-fluid "
+                  alt="..."
+                ></img>
+              </div>
+              <div className="col-4 col-md-3 col-lg-2">
+                <img
+                  src={
+                    "https://i.ibb.co/Y2rTPPP/pexels-skylar-kang-6044266-Cropped.jpg"
+                  }
+                  style={{
+                    width: "100%",
+                    borderRadius: "5px",
+                    objectFit: "cover",
+                  }}
+                  className="img-fluid "
+                  alt="..."
+                ></img>
+              </div>
             </div>
-
-            <div className="p-1">
-              <img
-                src={
-                  "https://i.ibb.co/DYS2fpS/pexels-leah-kelley-691046-Cropped.jpg"
-                }
-                style={{ width: "300px", objectFit: "cover" }}
-                className="img-fluid "
-                alt="..."
-              ></img>
-            </div>
-
-            <div className="p-1">
-              <img
-                src="https://i.ibb.co/DYS2fpS/pexels-leah-kelley-691046-Cropped.jpg"
-                style={{ width: "300px" }}
-                className="img-fluid "
-                alt="..."
-              ></img>
-            </div>
-          </div>
-        </div> */}
+          </div> */}
 
           <div
-            className="p-2 productHomepage"
+            className=" productHomepage"
             style={{
               width: "100%",
 
@@ -1684,6 +1682,7 @@ export default function ShowProductCategory({
               : productData.map((dt) => (
                   <div>
                     <ReSingleProductDesign
+                      favoProduct={favoProduct}
                       allRating={allRating}
                       seasonStroageProductFunction={
                         seasonStroageProductFunction
