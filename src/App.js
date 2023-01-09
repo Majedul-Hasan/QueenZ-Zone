@@ -9,6 +9,7 @@ import HeaderSearchBar from "../src/Components/Home/HeaderSearchBar";
 import Layout from "../src/Components/Home/Layout";
 import "./App.css";
 import CatagoryProduct from "./Components/CategoryPoduct/CatagoryProduct";
+import CreatePage from "./Components/CreatePage/CreatePage";
 import MainDashboard from "./Components/Dashboard/MainDashboard/MainDashboard";
 import EditOrderCommingSoon from "./Components/EditOrderCommingSoon/EditOrderCommingSoon";
 import FavoritePage from "./Components/Favorite/FavoritePage";
@@ -310,6 +311,19 @@ function App() {
       });
   };
 
+  const [homePageLayout, setHomePageLayout] = useState([]);
+
+  // call home page layout
+  useEffect(() => {
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneReadHomePageLayout"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setHomePageLayout(json[0].homePageLayout);
+      });
+  }, []);
+
   return (
     <div className="App">
       {/* home page layout */}
@@ -324,6 +338,7 @@ function App() {
               <Route exact path="/">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Layout
+                  homePageLayout={homePageLayout}
                   category={category}
                   productData={productData}
                   seasonStroageProductFunction={seasonStroageProductFunction}
@@ -383,6 +398,7 @@ function App() {
               <Route exact path="/Home">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Layout
+                  homePageLayout={homePageLayout}
                   category={category}
                   productData={productData}
                   seasonStroageProductFunction={seasonStroageProductFunction}
@@ -416,7 +432,11 @@ function App() {
               </Route>
               <Route exact path="/Category">
                 <HeaderSearchBar></HeaderSearchBar>
-                <Layout allRating={allRating}></Layout>
+                <Layout
+                  productData={productData}
+                  homePageLayout={homePageLayout}
+                  allRating={allRating}
+                ></Layout>
                 <NaviBar
                   setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
                   userScroll={userScroll}
@@ -476,6 +496,35 @@ function App() {
                 <HeaderSearchBar></HeaderSearchBar>
                 {/* <EditOrder></EditOrder> */}
                 <EditOrderCommingSoon></EditOrderCommingSoon>
+                <NaviBar
+                  setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
+                  userScroll={userScroll}
+                  setMessage={setMessage}
+                  curentUserInfo={curentUserInfo}
+                  setAniImg={setAniImg}
+                  productShowAnimation={productShowAnimation}
+                  setProductShowAnimation={setProductShowAnimation}
+                ></NaviBar>
+                <div>
+                  <div>
+                    <WhatsAppWidget
+                      textReplyTime="Online Shopping"
+                      companyName="Queenz Zone"
+                      class="_1bpcM"
+                      phoneNumber="966590519267"
+                    />
+                  </div>
+
+                  <MessengerCustomerChat
+                    pageId="109450594159775"
+                    appId="897437511658333"
+                  />
+                </div>
+              </Route>
+              <Route exact path="/Page/:PageName/:PNumber">
+                <HeaderSearchBar></HeaderSearchBar>
+                {/* <EditOrder></EditOrder> */}
+                <CreatePage></CreatePage>
                 <NaviBar
                   setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
                   userScroll={userScroll}

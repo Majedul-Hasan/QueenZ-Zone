@@ -13,6 +13,8 @@ export default function ShowProductCategory({
   seasonStroageProductFunction,
   allRating,
   productDataRoot,
+  top20,
+  categorys,
 }) {
   const [productData, setproductdata] = useState([]);
 
@@ -20,8 +22,22 @@ export default function ShowProductCategory({
 
   useEffect(() => {
     const filterProduct = productDataRoot.filter(
-      (Prp) => Prp.ProductCategory === ca[0]
+      (Prp) => Prp.ProductCategory === ca
     );
+
+    const filterCate = top20.filter((topC) => topC.cateTop20.cate === ca);
+
+    const filterFinalData = filterProduct.filter((dt) =>
+      filterCate[0]?.cateTop20.productsId.some((v) => dt._id.includes(v.id))
+    );
+
+    console.log(filterCate, " this is filter product -> ", filterFinalData);
+
+    if (!filterFinalData.length === false) {
+      setproductdata(filterFinalData);
+    } else {
+      setproductdata(false);
+    }
 
     // if (filterProduct.length >= 1) {
     //   setproductdata(filterProduct);
@@ -30,13 +46,10 @@ export default function ShowProductCategory({
     //   setproductdata("no value");
     //   console.log(" naii : ", ca.postCa);
     // }
+  }, [productDataRoot, top20]);
 
-    if (!filterProduct.length === false) {
-      setproductdata(filterProduct);
-    } else {
-      setproductdata(false);
-    }
-  }, [productDataRoot]);
+  // filterData
+  const filterDataCall = (props) => {};
 
   console.log("this caaaaaaaaaaaaa : ", productData);
 
@@ -1453,7 +1466,7 @@ export default function ShowProductCategory({
                   margin: "",
                 }}
               >
-                Category : <strong>{ca[0]}</strong>
+                Category : <strong>{ca}</strong>
               </span>
             </div>
             <div
@@ -1464,7 +1477,7 @@ export default function ShowProductCategory({
                 borderRadius: "5px",
                 backgroundColor: "#FFF7BF",
               }}
-              onClick={() => history.push(`/Category/${ca[0]}`)}
+              onClick={() => history.push(`/Category/${ca}`)}
             >
               <span
                 className="d-flex justify-content-center"
@@ -1559,7 +1572,7 @@ export default function ShowProductCategory({
             className=" productHomepage"
             style={{
               width: "100%",
-
+              paddingBottom: "10px",
               display: "flex",
               overflow: "scroll",
             }}
@@ -1699,7 +1712,7 @@ export default function ShowProductCategory({
 
             <div
               class="d-flex align-items-center p-5"
-              onClick={() => history.push(`/Category/${ca[0]}`)}
+              onClick={() => history.push(`/Category/${ca}`)}
             >
               <div
                 style={{

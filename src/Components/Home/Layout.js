@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import CoverflowEffectCarousel from "../CoverflowEffectCarousel/CoverflowEffectCarousel";
 import Deals from "../Deals/Deals";
-import HomePageLoadingAni from "../HomePageLoadingAni/HomePageLoadingAni";
+import ProductCard from "../ProductCard/ProductCard";
 import ProductGalleryCarousel from "../ProductGalleryCarousel/ProductGalleryCarousel";
 import ProductBanner from "../ProductsBanners/ProductBanner";
+
+import HomePageLoadingAni from "../HomePageLoadingAni/HomePageLoadingAni";
 import SpecialOffer from "../SpecialOffer/SpecialOffer";
 import StackedCenterCarousel from "../StackedCenterCarousel/StackedCenterCarousel";
 import StaticBanner from "../StaticBanner/StaticBanner";
@@ -11,7 +13,7 @@ import SwipeableCarousel from "../SwipeableCarousel/SwipeableCarousel";
 import ThreePoster from "../ThreePoster/ThreePoster";
 import AllProductCatagaryShow from "./AllProductCatagaryShow";
 import CarouselHome from "./CarouselHome";
-import ProductPorster from "./CategoryOverView";
+import CategoryOverViewBack from "./CategoryOverViewBack";
 
 export default function Layout({
   setAniImg,
@@ -19,6 +21,7 @@ export default function Layout({
   allRating,
   category,
   productData,
+  homePageLayout,
 }) {
   // category
 
@@ -45,61 +48,197 @@ export default function Layout({
       });
   }, []);
 
+  const [carousel, setCarousel] = useState([]);
+  const [productCards, setProductCards] = useState([]);
+  const [productPoster, setProductPoster] = useState([]);
+  const [staticBanner, setStaticBanner] = useState([]);
+  const [SwipeableCarouselAll, setSwipeableCarousel] = useState([]);
+  const [categorys, setCategorys] = useState([]);
+  const [top20, setSetTop20] = useState([]);
+
+  // fetch carousel
+  useEffect(() => {
+    // carousel
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneReadComponentsSection"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setCarousel(json);
+      });
+
+    //  product cards
+
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenzZoneReadProductCards"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setProductCards(json);
+      });
+
+    // product's poster
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneReadProductPoster"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setProductPoster(json);
+      });
+
+    // static banner
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneReadStaticPoster"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setStaticBanner(json);
+      });
+
+    // Swipeable Carousel
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneReadSwipeableCarousel"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setSwipeableCarousel(json);
+        console.log("carousel -> ", json);
+      });
+
+    // Swipeable Carousel
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneCategoryRead"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setCategorys(json);
+        console.log("carousel -> ", json);
+      });
+
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneReadTop20"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setSetTop20(json);
+      });
+  }, []);
+
   return (
     <div className="mb-5 pb-3">
-      <div className="container px-0">
-        <CarouselHome></CarouselHome>
-      </div>
+      {homePageLayout?.map((singleHomePageLayout) => (
+        <div>
+          {console.log("this is home page Layout  : ", singleHomePageLayout)}
 
-      <div
-        className="container px-0 mt-0 mb-2 pt-2 "
-        style={{ backgroundColor: "#dddddd" }}
-      >
-        <div className="p-3 pt-5" style={{ display: "none" }}>
-          <span>Lorem ipsum dolor</span>
-        </div>
-        <img
-          style={{ width: "100%" }}
-          src={
-            "https://f.nooncdn.com/mpcms/EN0002/assets/5d5ae7d1-722b-4a49-90ef-d7b0997daf10.png"
-          }
-          class="img-fluid "
-          alt="..."
-        ></img>
-        <div className="d-flex" style={{ flexWrap: "wrap" }}>
-          {calayoutOnly.map((ca) => (
-            <div className="col-6 col-lg-3">
-              {" "}
-              <ProductPorster ca={ca}></ProductPorster>
+          {singleHomePageLayout.type === "CarouselSection" && (
+            <div className="container px-0">
+              <CarouselHome
+                id={singleHomePageLayout.componentId}
+                carousel={carousel}
+              ></CarouselHome>
             </div>
-          ))}
+          )}
+
+          {singleHomePageLayout.type === "ProductsPoster" && (
+            <div>
+              <CategoryOverViewBack
+                id={singleHomePageLayout.componentId}
+                productPoster={productPoster}
+              ></CategoryOverViewBack>
+            </div>
+          )}
+
+          {singleHomePageLayout.type === "StaticBanner" && (
+            <div>
+              <div>
+                <StaticBanner
+                  staticBanner={staticBanner}
+                  id={singleHomePageLayout.componentId}
+                ></StaticBanner>
+              </div>
+            </div>
+          )}
+
+          {singleHomePageLayout.type === "SwipeableCarousel" && (
+            <div>
+              <div>
+                <SwipeableCarousel
+                  SwipeableCarouselAll={SwipeableCarouselAll}
+                  id={singleHomePageLayout.componentId}
+                ></SwipeableCarousel>
+              </div>
+            </div>
+          )}
+
+          {singleHomePageLayout.type === "productCards" && (
+            <div>
+              <div className="container px-0">
+                <ProductCard
+                  productData={productData}
+                  productCards={productCards}
+                  id={singleHomePageLayout.componentId}
+                  allRating={allRating}
+                ></ProductCard>
+              </div>
+            </div>
+          )}
+
+          {singleHomePageLayout.type === "Category" && (
+            <div>
+              <div className="container px-0">
+                <AllProductCatagaryShow
+                  categorys={categorys}
+                  top20={top20}
+                  id={singleHomePageLayout.componentId}
+                  allRating={allRating}
+                  productData={productData}
+                  ca={singleHomePageLayout.Category}
+                  seasonStroageProductFunction={seasonStroageProductFunction}
+                  setAniImg={setAniImg}
+                ></AllProductCatagaryShow>
+              </div>
+            </div>
+          )}
         </div>
+      ))}
+
+      {/* loading */}
+      {!homePageLayout.length === true && (
+        <div>
+          <div>
+            <HomePageLoadingAni></HomePageLoadingAni>
+            <HomePageLoadingAni></HomePageLoadingAni>
+            <HomePageLoadingAni></HomePageLoadingAni>
+            <HomePageLoadingAni></HomePageLoadingAni>
+            <HomePageLoadingAni></HomePageLoadingAni>
+            <HomePageLoadingAni></HomePageLoadingAni>
+            <HomePageLoadingAni></HomePageLoadingAni>
+            <HomePageLoadingAni></HomePageLoadingAni>
+          </div>
+        </div>
+      )}
+
+      <div style={{ display: "none" }}>
+        <Deals></Deals>
       </div>
 
-      <Deals></Deals>
+      <div style={{ display: "none" }}>
+        <SpecialOffer></SpecialOffer>
+      </div>
 
-      <SpecialOffer></SpecialOffer>
+      <div style={{ display: "none" }}>
+        <StackedCenterCarousel></StackedCenterCarousel>
+      </div>
 
-      <StackedCenterCarousel></StackedCenterCarousel>
-
-      <div>
+      <div style={{ display: "none" }}>
         <ProductBanner></ProductBanner>
       </div>
 
-      <div>
-        <StaticBanner></StaticBanner>
-      </div>
-
-      <div>
-        <SwipeableCarousel></SwipeableCarousel>
-        <SwipeableCarousel></SwipeableCarousel>
-      </div>
-
-      <div>
+      <div style={{ display: "none" }}>
         <ThreePoster></ThreePoster>
       </div>
 
-      <div className="container ">
+      <div className="container " style={{ display: "none" }}>
         <div className="row ">
           <div className="col-md-6 col-sm-12 px-0 mx-0">
             <CoverflowEffectCarousel></CoverflowEffectCarousel>
@@ -133,7 +272,7 @@ export default function Layout({
         </div>
       </div>
 
-      <div>
+      <div style={{ display: "none" }}>
         <ProductGalleryCarousel></ProductGalleryCarousel>
         <ProductGalleryCarousel></ProductGalleryCarousel>
       </div>
@@ -141,30 +280,31 @@ export default function Layout({
       {/* <ShowGroupPicFirst></ShowGroupPicFirst>  */}
       {/* <DeliveryFee></DeliveryFee> */}
 
-      <div className="container px-0">
-        {!category.length === false ? (
-          category.map((ca) => (
-            <AllProductCatagaryShow
-              allRating={allRating}
-              productData={productData}
-              ca={ca}
-              seasonStroageProductFunction={seasonStroageProductFunction}
-              setAniImg={setAniImg}
-            ></AllProductCatagaryShow>
-          ))
-        ) : (
-          <div>
-            <HomePageLoadingAni></HomePageLoadingAni>
-            <HomePageLoadingAni></HomePageLoadingAni>
-            <HomePageLoadingAni></HomePageLoadingAni>
-            <HomePageLoadingAni></HomePageLoadingAni>
-            <HomePageLoadingAni></HomePageLoadingAni>
-            <HomePageLoadingAni></HomePageLoadingAni>
-            <HomePageLoadingAni></HomePageLoadingAni>
-            <HomePageLoadingAni></HomePageLoadingAni>
-          </div>
-        )}
-      </div>
+      {/* old product cate */}
+      {/* <div className="container px-0">
+            {!category.length === false ? (
+              category.map((ca) => (
+                <AllProductCatagaryShow
+                  allRating={allRating}
+                  productData={productData}
+                  ca={ca}
+                  seasonStroageProductFunction={seasonStroageProductFunction}
+                  setAniImg={setAniImg}
+                ></AllProductCatagaryShow>
+              ))
+            ) : (
+              <div>
+                <HomePageLoadingAni></HomePageLoadingAni>
+                <HomePageLoadingAni></HomePageLoadingAni>
+                <HomePageLoadingAni></HomePageLoadingAni>
+                <HomePageLoadingAni></HomePageLoadingAni>
+                <HomePageLoadingAni></HomePageLoadingAni>
+                <HomePageLoadingAni></HomePageLoadingAni>
+                <HomePageLoadingAni></HomePageLoadingAni>
+                <HomePageLoadingAni></HomePageLoadingAni>
+              </div>
+            )}
+      </div> */}
     </div>
   );
 }

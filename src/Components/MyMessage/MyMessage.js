@@ -367,15 +367,16 @@ export default function MyMessage({
               style={{
                 position: "fixed",
 
-                bottom: "110px",
+                bottom: "130px",
 
                 margin: "auto",
                 padding: "5px",
                 backgroundColor: `#fec400`,
 
-                borderRadius: "20px",
+                borderRadius: "15px",
                 cursor: "pointer",
-                color: "white",
+                color: "black",
+                fontSize: "13px",
               }}
             >
               <span>{unSeenMsgUserScroll.msg}</span>
@@ -385,10 +386,10 @@ export default function MyMessage({
               style={{
                 position: "fixed",
 
-                bottom: "110px",
+                bottom: "130px",
 
                 margin: "auto",
-                padding: "10px",
+
                 // backgroundColor: `${scroll ? "green" : "red"}`,
                 border: "50%",
                 borderRadius: "50%",

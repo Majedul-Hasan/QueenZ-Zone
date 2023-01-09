@@ -1,14 +1,66 @@
-import React from "react";
+import styled from "@emotion/styled";
+import React, { useEffect, useState } from "react";
 
-export default function StaticBanner() {
+export default function StaticBanner({ id, staticBanner }) {
+  const [oneStaticBanner, setOneStaticBanner] = useState([]);
+
+  useEffect(() => {
+    const filterPoster = staticBanner.filter(
+      (dt) => dt.componentsSection.id === id
+    );
+
+    setOneStaticBanner(filterPoster);
+  }, [staticBanner]);
+
   return (
-    <div className="container mt-2 px-0">
-      <img
-        style={{ borderRadius: "10px", width: "100%" }}
-        src="	https://f.nooncdn.com/mpcms/EN0002/assets/5395e298-656e-4b18-8996-d3555137ac5e.gif"
-        class="img-fluid"
-        alt="..."
-      ></img>
-    </div>
+    <StaticBannerBack className="container px-0">
+      {!oneStaticBanner.length === false && (
+        <a href={oneStaticBanner[0].componentsSection.target}>
+          <div className="mobileStyle">
+            <img
+              style={{ width: "100%" }}
+              src={
+                oneStaticBanner[0].componentsSection.mobilePosterLink === ""
+                  ? oneStaticBanner[0].componentsSection.desktopPosterLink
+                  : oneStaticBanner[0].componentsSection.mobilePosterLink
+              }
+              class="img-fluid"
+              alt="..."
+            ></img>
+          </div>
+          <div className="desktopStyle">
+            <img
+              style={{ width: "100%" }}
+              src={
+                oneStaticBanner[0].componentsSection.desktopPosterLink === ""
+                  ? oneStaticBanner[0].componentsSection.mobilePosterLink
+                  : oneStaticBanner[0].componentsSection.desktopPosterLink
+              }
+              class="img-fluid"
+              alt="..."
+            ></img>
+          </div>
+        </a>
+      )}
+    </StaticBannerBack>
   );
 }
+
+const StaticBannerBack = styled.div`
+  @media screen and (max-width: 750px) {
+    .mobileStyle {
+      display: block;
+    }
+    .desktopStyle {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 750px) {
+    .desktopStyle {
+      display: block;
+    }
+    .mobileStyle {
+      display: none;
+    }
+  }
+`;
