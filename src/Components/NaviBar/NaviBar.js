@@ -3,7 +3,7 @@ import {
   faClipboardList,
   faHeart,
   faHouse,
-  faUser,
+  faUser
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styledCus from "styled-components";
@@ -255,6 +255,7 @@ export default function NaviBar({
                 onClick={() => optionName("MyMessage")}
                 style={{ padding: "0px", margin: "0px", marginTop: "-4px" }}
               >
+                
                 <MessageOption
                   setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
                   userScroll={userScroll}

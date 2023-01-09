@@ -1,11 +1,11 @@
 import ChatIcon from "@mui/icons-material/Chat";
 import Badge from "@mui/material/Badge";
-import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import "./MessageOption.css";
 
 import styledCus from "styled-components";
 
+import { CBadge, CButton } from "@coreui/react";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -136,25 +136,34 @@ export default function MessageOption({
 
   return (
     <IconBack>
-      <div></div>
-      <IconButton aria-label="cart">
+      <CButton
+        style={{ backgroundColor: "#fec400", border: "none", padding: "0px" }}
+        className="position-relative"
+      >
+        <ChatIcon
+          style={{
+            fontSize: "26px",
+            marginTop: "2px",
+            padding: "0px !important",
+            color: `${location.pathname === "/MyMessage" ? "black" : "white"}`,
+          }}
+        ></ChatIcon>
+        {unseenMessages.length !== 0 && (
+          <CBadge color="danger" position="top-end" shape="rounded-pill">
+            {unseenMessages.length}
+            <span className="visually-hidden">unread messages</span>
+          </CBadge>
+        )}
+      </CButton>
+      {/* <IconButton aria-label="cart">
         <StyledBadgeForMessage
           style={{ padding: "0px" }}
           badgeContent={unseenMessages.length}
           color="secondary"
         >
-          <ChatIcon
-            style={{
-              fontSize: "26px",
-              marginTop: "2px",
-              padding: "0px !important",
-              color: `${
-                location.pathname === "/MyMessage" ? "black" : "white"
-              }`,
-            }}
-          ></ChatIcon>
+       
         </StyledBadgeForMessage>
-      </IconButton>
+      </IconButton> */}
     </IconBack>
   );
 }

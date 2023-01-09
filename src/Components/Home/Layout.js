@@ -201,7 +201,6 @@ export default function Layout({
           )}
         </div>
       ))}
-
       {/* loading */}
       {!homePageLayout.length === true && (
         <div>
@@ -217,27 +216,21 @@ export default function Layout({
           </div>
         </div>
       )}
-
       <div style={{ display: "none" }}>
         <Deals></Deals>
       </div>
-
       <div style={{ display: "none" }}>
         <SpecialOffer></SpecialOffer>
       </div>
-
       <div style={{ display: "none" }}>
         <StackedCenterCarousel></StackedCenterCarousel>
       </div>
-
       <div style={{ display: "none" }}>
         <ProductBanner></ProductBanner>
       </div>
-
       <div style={{ display: "none" }}>
         <ThreePoster></ThreePoster>
       </div>
-
       <div className="container " style={{ display: "none" }}>
         <div className="row ">
           <div className="col-md-6 col-sm-12 px-0 mx-0">
@@ -271,15 +264,12 @@ export default function Layout({
           </div>
         </div>
       </div>
-
       <div style={{ display: "none" }}>
         <ProductGalleryCarousel></ProductGalleryCarousel>
         <ProductGalleryCarousel></ProductGalleryCarousel>
       </div>
-
       {/* <ShowGroupPicFirst></ShowGroupPicFirst>  */}
       {/* <DeliveryFee></DeliveryFee> */}
-
       {/* old product cate */}
       {/* <div className="container px-0">
             {!category.length === false ? (
