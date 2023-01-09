@@ -336,6 +336,10 @@ const NavBack = styledCus.div`
     padding: 0px;
   }
 
+  .css-1yxmbwk{
+    padding: 0px;
+  }
+
   // @media screen and (min-width: 550px) {
   //   .navBackAll {
   //     display: none !important;

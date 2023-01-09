@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconButton } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 
 export default function ShoppingCardIcon({
   location,
@@ -25,7 +26,7 @@ export default function ShoppingCardIcon({
   console.log(productList);
 
   return (
-    <div>
+    <ShoppingCardIconStyle>
       <IconButton aria-label="cart">
         <StyledBadge
           //   badgeContent={
@@ -54,6 +55,18 @@ export default function ShoppingCardIcon({
           />
         </StyledBadge>
       </IconButton>
-    </div>
+    </ShoppingCardIconStyle>
   );
 }
+
+const ShoppingCardIconStyle = styled.div`
+  .MuiButtonBase-root
+    .MuiIconButton-root
+    .MuiIconButton-sizeMedium
+    .css-1yxmbwk {
+    padding: 0px !important;
+  }
+  .css-1yxmbwk {
+    padding: 0px !important;
+  }
+`;
