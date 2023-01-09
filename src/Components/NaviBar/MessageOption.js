@@ -2,6 +2,7 @@ import ChatIcon from "@mui/icons-material/Chat";
 import Badge from "@mui/material/Badge";
 import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
+import "./MessageOption.css";
 
 import styledCus from "styled-components";
 
