@@ -147,6 +147,7 @@ export default function MessageOption({
             style={{
               fontSize: "26px",
               marginTop: "2px",
+              padding: "0px !important",
               color: `${
                 location.pathname === "/MyMessage" ? "black" : "white"
               }`,
@@ -162,5 +163,9 @@ const IconBack = styledCus.div`
   .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
     padding: 0px;
   }
+  .MuiButtonBase-root .MuiIconButton-root .MuiIconButton-sizeMedium .css-1yxmbwk{
+    padding: 0px !important;
+  }
+  
  
 `;

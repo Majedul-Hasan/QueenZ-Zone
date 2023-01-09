@@ -14,7 +14,7 @@ code {
 
 
 .MuiButtonBase-root .MuiIconButton-root .MuiIconButton-sizeMedium .css-1yxmbwk{
-  padding: 0px;
+  padding: 0px !important;
 }
 
 .MuiButtonBase-root .MuiIconButton-root .MuiIconButton-sizeMedium .css-1yxmbwk{
