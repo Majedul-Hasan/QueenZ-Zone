@@ -2,23 +2,17 @@
 
 
 .mystyle {
-    animation-duration: 4s;
-    animation-name: slidein;
-    transition: 4s;
+  animation: myAnim 1s ease 0s 1 normal none;
+    
   }
-  
-  @keyframes slidein {
+  @keyframes myAnim {
     0% {
-     opacity: 1;
-     margin-left: 0px;
+      opacity: 1;
+      transform: translateX(0) rotate(0deg);
     }
   
-    50% {
-        opacity: 0.5;
-    }
     100% {
-        opacity: 0;
-        margin-left: -3000px;
-        margin-right: 3000px;
+      opacity: 0;
+      transform: translateX(-250px) rotate(-200deg);
     }
   }

@@ -20,3 +20,18 @@ code {
 .MuiButtonBase-root .MuiIconButton-root .MuiIconButton-sizeMedium .css-1yxmbwk{
   padding: 0px;
 }
+
+.jss3{
+
+      padding-top: 0px !important; 
+   padding-bottom: 0px !important;
+   padding: 0px !important;
+}
+
+.jss5{
+  display: none;
+}
+
+.jss1{
+  padding: 0px !important;
+}

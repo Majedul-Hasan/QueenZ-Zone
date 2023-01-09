@@ -213,7 +213,7 @@ export default function SingleProdductPage({ setAniImg, curentUserInfo }) {
 
   // setTimeout(console.log(product[0].ProductPrice), 10000);
 
-  console.log("this is product : ", !product.length);
+  console.log("this is product : ", product);
   // console.log("this is frist image : ", );
 
   const executeOnClick = (isExpanded) => {
@@ -310,85 +310,101 @@ export default function SingleProdductPage({ setAniImg, curentUserInfo }) {
                   )}
                 </Carousel>
               </div>
-              <div>
-                <div
-                  class="m-2 d-flex justify-content-start productColorV"
-                  style={{
-                    marginTop: "-30px",
+              {!product.length === false && (
+                <div>
+                  {product[0].IsProductColor === true && (
+                    <div>
+                      <div
+                        class="m-2 d-flex justify-content-start productColorV"
+                        style={{
+                          marginTop: "-30px",
 
-                    borderRadius: "5px",
-                    alignItems: "center",
-                    border: "2px solid #fec400",
-                    overflowX: "scroll",
-                  }}
-                >
-                  <div>
-                    <h5
-                      style={{
-                        marginTop: "-20px",
-                        margin: "0px",
-                        padding: "2px",
-                        marginLeft: "10px",
-                        color: "#686868",
-                        fontSize: "20px",
-                      }}
-                    >
-                      Color:{" "}
-                    </h5>
-                  </div>
-                  <div>
-                    <div class="d-flex justify-content-center">
-                      {!product.length <= 0 ? (
-                        product[0].ProductImage.map((img) => (
-                          <div>
-                            <Button
-                              variant="text"
-                              className=""
-                              onClick={() => setFristImage(img[0].image)}
-                            >
-                              <img
-                                style={{ width: "50px", borderRadius: "5px" }}
-                                src={img[0].image[0]}
-                                class="img-fluid "
-                                alt="..."
-                              ></img>{" "}
-                            </Button>
-                          </div>
-                        ))
-                      ) : (
-                        <div class="spinner-border text-warning" role="status">
-                          <span class="visually-hidden">Loading...</span>
-                        </div>
-                      )}
-                    </div>
-                    <div class="d-flex justify-content-center">
-                      {!product.length === false ? (
-                        product[0].ProductImage.map((img) => (
-                          <Button
-                            variant="text"
-                            className="pb-2"
-                            style={{ margin: "0px", padding: "0px" }}
-                            onClick={() => setFristImage(img[0].image)}
+                          borderRadius: "5px",
+                          alignItems: "center",
+                          border: "2px solid #fec400",
+                          overflowX: "scroll",
+                        }}
+                      >
+                        <div>
+                          <h5
+                            style={{
+                              marginTop: "-20px",
+                              margin: "0px",
+                              padding: "2px",
+                              marginLeft: "10px",
+                              color: "#686868",
+                              fontSize: "20px",
+                            }}
                           >
-                            <div
-                              style={{
-                                backgroundColor: img[0].color,
-                                width: "50px",
-                                height: "15px",
-                                borderRadius: "5px",
-                              }}
-                            ></div>
-                          </Button>
-                        ))
-                      ) : (
-                        <div class="spinner-border text-warning" role="status">
-                          <span class="visually-hidden">Loading...</span>
+                            Color:{" "}
+                          </h5>
                         </div>
-                      )}
+                        <div>
+                          <div class="d-flex justify-content-center">
+                            {!product.length <= 0 ? (
+                              product[0].ProductImage.map((img) => (
+                                <div>
+                                  <Button
+                                    variant="text"
+                                    className=""
+                                    onClick={() => setFristImage(img[0].image)}
+                                  >
+                                    <img
+                                      style={{
+                                        width: "50px",
+                                        borderRadius: "5px",
+                                      }}
+                                      src={img[0].image[0]}
+                                      class="img-fluid "
+                                      alt="..."
+                                    ></img>{" "}
+                                  </Button>
+                                </div>
+                              ))
+                            ) : (
+                              <div
+                                class="spinner-border text-warning"
+                                role="status"
+                              >
+                                <span class="visually-hidden">Loading...</span>
+                              </div>
+                            )}
+                          </div>
+                          <div class="d-flex justify-content-center">
+                            {!product.length === false ? (
+                              product[0].ProductImage.map((img) => (
+                                <Button
+                                  variant="text"
+                                  className="pb-2"
+                                  style={{ margin: "0px", padding: "0px" }}
+                                  onClick={() => setFristImage(img[0].image)}
+                                >
+                                  <div
+                                    style={{
+                                      backgroundColor: img[0].color,
+                                      width: "50px",
+                                      height: "15px",
+                                      borderRadius: "5px",
+                                    }}
+                                  ></div>
+                                </Button>
+                              ))
+                            ) : (
+                              <div
+                                class="spinner-border text-warning"
+                                role="status"
+                              >
+                                <span class="visually-hidden">Loading...</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
-              </div>
+              )}
+
               <div>
                 <ShareSocial
                   style={style}
@@ -550,19 +566,27 @@ export default function SingleProdductPage({ setAniImg, curentUserInfo }) {
                       <b>
                         {" "}
                         {!product.length === false && product[0].ProductName}
-                        Skyland Fitness 2 in 1 Treadmill Machine Walking Pad &
-                        Running Pad with Remote Control and Bluetooth Speaker
-                        -Motor =2.25 HP- 4 HP peak-EM-1282(Gray,Blue,Black)
                       </b>
                     </span>
                   </div>
                 </div>
               </div>
-              <div className="mx-2">
-                <a href="#" className="brandStyle">
-                  Brand: SKY LAND
-                </a>
-              </div>
+              {!product.length === false && (
+                <div>
+                  {product[0].ProductBrandName !== "" && (
+                    <div className="mx-2">
+                      <a
+                        href={product[0].ProductBrandOptionLink}
+                        className="brandStyle"
+                      >
+                        {product[0].ProductBrandOptionName}:{" "}
+                        {product[0].ProductBrandName}
+                      </a>
+                    </div>
+                  )}
+                </div>
+              )}
+
               <div className="m-2">
                 <span style={{ color: "gray" }}>Stock : </span>
                 <span style={{ color: "green", fontSize: "18px" }}>
@@ -847,7 +871,7 @@ export default function SingleProdductPage({ setAniImg, curentUserInfo }) {
                   SAR
                 </span>
               </div>
-              <div className="mt-3">
+              <div className="mt-3" style={{ display: "none" }}>
                 <span>
                   {" "}
                   <PaymentsIcon
@@ -976,95 +1000,157 @@ export default function SingleProdductPage({ setAniImg, curentUserInfo }) {
                     </div>
                   </div>
                 )}
-                <div className="noteImage " style={{ fontSize: "14px" }}>
+                {!product.length === false && (
                   <div>
-                    <span
-                      style={{
-                        color: "#686868",
-                        fontSize: "18px",
-                      }}
-                    >
-                      Details :
-                    </span>
-                  </div>
-                  <ShowMoreText
-                    /* Default options */
-                    lines={3}
-                    more="Show more"
-                    less="^ Show less"
-                    className="content-css"
-                    anchorClass="my-anchor-css-class"
-                    expanded={false}
-                    width={280}
-                    height={100}
-                    truncatedEndingComponent={"... "}
-                  >
-                    <div dangerouslySetInnerHTML={{ __html: notes }}></div>
-                  </ShowMoreText>
-                </div>
-                <div className="mt-2">
-                  <div>
-                    <span
-                      style={{
-                        color: "#686868",
-                        fontSize: "18px",
-                      }}
-                    >
-                      More Details :
-                    </span>
-                  </div>
-                  <div
-                    className={`mt-2 ${
-                      showImage === true && "detailsImageHide"
-                    }`}
-                  >
-                    <img
-                      className={`${showImage ? "hideImage" : "showImage"}`}
-                      style={{
-                        width: "100%",
-                        borderRadius: "10px",
-                      }}
-                      src={
-                        "https://wps-media.jarir.com/wp-content/uploads/2022/08/honor-70-lp-en.jpg"
-                      }
-                      alt=""
-                    />
-                  </div>
-                  <div
-                    class="d-flex justify-content-center "
-                    style={{ marginTop: "-10px" }}
-                  >
-                    {showImage ? (
-                      <Button
-                        style={{
-                          backgroundColor: " #fec400",
+                    {product[0].isProductDescription === true && (
+                      <div>
+                        {" "}
+                        <div
+                          className="noteImage "
+                          style={{ fontSize: "14px" }}
+                        >
+                          <div>
+                            <span
+                              style={{
+                                color: "#686868",
+                                fontSize: "18px",
+                              }}
+                            >
+                              <b>
+                                {!product.length === false &&
+                                  product[0].productDescriptionName}{" "}
+                                :
+                              </b>
+                            </span>
+                          </div>
+                          <ShowMoreText
+                            /* Default options */
+                            lines={3}
+                            more="Show more"
+                            less="^ Show less"
+                            className="content-css"
+                            anchorClass="my-anchor-css-class"
+                            expanded={false}
+                            width={280}
+                            height={100}
+                            truncatedEndingComponent={"... "}
+                          >
+                            <div
+                              dangerouslySetInnerHTML={{ __html: notes }}
+                            ></div>
+                          </ShowMoreText>
+                        </div>
+                        {!product.length === false && (
+                          <div>
+                            {product[0].productMoreDetailsMainImageUrl !==
+                              "" && (
+                              <div className="mt-2">
+                                <div>
+                                  <span
+                                    style={{
+                                      color: "#686868",
+                                      fontSize: "18px",
+                                    }}
+                                  >
+                                    {product[0].productMoreDetailsImageName} :
+                                  </span>
+                                </div>
+                                <div
+                                  className={`mt-2 ${
+                                    showImage === true && "detailsImageHide"
+                                  }`}
+                                >
+                                  <img
+                                    className={`${
+                                      showImage ? "hideImage" : "showImage"
+                                    }`}
+                                    style={{
+                                      width: "100%",
+                                      borderRadius: "10px",
+                                    }}
+                                    src={
+                                      product[0].productMoreDetailsMainImageUrl
+                                    }
+                                    alt=""
+                                  />
+                                </div>
+                                <div
+                                  class="d-flex justify-content-center "
+                                  style={{ marginTop: "-10px" }}
+                                >
+                                  {showImage ? (
+                                    <Button
+                                      style={{
+                                        backgroundColor: " #fec400",
 
-                          boxShadow: "none",
-                          color: "black",
-                        }}
-                        variant="contained"
-                        onClick={() => setShowImage(!showImage)}
-                        size="small"
-                      >
-                        {" "}
-                        Show Image
-                      </Button>
-                    ) : (
-                      <Button
-                        style={{
-                          border: "1px solid #fec400",
-                          color: "#fec400",
-                        }}
-                        variant="outlined"
-                        size="small"
-                        onClick={() => setShowImage(!showImage)}
-                      >
-                        {" "}
-                        Show less
-                      </Button>
+                                        boxShadow: "none",
+                                        color: "black",
+                                      }}
+                                      variant="contained"
+                                      onClick={() => setShowImage(!showImage)}
+                                      size="small"
+                                    >
+                                      {" "}
+                                      Show Image
+                                    </Button>
+                                  ) : (
+                                    <Button
+                                      style={{
+                                        border: "1px solid #fec400",
+                                        color: "#fec400",
+                                      }}
+                                      variant="outlined"
+                                      size="small"
+                                      onClick={() => setShowImage(!showImage)}
+                                    >
+                                      {" "}
+                                      Show less
+                                    </Button>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     )}
                   </div>
-                </div>
+                )}
+                {!product.length === false && (
+                  <div>
+                    {product[0].ProductImportantInfoText !== "" && (
+                      <div className="mt-2">
+                        <div>
+                          <span
+                            style={{
+                              color: "#686868",
+                              fontSize: "18px",
+                            }}
+                          >
+                            <b
+                              style={{
+                                color: `${product[0].ProductImportantInfoTitleColor}`,
+                              }}
+                            >
+                              {product[0].ProductImportantInfoName} :
+                            </b>
+                          </span>
+                        </div>
+                        <div
+                          className="p-1"
+                          style={{
+                            borderRadius: "5px",
+                            paddingLeft: "10px",
+                            backgroundColor: `${product[0].ProductImportantInfoBackgroundColor}`,
+                            color: `${product[0].ProductImportantInfoContentColor}`,
+                          }}
+                        >
+                          {product[0].ProductImportantInfoText}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -1300,7 +1386,7 @@ export default function SingleProdductPage({ setAniImg, curentUserInfo }) {
                       SAR
                     </span>
                   </div>
-                  <div className="mt-3">
+                  <div className="mt-3" style={{ display: "none" }}>
                     <span>
                       {" "}
                       <PaymentsIcon
@@ -1368,206 +1454,207 @@ export default function SingleProdductPage({ setAniImg, curentUserInfo }) {
             </div>
           </div>
         )}
-        <div className="mt-5">
-          {window.innerWidth <= 766 && (
-            <div id="ratingMobile">
-              <div>
-                <div className="mt-3">
-                  <h5 style={{ margin: "0px", padding: "0px" }}>
-                    Customer reviews
-                  </h5>
-                </div>
-                <div
-                  className="d-flex align-items-center left-side-rating "
-                  style={{
-                    fontSize: "14px",
-                    color: "#007185",
-                    cursor: "pointer",
-                  }}
-                >
-                  <div>
-                    {productReviewCount !== false && (
-                      <ReactStars
-                        count={5}
-                        onChange={ratingChanged}
-                        size={24}
-                        isHalf={true}
-                        value={productReviewCount}
-                        edit={false}
-                        activeColor="#ffd700"
-                      />
-                    )}
+        {!product.length === false && (
+          <div className="mt-5">
+            {window.innerWidth <= 766 && (
+              <div id="ratingMobile">
+                <div>
+                  <div className="mt-3">
+                    <h5 style={{ margin: "0px", padding: "0px" }}>
+                      Customer reviews
+                    </h5>
                   </div>
+                  <div
+                    className="d-flex align-items-center left-side-rating "
+                    style={{
+                      fontSize: "14px",
+                      color: "#007185",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <div>
+                      {productReviewCount !== false && (
+                        <ReactStars
+                          count={5}
+                          onChange={ratingChanged}
+                          size={24}
+                          isHalf={true}
+                          value={productReviewCount}
+                          edit={false}
+                          activeColor="#ffd700"
+                        />
+                      )}
+                    </div>
 
-                  <div className="mx-2">
-                    {productReviewCount !== false && (
-                      <span>
-                        {parseFloat(productReviewCount).toFixed(1)} ratings |{" "}
-                        {allRating.length} reviews
-                      </span>
-                    )}
+                    <div className="mx-2">
+                      {productReviewCount !== false && (
+                        <span>
+                          {parseFloat(productReviewCount).toFixed(1)} ratings |{" "}
+                          {allRating.length} reviews
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
-                {window.innerWidth >= 766 && (
-                  <div id="rating">this is rating</div>
-                )}
-                {!allRating.length === false &&
-                  allRating.map((re, index) => (
-                    <div className="mt-3">
-                      <div>
-                        <div className="d-flex justify-content-between align-items-center">
-                          <div className="d-flex align-items-center">
-                            <div>
-                              <img
-                                style={{
-                                  borderRadius: "50%",
-                                  height: "28px",
-                                }}
-                                src={unknownPeople}
-                                alt=""
-                              />
-                            </div>
-                            <div>
-                              <span
-                                className="px-2"
-                                style={{ fontSize: "13px" }}
-                              >
-                                <b>{re.rating.name}</b>
-                              </span>
-                            </div>
-                          </div>
-                          <div
-                            className="px-1"
-                            style={{ color: "gray", fontSize: "11px" }}
-                          >
-                            <span>
-                              {new Date(re.rating.time).getDate()}/
-                              {new Date(re.rating.time).getMonth()}/
-                              {new Date(re.rating.time).getFullYear()}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="d-flex align-items-center">
-                          <div>
-                            <ReactStars
-                              count={5}
-                              isHalf={true}
-                              size={15}
-                              value={re.rating.rating}
-                              edit={false}
-                              activeColor="#ffd700"
-                            />
-                          </div>
-                          <div
-                            className="px-1"
-                            style={{ color: "gray", fontSize: "11px" }}
-                          >
-                            <span>
-                              {" "}
-                              (Rating {parseFloat(re.rating.rating).toFixed(
-                                1
-                              )}{" "}
-                              out of 5){" "}
-                            </span>
-                          </div>
-                        </div>
-
-                        {re.rating.reviewImage !== false && (
-                          <div className="mb-2">
-                            <div class=" " style={{}}>
-                              <div
-                                className={`mt-2 ${
-                                  showReviewImage.id === index &&
-                                  showReviewImage.state === true &&
-                                  "detailsImageHide"
-                                }`}
-                              >
+                  {window.innerWidth >= 766 && (
+                    <div id="rating">this is rating</div>
+                  )}
+                  {!allRating.length === false &&
+                    allRating.map((re, index) => (
+                      <div className="mt-3">
+                        <div>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="d-flex align-items-center">
+                              <div>
                                 <img
-                                  className={`${
-                                    showReviewImage.id === index &&
-                                    showReviewImage.state === true
-                                      ? "showImage"
-                                      : "hideImage"
-                                  }`}
                                   style={{
-                                    width: "100%",
-                                    borderRadius: "10px",
+                                    borderRadius: "50%",
+                                    height: "28px",
                                   }}
-                                  src={re.rating.reviewImage}
+                                  src={unknownPeople}
                                   alt=""
                                 />
                               </div>
-
-                              <div
-                                className="d-flex justify-content-center"
-                                style={{ marginTop: "-10px" }}
-                              >
-                                {showReviewImage.id === index &&
-                                showReviewImage.state === true ? (
-                                  <Button
-                                    style={{
-                                      backgroundColor: " #fec400",
-
-                                      boxShadow: "none",
-                                      color: "black",
-                                    }}
-                                    variant="contained"
-                                    onClick={() =>
-                                      setShowReviewImage({
-                                        state: !showReviewImage.state,
-                                        id: index,
-                                      })
-                                    }
-                                    size="small"
-                                  >
-                                    {" "}
-                                    Show Image
-                                  </Button>
-                                ) : (
-                                  <Button
-                                    style={{
-                                      border: "1px solid #fec400",
-                                      color: "#fec400",
-                                    }}
-                                    variant="outlined"
-                                    size="small"
-                                    onClick={() =>
-                                      setShowReviewImage({
-                                        state: !showReviewImage.state,
-                                        id: index,
-                                      })
-                                    }
-                                  >
-                                    {" "}
-                                    Show less
-                                  </Button>
-                                )}
+                              <div>
+                                <span
+                                  className="px-2"
+                                  style={{ fontSize: "13px" }}
+                                >
+                                  <b>{re.rating.name}</b>
+                                </span>
                               </div>
                             </div>
+                            <div
+                              className="px-1"
+                              style={{ color: "gray", fontSize: "11px" }}
+                            >
+                              <span>
+                                {new Date(re.rating.time).getDate()}/
+                                {new Date(re.rating.time).getMonth()}/
+                                {new Date(re.rating.time).getFullYear()}
+                              </span>
+                            </div>
                           </div>
-                        )}
 
-                        {re.rating.msg !== "" && (
-                          <div
-                            className="p-2"
-                            style={{
-                              color: "#424242",
-                              backgroundColor: "rgba(255, 215, 0, 0.23)",
-                              fontSize: "13px",
-                              borderRadius: "5px",
-                            }}
-                          >
-                            <span>{re.rating.msg}</span>
+                          <div className="d-flex align-items-center">
+                            <div>
+                              <ReactStars
+                                count={5}
+                                isHalf={true}
+                                size={15}
+                                value={re.rating.rating}
+                                edit={false}
+                                activeColor="#ffd700"
+                              />
+                            </div>
+                            <div
+                              className="px-1"
+                              style={{ color: "gray", fontSize: "11px" }}
+                            >
+                              <span>
+                                {" "}
+                                (Rating{" "}
+                                {parseFloat(re.rating.rating).toFixed(1)} out of
+                                5){" "}
+                              </span>
+                            </div>
                           </div>
-                        )}
+
+                          {re.rating.reviewImage !== false && (
+                            <div className="mb-2">
+                              <div class=" " style={{}}>
+                                <div
+                                  className={`mt-2 ${
+                                    showReviewImage.id === index &&
+                                    showReviewImage.state === true &&
+                                    "detailsImageHide"
+                                  }`}
+                                >
+                                  <img
+                                    className={`${
+                                      showReviewImage.id === index &&
+                                      showReviewImage.state === true
+                                        ? "showImage"
+                                        : "hideImage"
+                                    }`}
+                                    style={{
+                                      width: "100%",
+                                      borderRadius: "10px",
+                                    }}
+                                    src={re.rating.reviewImage}
+                                    alt=""
+                                  />
+                                </div>
+
+                                <div
+                                  className="d-flex justify-content-center"
+                                  style={{ marginTop: "-10px" }}
+                                >
+                                  {showReviewImage.id === index &&
+                                  showReviewImage.state === true ? (
+                                    <Button
+                                      style={{
+                                        backgroundColor: " #fec400",
+
+                                        boxShadow: "none",
+                                        color: "black",
+                                      }}
+                                      variant="contained"
+                                      onClick={() =>
+                                        setShowReviewImage({
+                                          state: !showReviewImage.state,
+                                          id: index,
+                                        })
+                                      }
+                                      size="small"
+                                    >
+                                      {" "}
+                                      Show Image
+                                    </Button>
+                                  ) : (
+                                    <Button
+                                      style={{
+                                        border: "1px solid #fec400",
+                                        color: "#fec400",
+                                      }}
+                                      variant="outlined"
+                                      size="small"
+                                      onClick={() =>
+                                        setShowReviewImage({
+                                          state: !showReviewImage.state,
+                                          id: index,
+                                        })
+                                      }
+                                    >
+                                      {" "}
+                                      Show less
+                                    </Button>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {re.rating.msg !== "" && (
+                            <div
+                              className="p-2"
+                              style={{
+                                color: "#424242",
+                                backgroundColor: "rgba(255, 215, 0, 0.23)",
+                                fontSize: "13px",
+                                borderRadius: "5px",
+                              }}
+                            >
+                              <span>{re.rating.msg}</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </SingleProductback>
   );

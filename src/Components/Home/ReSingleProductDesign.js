@@ -1,14 +1,12 @@
 import {
   faAngleLeft,
   faAngleRight,
+  faCartShopping,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ShoppingCartOutlined } from "@mui/icons-material";
 import { default as FavoriteIcon } from "@mui/icons-material/Favorite";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
 import Carousel from "nuka-carousel";
 import React, { useEffect, useState } from "react";
 import ReactStars from "react-rating-stars-component";
@@ -170,6 +168,8 @@ export default function ReSingleProductDesign({
             }}
           >
             <Carousel
+              infiniteLoop={true}
+              autoPlay={true}
               renderCenterLeftControls={({ previousSlide }) => (
                 <button
                   style={{
@@ -403,7 +403,7 @@ export default function ReSingleProductDesign({
               }}
             /> */}
 
-                <Stack
+                {/* <Stack
                   spacing={2}
                   direction="row"
                   style={{ padding: "0px", margin: "0px", minWidth: "0px" }}
@@ -411,7 +411,9 @@ export default function ReSingleProductDesign({
                   <Button variant="text">
                     <ShoppingCartOutlined />
                   </Button>
-                </Stack>
+                </Stack> */}
+
+                <FontAwesomeIcon icon={faCartShopping} />
               </div>
             </div>
           </div>

@@ -45,7 +45,7 @@ export default function ProductCard({
     setTimeout(() => {
       console.log("this is remove setInterval");
       setanimationShow("none");
-    }, 500);
+    }, 1000);
   };
 
   const [selected, setSelected] = useState([]);

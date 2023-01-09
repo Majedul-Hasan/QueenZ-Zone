@@ -14,7 +14,7 @@ export default function ShoppingCardPage() {
   const [seasonData, setseasonData] = useState([]);
 
   // for delivery fee
-  const [deliveryFee, setDeliveryFee] = useState(false);
+  const [deliveryFee, setDeliveryFee] = useState(true);
 
   useEffect(() => {
     console.log(
@@ -301,7 +301,7 @@ export default function ShoppingCardPage() {
                 <span>
                   {deliveryFee === false
                     ? "Delivery fee will be determined by negotiation"
-                    : `SAR {``}25`}
+                    : `SAR  25`}
                 </span>
               </div>
             </div>
