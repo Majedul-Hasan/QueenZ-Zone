@@ -26,6 +26,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     right: -3,
     top: 13,
     border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0px !important",
   },
 }));
 
@@ -252,7 +253,7 @@ export default function NaviBar({
 
               <div
                 onClick={() => optionName("MyMessage")}
-                style={{ padding: " 0px", margin: "0px", marginTop: "-4px" }}
+                style={{ padding: "0px", margin: "0px", marginTop: "-4px" }}
               >
                 <MessageOption
                   setUnSeenMsgUserScroll={setUnSeenMsgUserScroll}
@@ -287,6 +288,7 @@ export default function NaviBar({
                   </div>
                 </div>
               </div>
+
               <div onClick={() => optionName("UserOrderPage")}>
                 {" "}
                 <FontAwesomeIcon
@@ -298,6 +300,7 @@ export default function NaviBar({
                   icon={faClipboardList}
                 />
               </div>
+
               <div onClick={() => optionName("MyAccount")}>
                 {loggingUserInfo.photoURL ? (
                   <img
