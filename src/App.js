@@ -324,6 +324,83 @@ function App() {
       });
   }, []);
 
+  /// === home page layout ====
+  const [carousel, setCarousel] = useState([]);
+  const [productCards, setProductCards] = useState([]);
+  const [productPoster, setProductPoster] = useState([]);
+  const [staticBanner, setStaticBanner] = useState([]);
+  const [SwipeableCarouselAll, setSwipeableCarousel] = useState([]);
+  const [categorys, setCategorys] = useState([]);
+  const [top20, setSetTop20] = useState([]);
+
+  // fetch carousel
+  useEffect(() => {
+    // carousel
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneReadComponentsSection"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setCarousel(json);
+      });
+
+    //  product cards
+
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenzZoneReadProductCards"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setProductCards(json);
+      });
+
+    // product's poster
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneReadProductPoster"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setProductPoster(json);
+      });
+
+    // static banner
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneReadStaticPoster"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setStaticBanner(json);
+      });
+
+    // Swipeable Carousel
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneReadSwipeableCarousel"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setSwipeableCarousel(json);
+        console.log("carousel -> ", json);
+      });
+
+    // Swipeable Carousel
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneCategoryRead"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setCategorys(json);
+        console.log("carousel -> ", json);
+      });
+
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneReadTop20"
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        setSetTop20(json);
+      });
+  }, []);
+
   return (
     <div className="App">
       {/* home page layout */}
@@ -338,6 +415,13 @@ function App() {
               <Route exact path="/">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Layout
+                  carousel={carousel}
+                  productCards={productCards}
+                  productPoster={productPoster}
+                  staticBanner={staticBanner}
+                  SwipeableCarouselAll={SwipeableCarouselAll}
+                  categorys={categorys}
+                  top20={top20}
                   homePageLayout={homePageLayout}
                   category={category}
                   productData={productData}
@@ -398,6 +482,13 @@ function App() {
               <Route exact path="/Home">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Layout
+                  carousel={carousel}
+                  productCards={productCards}
+                  productPoster={productPoster}
+                  staticBanner={staticBanner}
+                  SwipeableCarouselAll={SwipeableCarouselAll}
+                  categorys={categorys}
+                  top20={top20}
                   homePageLayout={homePageLayout}
                   category={category}
                   productData={productData}
@@ -433,6 +524,13 @@ function App() {
               <Route exact path="/Category">
                 <HeaderSearchBar></HeaderSearchBar>
                 <Layout
+                  carousel={carousel}
+                  productCards={productCards}
+                  productPoster={productPoster}
+                  staticBanner={staticBanner}
+                  SwipeableCarouselAll={SwipeableCarouselAll}
+                  categorys={categorys}
+                  top20={top20}
                   productData={productData}
                   homePageLayout={homePageLayout}
                   allRating={allRating}

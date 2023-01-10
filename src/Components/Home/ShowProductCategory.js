@@ -232,11 +232,24 @@ export default function ShowProductCategory({
     enqueueSnackbar("Product added to cart", { variant });
   };
 
+  const [isAnimation, setIsAnimation] = useState({
+    state: false,
+    id: "",
+  });
+
   const PushSingleProductpage = (props) => {
-    history.push(
-      `/Category/${props.ProductCategory}/${props.ProductName}/${props._id}`
-    );
-    console.log(props);
+    setIsAnimation({
+      state: true,
+      id: props._id,
+    });
+
+    setTimeout(() => {
+      history.push(
+        `/Category/${props.ProductCategory}/${props.ProductName}/${props._id}`
+      );
+    }, 1500);
+
+    // console.log(props);
   };
 
   const [loadingAnimation, setLoadingAnimation] = useState([
@@ -1700,6 +1713,7 @@ export default function ShowProductCategory({
                       seasonStroageProductFunction={
                         seasonStroageProductFunction
                       }
+                      isAnimation={isAnimation}
                       PushSingleProductpage={PushSingleProductpage}
                       setAniImg={setAniImg}
                       oldSecData={oldSecData}

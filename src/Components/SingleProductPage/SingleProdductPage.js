@@ -1036,7 +1036,9 @@ export default function SingleProdductPage({ setAniImg, curentUserInfo }) {
                             truncatedEndingComponent={"... "}
                           >
                             <div
-                              dangerouslySetInnerHTML={{ __html: notes }}
+                              dangerouslySetInnerHTML={{
+                                __html: product[0].FinalProductDescription,
+                              }}
                             ></div>
                           </ShowMoreText>
                         </div>

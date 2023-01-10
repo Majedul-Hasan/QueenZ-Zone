@@ -110,7 +110,7 @@ export default function CategoryOverViewBack({ id, productPoster }) {
 
             <div className="d-flex" style={{ flexWrap: "wrap" }}>
               {onePoster[0].componentsSection.link.map((img) => (
-                <div className="col-6 col-lg-2">
+                <div className="col-6 col-lg-3">
                   {" "}
                   <ProductPorster img={img}></ProductPorster>
                 </div>

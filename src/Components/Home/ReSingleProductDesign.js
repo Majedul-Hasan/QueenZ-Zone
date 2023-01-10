@@ -11,6 +11,7 @@ import Carousel from "nuka-carousel";
 import React, { useEffect, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
+import "./ReSingleProductDesign.css";
 
 export default function ReSingleProductDesign({
   favoProduct,
@@ -21,9 +22,20 @@ export default function ReSingleProductDesign({
   setAniImg,
   PushSingleProductpage,
   allRating,
+  isAnimation,
   seasonStroageProductFunction,
 }) {
   const [imgs, setImgs] = useState(dt.ProductImage);
+
+  const [isSingleAni, setIsSingleAni] = useState(false);
+
+  useEffect(() => {
+    if (isAnimation.state === true) {
+      if (isAnimation.id === dt._id) {
+        setIsSingleAni(true);
+      }
+    }
+  }, [isAnimation]);
 
   // metarial ui icon click color
   let label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -155,7 +167,9 @@ export default function ReSingleProductDesign({
   }, [favoProduct]);
 
   return (
-    <ReSingleProback>
+    <ReSingleProback
+      className={`${isSingleAni === true && "ReSingleProbackAnimation"}`}
+    >
       <div>
         <div className="">
           <div
@@ -218,6 +232,7 @@ export default function ReSingleProductDesign({
                 />
               ))}
             </Carousel>
+
             <div
               className="p-1 "
               style={{

@@ -41,9 +41,9 @@ export default function SwipeableCarousel({ id, SwipeableCarouselAll }) {
           {!oneSwipeableCarousel.length === false && (
             <div>
               <div
-                class={` p-2 mb-${oneSwipeableCarousel[0].componentsSection.boxTitleMb} mt-${oneSwipeableCarousel[0].componentsSection.boxTitleMt} pb-${oneSwipeableCarousel[0].componentsSection.boxTitlePb} pt-${oneSwipeableCarousel[0].componentsSection.boxTitlePt}  d-flex justify-content-between `}
+                class={` mb-${oneSwipeableCarousel[0].componentsSection.boxTitleMb} mt-${oneSwipeableCarousel[0].componentsSection.boxTitleMt} pb-${oneSwipeableCarousel[0].componentsSection.boxTitlePb} pt-${oneSwipeableCarousel[0].componentsSection.boxTitlePt}  d-flex justify-content-between `}
               >
-                <div className="mb-2">
+                <div className="mb-2 px-2">
                   <h5 className="title" style={{ fontSize: "25px" }}>
                     <a
                       style={{ textDecoration: "none", color: "black" }}
@@ -61,7 +61,7 @@ export default function SwipeableCarousel({ id, SwipeableCarouselAll }) {
                 </div>
                 {oneSwipeableCarousel[0].componentsSection.boxTitleBtnTxt !==
                   "" && (
-                  <div>
+                  <div className="px-2">
                     <button
                       style={{
                         display: "block",
@@ -107,31 +107,37 @@ export default function SwipeableCarousel({ id, SwipeableCarouselAll }) {
                   </div>
                 )}
 
-                <Carousel
-                  // show={window.innerWidth < 990 ? 3.5 : 9.5}
-                  show={
-                    oneSwipeableCarousel[0].componentsSection
-                      .boxShowMobileDevice
-                      ? 3.5
-                      : oneSwipeableCarousel[0].componentsSection
-                          .boxShowMobileDevice
-                  }
-                  slide={3}
-                  swiping={true}
-                  rightArrow={false}
-                  leftArrow={false}
-                  responsive={true}
-                >
-                  {oneSwipeableCarousel[0].componentsSection.link.map((img) => (
-                    <div>
-                      <a href={img.target}>
-                        {" "}
-                        <img class="img-fluid" src={img.link} alt="..." />
-                      </a>
-                    </div>
-                  ))}
-                </Carousel>
+                {!oneSwipeableCarousel.length === false && (
+                  <Carousel
+                    // show={window.innerWidth < 990 ? 3.5 : 9.5}
+                    show={
+                      oneSwipeableCarousel[0].componentsSection
+                        .boxShowMobileDevice
+                    }
+                    slide={3}
+                    swiping={true}
+                    rightArrow={false}
+                    leftArrow={false}
+                    responsive={true}
+                  >
+                    {oneSwipeableCarousel[0].componentsSection.link.map(
+                      (img) => (
+                        <div>
+                          <a href={img.target}>
+                            {" "}
+                            <img
+                              class="img-fluid px-1"
+                              src={img.link}
+                              alt="..."
+                            />
+                          </a>
+                        </div>
+                      )
+                    )}
+                  </Carousel>
+                )}
               </div>
+              <div></div>
               <div className="desktopStyle">
                 {titleImageShow === true && (
                   <div
@@ -153,35 +159,37 @@ export default function SwipeableCarousel({ id, SwipeableCarouselAll }) {
                             : oneSwipeableCarousel[0].componentsSection
                                 .boxDesktopView
                         }
-                        class="img-fluid"
+                        class="img-fluid px-1"
                         alt="..."
                       ></img>
                     </a>
                   </div>
                 )}
-                <Carousel
-                  show={
-                    oneSwipeableCarousel[0].componentsSection
-                      .boxShowDesktopDevice === ""
-                      ? 9.5
-                      : oneSwipeableCarousel[0].componentsSection
-                          .boxShowDesktopDevice
-                  }
-                  slide={3}
-                  swiping={true}
-                  rightArrow={false}
-                  leftArrow={false}
-                  responsive={true}
-                >
-                  {oneSwipeableCarousel[0].componentsSection.link.map((img) => (
-                    <div>
-                      <a href={img.target}>
-                        {" "}
-                        <img class="img-fluid" src={img.link} alt="..." />
-                      </a>
-                    </div>
-                  ))}
-                </Carousel>
+
+                {!oneSwipeableCarousel.length === false && (
+                  <Carousel
+                    show={
+                      oneSwipeableCarousel[0].componentsSection
+                        .boxShowDesktopDevice
+                    }
+                    slide={3}
+                    swiping={true}
+                    rightArrow={false}
+                    leftArrow={false}
+                    responsive={true}
+                  >
+                    {oneSwipeableCarousel[0].componentsSection.link.map(
+                      (img) => (
+                        <div>
+                          <a href={img.target}>
+                            {" "}
+                            <img class="img-fluid" src={img.link} alt="..." />
+                          </a>
+                        </div>
+                      )
+                    )}
+                  </Carousel>
+                )}
               </div>
             </div>
           )}

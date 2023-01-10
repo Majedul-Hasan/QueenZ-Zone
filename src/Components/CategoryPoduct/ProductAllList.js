@@ -1,15 +1,13 @@
 import {
   faAngleLeft,
   faAngleRight,
+  faCartShopping,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ShoppingCartOutlined } from "@mui/icons-material";
 import Favorite from "@mui/icons-material/Favorite";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import Stack from "@mui/material/Stack";
 import { useSnackbar } from "notistack";
 import Carousel from "nuka-carousel";
 import React, { useEffect, useState } from "react";
@@ -322,15 +320,7 @@ export default function ProductAllList({
               }}
             /> */}
 
-            <Stack
-              spacing={2}
-              direction="row"
-              style={{ padding: "0px", margin: "0px", minWidth: "0px" }}
-            >
-              <Button variant="text">
-                <ShoppingCartOutlined />
-              </Button>
-            </Stack>
+            <FontAwesomeIcon icon={faCartShopping} />
           </div>
         </div>
       </div>

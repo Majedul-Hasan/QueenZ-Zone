@@ -33,7 +33,7 @@ export default function ProductCard({
 
       setProducts(filterData);
     }
-  }, [oneProductcard]);
+  }, [oneProductcard, productData, productCards]);
 
   let history = useHistory();
 

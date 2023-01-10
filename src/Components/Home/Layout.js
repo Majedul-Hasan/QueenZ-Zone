@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CoverflowEffectCarousel from "../CoverflowEffectCarousel/CoverflowEffectCarousel";
 import Deals from "../Deals/Deals";
 import ProductCard from "../ProductCard/ProductCard";
@@ -22,11 +22,14 @@ export default function Layout({
   category,
   productData,
   homePageLayout,
+  carousel,
+  productCards,
+  productPoster,
+  staticBanner,
+  SwipeableCarouselAll,
+  categorys,
+  top20,
 }) {
-  // category
-
-  const [calayoutOnly, setCaleyoutOnly] = useState([]);
-
   // useEffect(() => {
   //   fetch("https://queenzzoneserver-production.up.railway.app/queenZoneCategoryRead")
   //     .then((response) => response.json())
@@ -35,94 +38,6 @@ export default function Layout({
   //       console.log("tyhis is catttttttt :;;  ", json);
   //     });
   // }, []);
-
-  useEffect(() => {
-    // Update the document title using the browser API
-    fetch(
-      "https://queenzzoneserver-production.up.railway.app/queenZoneCategoryRead"
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        console.log("this is new category => ", json);
-        setCaleyoutOnly(json);
-      });
-  }, []);
-
-  const [carousel, setCarousel] = useState([]);
-  const [productCards, setProductCards] = useState([]);
-  const [productPoster, setProductPoster] = useState([]);
-  const [staticBanner, setStaticBanner] = useState([]);
-  const [SwipeableCarouselAll, setSwipeableCarousel] = useState([]);
-  const [categorys, setCategorys] = useState([]);
-  const [top20, setSetTop20] = useState([]);
-
-  // fetch carousel
-  useEffect(() => {
-    // carousel
-    fetch(
-      "https://queenzzoneserver-production.up.railway.app/queenZoneReadComponentsSection"
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        setCarousel(json);
-      });
-
-    //  product cards
-
-    fetch(
-      "https://queenzzoneserver-production.up.railway.app/queenzZoneReadProductCards"
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        setProductCards(json);
-      });
-
-    // product's poster
-    fetch(
-      "https://queenzzoneserver-production.up.railway.app/queenZoneReadProductPoster"
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        setProductPoster(json);
-      });
-
-    // static banner
-    fetch(
-      "https://queenzzoneserver-production.up.railway.app/queenZoneReadStaticPoster"
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        setStaticBanner(json);
-      });
-
-    // Swipeable Carousel
-    fetch(
-      "https://queenzzoneserver-production.up.railway.app/queenZoneReadSwipeableCarousel"
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        setSwipeableCarousel(json);
-        console.log("carousel -> ", json);
-      });
-
-    // Swipeable Carousel
-    fetch(
-      "https://queenzzoneserver-production.up.railway.app/queenZoneCategoryRead"
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        setCategorys(json);
-        console.log("carousel -> ", json);
-      });
-
-    fetch(
-      "https://queenzzoneserver-production.up.railway.app/queenZoneReadTop20"
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        setSetTop20(json);
-      });
-  }, []);
 
   return (
     <div className="mb-5 pb-3">
