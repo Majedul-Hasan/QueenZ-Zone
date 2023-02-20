@@ -1,31 +1,44 @@
 import {
   faAngleLeft,
   faAngleRight,
+  faCartShopping,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ShoppingCartOutlined } from "@mui/icons-material";
-import Favorite from "@mui/icons-material/Favorite";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import Stack from "@mui/material/Stack";
+import { default as FavoriteIcon } from "@mui/icons-material/Favorite";
+import IconButton from "@mui/material/IconButton";
 import Carousel from "nuka-carousel";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import ReactStars from "react-rating-stars-component";
+import styled from "styled-components";
+import "./ReSingleProductDesign.css";
 
 export default function ReSingleProductDesign({
+  favoProduct,
   setOldSecdata,
   oldSecData,
   dt,
   ProductAdded,
   setAniImg,
   PushSingleProductpage,
+  allRating,
+  isAnimation,
   seasonStroageProductFunction,
 }) {
   const [imgs, setImgs] = useState(dt.ProductImage);
 
+  const [isSingleAni, setIsSingleAni] = useState(false);
+
+  useEffect(() => {
+    if (isAnimation.state === true) {
+      if (isAnimation.id === dt._id) {
+        setIsSingleAni(true);
+      }
+    }
+  }, [isAnimation]);
+
   // metarial ui icon click color
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
+  let label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   // setState for First image
   const [firstImgs, setFristImgs] = useState(dt.ProductImage[0][0].image);
@@ -60,8 +73,103 @@ export default function ReSingleProductDesign({
   //   seasonStroageProductFunction(props);
   // };
 
+  // ^^ product review
+
+  // product review
+  const [thisProductReview, setThisProductReview] = useState([]);
+
+  // product review count
+  const [productReviewCount, setProductReviewCount] = useState();
+
+  useEffect(() => {
+    const thisProductRev22 = allRating.filter(
+      (allRev) => allRev.rating.productId === dt._id
+    );
+
+    let count = 0;
+
+    const reviewCount = thisProductRev22.map(
+      (re) => (count = re.rating.rating + count)
+    );
+
+    // console.log(
+    //   count / thisProductRev22.length,
+    //   " : this is product Rating for reSingleProduct : ",
+    //   thisProductRev22
+    // );
+
+    !thisProductRev22.length === false &&
+      setProductReviewCount(count / thisProductRev22.length);
+
+    setThisProductReview(thisProductRev22);
+  }, [allRating]);
+
+  // addToFavoriteSection
+  const addToFavoriteSection = (dt) => {
+    // const localData = localStorage.getItem("favoriteList");
+
+    // // const filterData = localData.find((fdata) => fdata === dt);
+
+    // //    localData.map((dts) => console.log(dts));
+
+    // if (localStorage.getItem("favoriteList") === null) {
+    //   localStorage.setItem("favoriteList", JSON.stringify(dt));
+    // } else {
+    //   localStorage.setItem("favoriteList", [
+    //     localStorage.getItem("favoriteList"),
+    //     JSON.stringify(dt),
+    //   ]);
+    // }
+
+    const localData = JSON.parse(localStorage.getItem("favoriteList"));
+
+    const findData =
+      localData === null
+        ? false
+        : localData.filter((mainData) => mainData === dt);
+
+    console.log(findData, " this is local storage  data => ", localData, dt);
+
+    if (!findData.length !== false) {
+      if (localData === null) {
+        localStorage.setItem("favoriteList", JSON.stringify([dt]));
+      } else {
+        localStorage.setItem(
+          "favoriteList",
+          JSON.stringify([...localData, dt])
+        );
+      }
+    } else {
+      // remove data
+
+      const removeIteam = localData.filter((rIteam) => rIteam !== dt);
+
+      localStorage.setItem("favoriteList", JSON.stringify(removeIteam));
+    }
+  };
+
+  // filter for root local data
+  useEffect(() => {
+    if (favoProduct === null) {
+      setLove(false);
+    } else if (!favoProduct.length === true) {
+      setLove(false);
+    } else {
+      let findData = favoProduct.filter((fData) => fData === dt._id);
+
+      console.log(
+        findData,
+        " this is root local strobe product => ",
+        favoProduct
+      );
+      !findData.length === false ? setLove(true) : setLove(false);
+    }
+  }, [favoProduct]);
+
   return (
-    <div>
+    <ReSingleProback
+      className={`${isSingleAni === true && "ReSingleProbackAnimation"}`}
+    >
       <div>
         <div className="">
           <div
@@ -74,6 +182,8 @@ export default function ReSingleProductDesign({
             }}
           >
             <Carousel
+              infiniteLoop={true}
+              autoPlay={true}
               renderCenterLeftControls={({ previousSlide }) => (
                 <button
                   style={{
@@ -118,9 +228,11 @@ export default function ReSingleProductDesign({
                     borderRadius: "5px 5px 0px 0px ",
                   }}
                   src={img}
+                  alt="product"
                 />
               ))}
             </Carousel>
+
             <div
               className="p-1 "
               style={{
@@ -172,7 +284,9 @@ export default function ReSingleProductDesign({
               </div>
               <div onClick={() => PushSingleProductpage(dt)}>
                 <div className="mt-2" style={{ fontSize: "12px" }}>
-                  {dt.ProductName}
+                  {dt.ProductName.length > 50
+                    ? dt.ProductName.substring(0, 50) + "..."
+                    : dt.ProductName}
                 </div>
                 <div
                   className="pt-1"
@@ -225,6 +339,31 @@ export default function ReSingleProductDesign({
                   </div>
                 </s>
               </div>
+              {!thisProductReview.length === false && (
+                <div
+                  className="d-flex flex-row-reverse align-items-center"
+                  onClick={() => PushSingleProductpage(dt)}
+                >
+                  <div>
+                    <ReactStars
+                      count={5}
+                      isHalf={true}
+                      size={15}
+                      value={productReviewCount}
+                      edit={false}
+                      activeColor="#ffd700"
+                    />
+                  </div>
+                  <div
+                    className="px-1"
+                    style={{ color: "gray", fontSize: "11px" }}
+                  >
+                    <span>
+                      ({thisProductReview ? thisProductReview.length : 0})
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div
@@ -235,13 +374,35 @@ export default function ReSingleProductDesign({
               }}
             >
               <div>
-                <Checkbox
+                {/* <Checkbox
                   {...label}
                   color="error"
                   icon={<FavoriteBorder />}
                   checkedIcon={<Favorite />}
-                />
+                /> */}
+
+                {love === true ? (
+                  <IconButton aria-label="cart">
+                    <FavoriteIcon
+                      style={{ color: "red" }}
+                      onClick={() => {
+                        addToFavoriteSection(dt._id);
+                        setLove(!love);
+                      }}
+                    />
+                  </IconButton>
+                ) : (
+                  <IconButton aria-label="cart">
+                    <FavoriteIcon
+                      onClick={() => {
+                        addToFavoriteSection(dt._id);
+                        setLove(!love);
+                      }}
+                    />
+                  </IconButton>
+                )}
               </div>
+
               <div onClick={() => PushSingleProductpage(dt)}>
                 <FontAwesomeIcon icon={faEye} />
               </div>
@@ -257,20 +418,38 @@ export default function ReSingleProductDesign({
               }}
             /> */}
 
-                <Stack
+                {/* <Stack
                   spacing={2}
                   direction="row"
-                  style={{ padding: "0px", margin: "0px" }}
+                  style={{ padding: "0px", margin: "0px", minWidth: "0px" }}
                 >
                   <Button variant="text">
                     <ShoppingCartOutlined />
                   </Button>
-                </Stack>
+                </Stack> */}
+
+                <FontAwesomeIcon icon={faCartShopping} />
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </ReSingleProback>
   );
 }
+
+const ReSingleProback = styled.div`
+  .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+    padding: 0px;
+    min-width: 0px;
+  }
+  .css-1peyhh5-MuiButtonBase-root-MuiCheckbox-root {
+    padding: 0px;
+  }
+  .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+    padding: 0px !important;
+  }
+  .css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+    padding: 0px !important;
+  }
+`;

@@ -1,10 +1,17 @@
-import { React, useContext, useState } from "react";
+import { React, useContext, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useLocation } from "react-router-dom";
+import io from "socket.io-client";
 import { UserInfoContext } from "../../App";
-export default function LogInUserInfoPage() {
+import globeSocketIo from "../../globeVar ";
+
+export default function LogInUserInfoPage({
+  setcallUseEffectForCurrentUserInfo,
+}) {
   let history = useHistory();
   let location = useLocation();
+  const socket = useRef();
+  socket.current = io(globeSocketIo);
 
   //  back location
   let { from } = location.state || { from: { pathname: "/" } };
@@ -25,6 +32,20 @@ export default function LogInUserInfoPage() {
   const signOutUser = () => {
     setLoginUsserInfo("");
     localStorage.removeItem("UserInfo");
+
+    // local user data found
+
+    // post data
+    socket.current.emit("new-online-user", {
+      activeUserInfo: "new",
+      activeUserNumber: localStorage.getItem("localVisitorNumber"),
+      oldUserInfo: null,
+    });
+    console.log("this is socket 5");
+
+    setcallUseEffectForCurrentUserInfo(
+      Math.floor(100000000 + Math.random() * 900000000)
+    );
   };
 
   // react from hook
@@ -43,13 +64,16 @@ export default function LogInUserInfoPage() {
     console.log(newData, loggingUserInfo._id);
 
     // fetch data update
-    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneUserInfoUpdate", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ newData }),
-    })
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneUserInfoUpdate",
+      {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ newData }),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);

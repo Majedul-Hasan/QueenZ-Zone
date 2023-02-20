@@ -6,7 +6,7 @@ import { AlllllProductInfoContext } from "./AllAboutProduct";
 // product info create context
 export const ProductInfoContext = createContext();
 
-export default function AddProductReDesign({ demo }) {
+export default function AddProductReDesign({ demo, AllProInfo }) {
   const [AlOverProductInfoContext, setAlOverProductInfoContext] = useContext(
     AlllllProductInfoContext
   );
@@ -30,6 +30,8 @@ export default function AddProductReDesign({ demo }) {
   const [addSingleProduct, setAddSingleProduc] = useState(["1"]);
 
   const addProduct = (props) => {
+    console.log("this is add color : ", props);
+
     setAddSingleProduc([...addSingleProduct, props]);
   };
 
@@ -40,7 +42,7 @@ export default function AddProductReDesign({ demo }) {
           <div>
             <div>
               {addSingleProduct.map((product) => (
-                <div className="p-2" style={{}}>
+                <div className="pt-2" style={{}}>
                   <AddLink
                     product={product}
                     setEnableColor={setEnableColor}
@@ -53,6 +55,7 @@ export default function AddProductReDesign({ demo }) {
 
             {enableColor === false && (
               <AddAnotherColorBtn
+                AllProInfo={AllProInfo}
                 addProduct={addProduct}
                 addSingleProduct={addSingleProduct}
               ></AddAnotherColorBtn>

@@ -1,14 +1,18 @@
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faCartShopping,
+  faEye,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ShoppingCartOutlined } from "@mui/icons-material";
 import Favorite from "@mui/icons-material/Favorite";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import Stack from "@mui/material/Stack";
 import { useSnackbar } from "notistack";
 import Carousel from "nuka-carousel";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 
 export default function ProductAllList({
   setOldSecdata,
@@ -18,6 +22,8 @@ export default function ProductAllList({
 }) {
   // pops msg for add shoppinf card
   const { enqueueSnackbar } = useSnackbar();
+
+  let history = useHistory();
 
   // metarial ui icon click color
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -30,7 +36,7 @@ export default function ProductAllList({
   // pops msg for add shoppinf card
   const handleClickVariant = (variant) => {
     // variant could be success, error, warning, info, or default
-    enqueueSnackbar("Product added successfull!", { variant });
+    enqueueSnackbar("Product added successfully!", { variant });
   };
 
   // setState for First image
@@ -57,7 +63,7 @@ export default function ProductAllList({
   };
 
   return (
-    <div className="col-6">
+    <PorductAllBack className="">
       <div
         className="p-2 mt-3"
         style={{ backgroundColor: "#FFF7BF ", borderRadius: "10px" }}
@@ -107,6 +113,7 @@ export default function ProductAllList({
                 borderRadius: "5px 5px 0px 0px ",
               }}
               src={img}
+              alt=""
             />
           ))}
         </Carousel>
@@ -159,10 +166,23 @@ export default function ProductAllList({
             )}
           </div>
 
-          <div className="mt-2" style={{ fontSize: "12px" }}>
+          <div
+            onClick={() =>
+              history.push(
+                `/Category/${dt.ProductCategory}/${dt.ProductName}/${dt._id}`
+              )
+            }
+            className="mt-2"
+            style={{ fontSize: "15px", fontWeight: "bold" }}
+          >
             {dt.ProductName}
           </div>
           <div
+            onClick={() =>
+              history.push(
+                `/Category/${dt.ProductCategory}/${dt.ProductName}/${dt._id}`
+              )
+            }
             className="pt-1"
             style={{
               fontSize: "13px",
@@ -190,7 +210,7 @@ export default function ProductAllList({
                 fontFamily: "Poppins",
                 paddingLeft: "5px",
                 display: `${
-                  dt.ProductOffer != "null" ? "inline-block" : "none"
+                  dt.ProductOffer !== "null" ? "inline-block" : "none"
                 }`,
               }}
             >
@@ -213,7 +233,7 @@ export default function ProductAllList({
             </div>
           </s>
         </div>
-        <div
+        {/* <div
           className="pt-2 d-flex justify-content-around"
           style={{
             fontSize: "21px",
@@ -248,14 +268,72 @@ export default function ProductAllList({
               }}
             /> */}
 
-            <Stack spacing={2} direction="row">
+        {/* <Stack spacing={2} direction="row">
               <Button variant="text">
                 <ShoppingCartOutlined />
               </Button>
             </Stack>
           </div>
+        </div>  */}
+
+        <div
+          className="pt-2 d-flex justify-content-around"
+          style={{
+            fontSize: "21px",
+            alignItems: "center",
+          }}
+        >
+          <div onClick={() => addToLove(dt)}>
+            <Checkbox
+              {...label}
+              color="error"
+              icon={<FavoriteBorder />}
+              checkedIcon={<Favorite />}
+            />
+          </div>
+          <div
+            onClick={() =>
+              history.push(
+                `/Category/${dt.ProductCategory}/${dt.ProductName}/${dt._id}`
+              )
+            }
+          >
+            <FontAwesomeIcon icon={faEye} />
+          </div>
+
+          <div
+            onClick={() => {
+              // addToShoppingCard(dt);
+              setAniImg({
+                firstImgs: firstImgs[0],
+                dt: [dt, firstImgs],
+              });
+            }}
+          >
+            {/* <FontAwesomeIcon
+              icon={faCartShopping}
+              className=""
+              style={{
+                backgroundColor: "",
+                borderRadius: "50%",
+                border: "1px solid white",
+              }}
+            /> */}
+
+            <FontAwesomeIcon icon={faCartShopping} />
+          </div>
         </div>
       </div>
-    </div>
+    </PorductAllBack>
   );
 }
+
+const PorductAllBack = styled.div`
+  .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+    padding: 0px;
+    min-width: 0px;
+  }
+  .css-1peyhh5-MuiButtonBase-root-MuiCheckbox-root {
+    padding: 0px;
+  }
+`;

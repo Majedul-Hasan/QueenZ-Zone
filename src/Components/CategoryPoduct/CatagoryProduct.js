@@ -164,7 +164,9 @@ export default function CatagoryProduct({ setAniImg }) {
 
   useEffect(() => {
     // Update the document title using the browser API
-    fetch("https://glacial-shore-36532.herokuapp.com/queenZoneFindAllProduct")
+    fetch(
+      "https://queenzzoneserver-production.up.railway.app/queenZoneFindAllProduct"
+    )
       .then((response) => response.json())
       .then((json) => {
         console.log("this is json ", json);
@@ -202,7 +204,7 @@ export default function CatagoryProduct({ setAniImg }) {
       <div></div>
       <div className=" mb-5 pd-5">
         <div
-          className="row"
+          className="row mb-5 pb-5"
           style={{
             margin: "0px",
             padding: "0px",
@@ -211,7 +213,7 @@ export default function CatagoryProduct({ setAniImg }) {
           }}
         >
           {!products.length === true ? (
-            <div className="d-flex justify-content-center">
+            <div className="  d-flex justify-content-center">
               <div style={{}}>
                 <img className="Loading" src={LogoLoging} alt="" />
                 <div>
@@ -222,14 +224,29 @@ export default function CatagoryProduct({ setAniImg }) {
                 </div>
               </div>
             </div>
+          ) : window.innerWidth <= 574 ? (
+            products.map((dt) => (
+              <div className="col-6">
+                {console.log("this is width : ", window.innerWidth)}
+                <ProductAllList
+                  setAniImg={setAniImg}
+                  oldSecData={oldSecData}
+                  setOldSecdata={setOldSecdata}
+                  dt={dt}
+                ></ProductAllList>
+              </div>
+            ))
           ) : (
             products.map((dt) => (
-              <ProductAllList
-                setAniImg={setAniImg}
-                oldSecData={oldSecData}
-                setOldSecdata={setOldSecdata}
-                dt={dt}
-              ></ProductAllList>
+              <div className="col-sm-6 col-md-4 col-lg-2">
+                {console.log("this is width : ", window.innerWidth)}
+                <ProductAllList
+                  setAniImg={setAniImg}
+                  oldSecData={oldSecData}
+                  setOldSecdata={setOldSecdata}
+                  dt={dt}
+                ></ProductAllList>
+              </div>
             ))
           )}
         </div>

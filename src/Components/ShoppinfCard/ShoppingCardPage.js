@@ -1,14 +1,20 @@
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "@mui/material/Button";
 import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
+
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 import ProductCard from "./ProductCard";
 
 export default function ShoppingCardPage() {
   const { enqueueSnackbar } = useSnackbar();
   let history = useHistory();
   const [seasonData, setseasonData] = useState([]);
+
+  // for delivery fee
+  const [deliveryFee, setDeliveryFee] = useState(true);
 
   useEffect(() => {
     console.log(
@@ -45,7 +51,7 @@ export default function ShoppingCardPage() {
     }
   }, [updateProductQty]);
 
-  // remove iteam
+  // remove item
   const removeItem = (props) => {
     setTimeout(() => {
       console.log("hlwwwwwwwwwww", props);
@@ -190,8 +196,13 @@ export default function ShoppingCardPage() {
 
       sessionStorage.setItem("addToShoppingCard", JSON.stringify(conted));
     }
+  }, [productSize]);
 
-    console.log("this is subTotal submit btn ", productSize);
+  useEffect(() => {
+    setTimeout(() => {
+      const subMub = JSON.parse(sessionStorage.getItem("addToShoppingCard"));
+      console.log("this is subTotal submit btn 333 ", subMub);
+    }, 1000);
   }, [productSize]);
 
   // subtotal submit btn
@@ -206,7 +217,9 @@ export default function ShoppingCardPage() {
 
     // console.log(subMub);
 
-    const pSizeChect = pSizeChectShow.filter((dt) => dt[0].pSize === undefined);
+    const pSizeChect = pSizeChectShow.filter(
+      (dt) => dt[0].pSize === undefined || dt[0].pSize === "Select Size"
+    );
 
     if (pSizeChect.length) {
       if (pSizeChect[0][0].isSizeShow === true) {
@@ -243,28 +256,54 @@ export default function ShoppingCardPage() {
   // }, [removeProduct]);
 
   return (
-    <div>
-      <div style={{ display: ` ${productSubProce === 0 ? "block" : "none"}` }}>
+    <ShoppingCardPageBack>
+      <div
+        style={{
+          display: ` ${productSubProce === 0 ? "block" : "none"}`,
+        }}
+      >
         <div className=" mt-5 pt-5 d-flex justify-content-center">
           <h3>Your cart is empty 🛒</h3>
         </div>
       </div>
-      <div style={{ display: ` ${productSubProce === 0 ? "none" : "block"}` }}>
-        <div className="mb-5 pb-5">
+      <div
+        style={{
+          display: ` ${productSubProce === 0 ? "none" : "block"}`,
+        }}
+      >
+        <div className="mb-5 pb-5 container" style={{}}>
           <div
             className="mt-2 p-2"
             style={{
               border: "2px solid #fec400",
               borderRadius: "10px",
+              boxShadow: "0 5px 45px -10px rgb(0 0 0 / 25%)",
               // opacity: `${animationShow === "tra" && "0.5"}`,
               // transition: "0.5s",
             }}
           >
             <div class="d-flex justify-content-between">
-              <div>Total :</div> <div>{productSubProce}</div>
+              <div>
+                <b>Total :</b>{" "}
+              </div>{" "}
+              <div>
+                SAR {``}
+                {productSubProce}
+              </div>
             </div>
-            <div class="d-flex justify-content-between">
-              <div>Delivery Fee : </div> <div>25</div>
+            <div class="d-flex justify-content-between mt-2">
+              <div>
+                <span>
+                  <b>Delivery Fee :</b>{" "}
+                </span>{" "}
+              </div>{" "}
+              <div>
+                <span>
+                  {deliveryFee === false
+                    ? "Delivery fee will be determined by negotiation"
+                    : `SAR  25`}
+                </span>
+              </div>
             </div>
             <div class="d-flex justify-content-between">
               <div></div> <div>------------------------</div>
@@ -273,33 +312,65 @@ export default function ShoppingCardPage() {
               style={{ color: "red", fontWeight: "bold" }}
               class="d-flex justify-content-between"
             >
-              <div>Subtotal</div> <div>{productSubProce + 25}</div>
+              <div>Subtotal</div>{" "}
+              <div>
+                SAR {` `}
+                {deliveryFee === false ? productSubProce : productSubProce + 25}
+              </div>
+            </div>
+            <div class="d-flex flex-row-reverse topSubmitBtn">
+              <Button
+                onClick={() => SubTotalOrderBtn()}
+                variant="contained"
+                style={{ backgroundColor: "#fec400" }}
+              >
+                {" "}
+                Proceed to Buy{" "}
+                <span style={{ fontSize: "16px", fontWeight: "600" }}>
+                  ({seasonData.length} items ->{" "}
+                  {deliveryFee === false
+                    ? productSubProce
+                    : productSubProce + 25}{" "}
+                  SAR)
+                </span>
+                <FontAwesomeIcon
+                  style={{ marginLeft: "4px" }}
+                  icon={faPaperPlane}
+                />
+              </Button>
             </div>
           </div>
-          <div className="mb-5 pb-5">
-            {seasonData.map((dt) => (
-              <ProductCard
-                editProductQty={editProductQty}
-                setEditProductQty={setEditProductQty}
-                dt={dt}
-                removeItem={removeItem}
-                proQtyNumberCheck={proQtyNumberCheck}
-                setproductSize={setproductSize}
-                errorproductSize={errorproductSize}
-              ></ProductCard>
-            ))}
+          <div className="pb-5 mb-5">
+            <div class="container-fluid container">
+              <div class="row">
+                {seasonData.map((dt) => (
+                  <div className="mt-3 col-md-4 col-sm-12 col-lg-4">
+                    <ProductCard
+                      productSizeGlo={productSize}
+                      editProductQty={editProductQty}
+                      setEditProductQty={setEditProductQty}
+                      dt={dt}
+                      removeItem={removeItem}
+                      proQtyNumberCheck={proQtyNumberCheck}
+                      setproductSize={setproductSize}
+                      errorproductSize={errorproductSize}
+                    ></ProductCard>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
         <div
-          className="mb-5"
+          className="mb-5  "
           style={{
             display: `${productSubProce === 0 ? "none" : "block"}`,
           }}
         >
           <div
-            class="p-2 fixed-bottom mb-5 pb-5 w-100"
-            style={{ backgroundColor: "white", height: "50px" }}
+            class="p-2 fixed-bottom mb-5 pb-5 w-100 container bottomSubmitBtn"
+            style={{ backgroundColor: "transparent", height: "50px" }}
           >
             <div
               className=""
@@ -316,13 +387,13 @@ export default function ShoppingCardPage() {
                     onClick={() => SubTotalOrderBtn()}
                     style={{ fontSize: "13px" }}
                   >
-                    Subtotal : <span style={{ fontSize: "12px" }}>SAR</span>{" "}
+                    Proceed to Buy{" "}
                     <span style={{ fontSize: "16px", fontWeight: "600" }}>
-                      {productSubProce + 25}
-                    </span>{" "}
-                    | Proceed to Buy{" "}
-                    <span style={{ fontSize: "16px", fontWeight: "600" }}>
-                      ({seasonData.length} items)
+                      ({seasonData.length} items ->{" "}
+                      {deliveryFee === false
+                        ? productSubProce
+                        : productSubProce + 25}{" "}
+                      SAR)
                     </span>
                     <FontAwesomeIcon
                       style={{ marginLeft: "4px" }}
@@ -335,6 +406,19 @@ export default function ShoppingCardPage() {
           </div>
         </div>
       </div>
-    </div>
+    </ShoppingCardPageBack>
   );
 }
+
+const ShoppingCardPageBack = styled.div`
+  @media only screen and (min-width: 600px) {
+    .bottomSubmitBtn {
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    .topSubmitBtn {
+      display: none !important;
+    }
+  }
+`;

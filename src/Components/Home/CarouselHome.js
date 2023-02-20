@@ -1,10 +1,80 @@
-import React from "react";
-import banner from "../../Asset/MaskGroup2.png";
+import React, { useEffect, useState } from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import styled from "styled-components";
 
-export default function CarouselHome() {
+export default function CarouselHome({ carousel, id }) {
+  const [oneCaro, setOneCaro] = useState([]);
+
+  useEffect(() => {
+    console.log("carouselcarousel ", carousel);
+
+    setOneCaro(carousel.filter((c) => c.componentsSection.id === id));
+  }, [carousel]);
+
   return (
-    <div>
-      <div
+    <CaroselBack>
+      {!oneCaro.length === false && (
+        <div
+          className={` mt-${oneCaro[0].componentsSection.mt} mb-${oneCaro[0].componentsSection.mb} `}
+        >
+          <div className="mobileStyle">
+            <Carousel
+              showStatus={false}
+              showIndicators={false}
+              showThumbs={false}
+              infiniteLoop={true}
+              autoPlay={true}
+              interval={
+                oneCaro[0].componentsSection.Interval === ""
+                  ? 2000
+                  : oneCaro[0].componentsSection.Interval
+              }
+            >
+              {oneCaro[0].componentsSection.link.map((img) => (
+                <div>
+                  <img
+                    href={img.target}
+                    src={
+                      img.mobileLink === "" ? img.desktopLink : img.mobileLink
+                    }
+                    alt="product"
+                  />
+                </div>
+              ))}
+            </Carousel>
+          </div>
+
+          <div className="desktopStyle">
+            <Carousel
+              showStatus={false}
+              showIndicators={false}
+              showThumbs={false}
+              infiniteLoop={true}
+              autoPlay={true}
+              interval={
+                oneCaro[0].componentsSection.Interval === ""
+                  ? 2000
+                  : oneCaro[0].componentsSection.Interval
+              }
+            >
+              {oneCaro[0].componentsSection.link.map((img) => (
+                <div>
+                  <img
+                    href={img.target}
+                    src={
+                      img.desktopLink === "" ? img.mobileLink : img.desktopLink
+                    }
+                    alt="product"
+                  />
+                </div>
+              ))}
+            </Carousel>
+          </div>
+        </div>
+      )}
+
+      {/* <div
         id="carouselExampleControls"
         class="carousel slide"
         data-bs-ride="carousel"
@@ -38,7 +108,26 @@ export default function CarouselHome() {
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
-      </div>
-    </div>
+      </div> */}
+    </CaroselBack>
   );
 }
+
+const CaroselBack = styled.div`
+  @media screen and (max-width: 750px) {
+    .mobileStyle {
+      display: block;
+    }
+    .desktopStyle {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 750px) {
+    .desktopStyle {
+      display: block;
+    }
+    .mobileStyle {
+      display: none;
+    }
+  }
+`;

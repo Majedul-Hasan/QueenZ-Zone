@@ -1203,7 +1203,6 @@ export default function HomePageLoadingAni() {
             />
           </div>
         </div>
-
         <div class="d-flex align-items-center p-5">
           <div
             style={{

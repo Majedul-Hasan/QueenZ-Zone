@@ -8,13 +8,15 @@ export default function EditOrderCommingSoon() {
   // order
   const [orderList, setOrderList] = useState([]);
   let { ONumber } = useParams();
+  // const socket = useRef();
+  // socket.current = io(globeSocketIo);
 
   console.log(ONumber);
 
   // // useEfect for read order info
   useEffect(() => {
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/queenZoneEditOrderFind/${ONumber}`
+      `https://queenzzoneserver-production.up.railway.app/queenZoneEditOrderFind/${ONumber}`
     )
       .then((response) => response.json())
       .then((json) => {
@@ -27,12 +29,14 @@ export default function EditOrderCommingSoon() {
     // // useEfect for read order info
 
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/queenZoneOrderDelete/${porps}`
+      `https://queenzzoneserver-production.up.railway.app/queenZoneOrderDelete/${porps}`
     )
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
       });
+
+    // socket.current.emit("new-order", "DELETE ORDER");
     history.push("/UserOrderPage");
   };
 

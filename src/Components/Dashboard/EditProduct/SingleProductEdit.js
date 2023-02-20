@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
-export default function SingleProductEdit({ pd }) {
+export default function SingleProductEdit({ pd, editProductBtn }) {
   const [productImage, srtProductImage] = useState([
     pd.ProductImage[0][0].image,
   ]);
@@ -17,7 +17,7 @@ export default function SingleProductEdit({ pd }) {
     console.log("this is id ", props._id);
 
     fetch(
-      `https://glacial-shore-36532.herokuapp.com/queenZoneProductDelete/${props._id}`
+      `https://queenzzoneserver-production.up.railway.app/queenZoneProductDelete/${props._id}`
     )
       .then((response) => response.json())
       .then((json) => console.log(json));
@@ -33,7 +33,7 @@ export default function SingleProductEdit({ pd }) {
           <Carousel>
             {productImage.map((img) => (
               <div>
-                <img src={img} />
+                <img src={img} alt="" />
               </div>
             ))}
           </Carousel>
@@ -83,7 +83,9 @@ export default function SingleProductEdit({ pd }) {
             </div>
             <div class="mt-3 d-flex justify-content-between">
               <div>
-                <Button variant="outlined">Edit</Button>
+                <Button variant="outlined" onClick={() => editProductBtn(pd)}>
+                  Edit
+                </Button>
               </div>
               <div onClick={() => deleteProduct(pd)}>
                 <Button variant="outlined" color="error">

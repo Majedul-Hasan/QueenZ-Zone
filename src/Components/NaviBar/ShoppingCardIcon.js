@@ -1,6 +1,8 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconButton } from "@mui/material";
+import { CBadge, CButton } from "@coreui/react";
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export default function ShoppingCardIcon({
   location,
@@ -25,8 +27,28 @@ export default function ShoppingCardIcon({
   console.log(productList);
 
   return (
-    <div>
-      <IconButton aria-label="cart">
+    <ShoppingCardIconStyle>
+      <CButton
+        style={{ backgroundColor: "#fec400", border: "none", padding: "0px" }}
+        className="position-relative"
+      >
+        <ShoppingCartIcon
+          style={{
+            color: `${
+              location.pathname === "/ShoppingCard" ||
+              location.pathname === "/Order"
+                ? "black"
+                : "white"
+            }`,
+          }}
+        ></ShoppingCartIcon>
+
+        <CBadge color="danger" position="top-end" shape="rounded-pill">
+          {productList === null ? 0 : productList.length}
+          <span className="visually-hidden">unread messages</span>
+        </CBadge>
+      </CButton>
+      {/* <IconButton aria-label="cart">
         <StyledBadge
           //   badgeContent={
           //     // window.sessionStorage.length != 0 ? productList.length : 0
@@ -53,7 +75,19 @@ export default function ShoppingCardIcon({
             icon={faCartShopping}
           />
         </StyledBadge>
-      </IconButton>
-    </div>
+      </IconButton> */}
+    </ShoppingCardIconStyle>
   );
 }
+
+const ShoppingCardIconStyle = styled.div`
+  .MuiButtonBase-root
+    .MuiIconButton-root
+    .MuiIconButton-sizeMedium
+    .css-1yxmbwk {
+    padding: 0px !important;
+  }
+  .css-1yxmbwk {
+    padding: 0px !important;
+  }
+`;
